@@ -2,8 +2,7 @@ package com.luminositygames.smoothietycoon.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.luminositygames.smoothietycoon.Screen2;
-import com.luminositygames.smoothietycoon.game.Game;
+import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.sections.Kitchen;
 import com.luminositygames.smoothietycoon.sections.Market;
 import com.luminositygames.smoothietycoon.sections.Office;
@@ -11,11 +10,23 @@ import com.luminositygames.smoothietycoon.sections.Section;
 import com.luminositygames.smoothietycoon.sections.Stand;
 import com.luminositygames.smoothietycoon.sections.UserInterface;
 import com.luminositygames.smoothietycoon.util.Image;
+import com.luminositygames.smoothietycoon.util.Window;
+
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public class Gameplay implements Screen2{
 
 	private Game game;
 	private UserInterface ui;
+	private Window window;
 	private Section section;
 	private Stand stand;
 	private Kitchen kitchen;
@@ -24,13 +35,14 @@ public class Gameplay implements Screen2{
 	
 	@Override
 	public void load() {
-		game = new Game();
-		ui = new UserInterface(game);
-		stand = new Stand(ui);
-		kitchen = new Kitchen(ui);
-		market = new Market(ui);
-		office = new Office(ui);
-		section = stand;
+		this.game = new Game();
+		this.ui = new UserInterface();
+		this.window = new Window(game);
+		this.stand = new Stand();
+		this.kitchen = new Kitchen();
+		this.market = new Market();
+		this.office = new Office();
+		this.section = stand;
 	}
 
 	@Override
@@ -39,13 +51,14 @@ public class Gameplay implements Screen2{
 		if (section.equals(stand)){
 			game.getCustomers().render();
 		}
-		ui.render();
+		ui.render(game);
+		window.render();
 	}
 
 	@Override
 	public void update(float delta) {
 		if (Gdx.input.justTouched()){
-			section.handleTouch();
+			handleTouch();
 		}
 		game.update(delta);
 		if (Image.get("leftArrow").isTouched()){
@@ -55,6 +68,38 @@ public class Gameplay implements Screen2{
 		} 
 	}
 	
+	private void handleTouch() {
+		if (window.isOpen()){
+			if (window.isTouched()){
+				window.handleTouch();
+			} else {
+				window.close();
+			}
+		} else {
+			if (section == stand){
+				if (Image.get("stand").isTouched()){
+					window.open(Window.STAND);
+				}
+			} else if (section == kitchen){
+				if (Image.get("refridgerator").isTouched()){
+					window.open(Window.REFRIDGERATOR);
+				} else if (Image.get("juicer").isTouched()){
+					window.open(Window.JUICER);
+				} else if (Image.get("blender").isTouched()){
+					window.open(Window.BLENDER);
+				}
+			} else if (section == market){
+				if (Image.get("fruitstand").isTouched()){
+					window.open(Window.FRUIT);
+				} else if (Image.get("yogurtstand").isTouched()){
+					window.open(Window.YOGURT);
+				} else if (Image.get("cupstand").isTouched()){
+					window.open(Window.CUPS);
+				}
+			}
+		}
+	}
+
 	@Override
 	public void keyPress(int keycode) {
 		if (keycode == Keys.LEFT){
@@ -65,7 +110,6 @@ public class Gameplay implements Screen2{
 	}
 
 	public void handleLeft(){
-		//System.out.println("Left arrow hit.");
 		if (section.equals(stand)){
 			section = office;
 		} else if (section.equals(kitchen)){
@@ -78,7 +122,6 @@ public class Gameplay implements Screen2{
 	}
 	
 	public void handleRight(){
-		//System.out.println("Right arrow hit.");
 		if (section.equals(stand)){
 			section = kitchen;
 		} else if (section.equals(kitchen)){

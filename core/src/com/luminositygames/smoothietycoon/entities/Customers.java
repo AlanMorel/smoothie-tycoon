@@ -1,26 +1,37 @@
-package com.luminositygames.smoothietycoon.game;
+package com.luminositygames.smoothietycoon.entities;
 
 import java.util.ArrayList;
 
+import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.util.Countdown;
 
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public class Customers {
 
-	private ArrayList<Customer> customers;
-
 	private Game game;
-
+	
+	private ArrayList<Customer> customers;
+	
+	private Countdown lastSpawn;
+	
 	private int maxCustomers;
 	private int totalCustomers;
-	private Countdown lastSpawn;
 
-	public Customers(Game g){
-		this.game = g;
-		lastSpawn = new Countdown(getDelay(), true);
-		lastSpawn.start();
-		customers = new ArrayList<Customer>();
+	public Customers(Game game){
+		this.game = game;
+		this.lastSpawn = new Countdown(getDelay(), true);
+		this.lastSpawn.start();
+		this.customers = new ArrayList<Customer>();
 		setMaxCustomers();
 		setTotalCustomers(0);
 	}
@@ -37,13 +48,12 @@ public class Customers {
 		}
 		if (totalCustomers < maxCustomers){
 			addCustomer();
-		} else if (!isCustomersVisible()){
+		} else if (!areCustomersVisible()){
 			if (!game.getIntermission().hasStarted()){
 				game.getIntermission().start();
 			} else if(game.getIntermission().isCompleted()){
 				game.newDay();
 			}
-			//NEW DAY
 		}
 		handlePurchaes();
 	}
@@ -51,14 +61,24 @@ public class Customers {
 	public int getPurchases() {
 		int purchases = 0;
 		for (Customer customer : customers){
-			if (customer.isBuying()){
+			if (customer.isBuying() && game.canServe()){
 				purchases++;
 			}
 		}
 		return purchases;
 	}
 
-	public boolean isCustomersVisible() {
+	public int getWaiting() {
+		int waiting = 0;
+		for (Customer customer : customers){
+			if (customer.isWaiting()){
+				waiting++;
+			}
+		}
+		return waiting;
+	}
+	
+	public boolean areCustomersVisible() {
 		for (Customer customer : customers){
 			if (!customer.hasLeft()){
 				return true;
@@ -70,7 +90,7 @@ public class Customers {
 	public void addCustomer() {
 		if (lastSpawn.isCompleted()){
 			totalCustomers++;
-			Customer customer = new Customer(getBuy(), getSide());
+			Customer customer = new Customer(game);
 			customers.add(customer);
 			lastSpawn = new Countdown(getDelay(), true);
 		}
@@ -105,7 +125,7 @@ public class Customers {
 	}
 
 	public boolean getBuy(){
-		int percentage = getBuyPercentage();
+		int percentage = game.getBuyPercentage();
 		int random = SmoothieTycoon.rand.nextInt(100);
 		if (random < percentage){
 			return true;
@@ -113,18 +133,13 @@ public class Customers {
 		return false;
 	}
 
-	public int getBuyPercentage() {
-		return game.getBuyPercentage();
-	}
-
 	private void handlePurchaes() {
-		if (game.canServe()){
-			double price = game.getRecipe().getPrice();
-			int purchases =  game.getCustomers().getPurchases();
-			for (int i = 0; i < purchases; i++){
-				game.getContainer().serve();
-				game.getPlayer().setMoney(game.getPlayer().getMoney() + price);
-			}
+		
+		double price = game.getRecipe().getPrice();
+		
+		for (int i = 0; i < getPurchases(); i++){
+			game.getContainer().serve();
+			game.getPlayer().addMoney(price);
 		}
 	}
 }

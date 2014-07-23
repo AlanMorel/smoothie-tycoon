@@ -16,7 +16,7 @@ public class DesktopLauncher {
 		config.width = Constants.WIDTH * scale / 100;
 		config.height = Constants.HEIGHT * scale / 100;
 		config.initialBackgroundColor = Color.valueOf("FFFFFF");
-		config.resizable = false;
+		config.resizable = false; 
 		config.vSyncEnabled = true;
 		new LwjglApplication(new SmoothieTycoon(), config);
 	}

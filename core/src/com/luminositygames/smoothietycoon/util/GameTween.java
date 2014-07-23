@@ -6,11 +6,11 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.luminositygames.smoothietycoon.Constants;
-import com.luminositygames.smoothietycoon.Screen2;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.screens.Screen2;
 
 /**
- * This file is part of Chainball
+ * This file is part of Smoothie Tycoon
  * 
  * Copyright (c) 2013 - 2014 Luminosity Games
  * 
@@ -27,12 +27,14 @@ public class GameTween {
 	public static final int HAT = 2;
 
 	private TweenManager tweenManager;
+	
 	private float value;
 
 	public GameTween(float value, int type){
 		this.value = value;
 		this.tweenManager = new TweenManager();
-		setupTween(type);
+		Tween.registerAccessor(GameTween.class, new GameTweenAccessor());
+		setTweenTo(type);
 	}
 	
 	public float getValue(){
@@ -47,8 +49,7 @@ public class GameTween {
 		tweenManager.update(delta);
 	}
 
-	public void setupTween(int type){
-		Tween.registerAccessor(GameTween.class, new GameTweenAccessor());
+	public void setTweenTo(int type){
 		if (type == GameTween.SPLASH){
 			Tween.to(this, GameTweenAccessor.VALUE, 1f).target(1).repeatYoyo(1, Constants.SPLASH_DURATION).setCallback(setScreenTo(SmoothieTycoon.mainMenu)).start(tweenManager);
 		} else if (type == GameTween.LOGO){

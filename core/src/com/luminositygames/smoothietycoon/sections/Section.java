@@ -1,19 +1,17 @@
 package com.luminositygames.smoothietycoon.sections;
 
-import com.luminositygames.smoothietycoon.util.GameTween;
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public interface Section {
 
-//Stand
-//Kitchen
-//Market
-//Office
-	
 	public void render (float delta);
-
-	public void update(float delta);
 	
-	public void renderTutorial (GameTween tween, int stage);
-
-	public void handleTouch();
 }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.luminositygames.smoothietycoon.screens.Gameplay;
+import com.luminositygames.smoothietycoon.screens.Screen2;
 import com.luminositygames.smoothietycoon.screens.Tutorial;
 import com.luminositygames.smoothietycoon.screens.MainMenu;
 import com.luminositygames.smoothietycoon.screens.Splash;
@@ -21,7 +22,7 @@ import com.luminositygames.smoothietycoon.util.Image;
 import com.luminositygames.smoothietycoon.util.KeyProcessor;
 
 /**
- * This file is part of Chainball
+ * This file is part of Smoothie Tycoon
  * 
  * Copyright (c) 2013 - 2014 Luminosity Games
  * 

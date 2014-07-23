@@ -1,9 +1,18 @@
 package com.luminositygames.smoothietycoon.screens;
 
-import com.luminositygames.smoothietycoon.Screen2;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.util.GameTween;
 import com.luminositygames.smoothietycoon.util.Image;
+
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public class Splash implements Screen2{
 

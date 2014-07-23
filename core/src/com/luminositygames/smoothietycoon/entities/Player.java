@@ -1,13 +1,22 @@
-package com.luminositygames.smoothietycoon.game;
+package com.luminositygames.smoothietycoon.entities;
+
+import com.luminositygames.smoothietycoon.Game;
+
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public class Player {
-
-	private static final double STARTING_MONEY = 20.00;
 	
 	private Game game;
 	
 	private double money;
-	
 	private int fruits;
 	private int ice;
 	private int yogurt;
@@ -16,12 +25,12 @@ public class Player {
 	
 	public Player(Game game){
 		this.game = game;
-		money = STARTING_MONEY;
-		fruits = 0;
-		ice = 0;
-		yogurt = 0;
-		juice = 0;
-		cups = 0;
+		this.money = 20.00;
+		this.fruits = 0;
+		this.ice = 0;
+		this.yogurt = 0;
+		this.juice = 0;
+		this.cups = 0;
 	}
 	
 	public int getFruits() {
@@ -98,8 +107,8 @@ public class Player {
 		return money;
 	}
 
-	public void setMoney(double money) {
-		this.money = money;
+	public void addMoney(double money) {
+		this.money += money;
 	}
 
 	public void useCup() {

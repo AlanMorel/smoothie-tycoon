@@ -2,8 +2,19 @@ package com.luminositygames.smoothietycoon.util;
 
 import com.badlogic.gdx.utils.TimeUtils;
 
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
+
 public class Countdown {
 
+	private boolean started;
 	private long duration; 
 	private long start;
 
@@ -11,12 +22,13 @@ public class Countdown {
 		this.duration = duration;
 		if (startImmediately){
 			this.start = TimeUtils.millis();
+			started = true;
 		}
 	}
 
 	public boolean isCompleted(){
 		long time = TimeUtils.millis();
-		if (time - start >= duration){
+		if (time - start >= duration && hasStarted()){
 			return true;
 		}
 		return false;
@@ -24,13 +36,11 @@ public class Countdown {
 
 	public void start() {
 		this.start = TimeUtils.millis();
+		this.started = true;
 	}
 	
 	public boolean hasStarted() {
-		if (start != 0){
-			return true;
-		}
-		return false;
+		return started;
 	}
 	
 	public int getPercentage(){

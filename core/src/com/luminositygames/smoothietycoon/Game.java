@@ -1,28 +1,38 @@
-package com.luminositygames.smoothietycoon.game;
+package com.luminositygames.smoothietycoon;
 
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.entities.Container;
+import com.luminositygames.smoothietycoon.entities.Customers;
+import com.luminositygames.smoothietycoon.entities.Player;
+import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.util.Countdown;
 
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
+
 public class Game {
-
-	private static final int NIGHT = 15000;
-
+	
 	private Player player;
 	private Recipe recipe;
 	private Customers customers;
 	private Container container;
+	private Countdown intermission;
+	
 	private int day;
 	private int temperature;
-	private Countdown intermission;
 
 	public Game(){
 		this.player = new Player(this);
 		this.recipe = new Recipe();
 		this.container = new Container(this);
-		this.day = 1;
-		setNewTemperature();
-		customers = new Customers(this);
-		intermission = new Countdown(NIGHT, false);
+		this.day = 0;
+		newDay();
 	}
 
 	public int getTemperature(){
@@ -30,7 +40,6 @@ public class Game {
 	}
 
 	public void setNewTemperature() {
-		//this.temperature = 0;
 		this.temperature = SmoothieTycoon.rand.nextInt(100);
 	}
 
@@ -57,13 +66,19 @@ public class Game {
 	public Container getContainer() {
 		return container;
 	}
+	
+	public boolean isEnoughSmoothie(){
+		return getContainer().getServings() - getCustomers().getWaiting() > 0;
+	}
 
 	public void update(float delta){
 		getCustomers().update(delta);
 	}
 
 	public void newDay() {
-		intermission = new Countdown(NIGHT, false);
+		int nightDuration = 10;
+		
+		intermission = new Countdown(nightDuration * 1000, false);
 		day++;
 		setNewTemperature();
 		customers = new Customers(this);
@@ -80,13 +95,11 @@ public class Game {
 	}
 	
 	public int getPricePercentageChange(){
-
 		double optimalPrice = 0.25 + (day * 0.05);
 		double price = recipe.getPrice();
 		
 		int x = (int) Math.round(((optimalPrice - price) * 25));
 
-		
 		int percentage = (x * 5 + 75);
 		
 		return adjustPerc(percentage);
@@ -113,7 +126,8 @@ public class Game {
 		//System.out.println("Current Temp: " + tempPerc + "%");
 		//System.out.println("Current Total: " + percentage + "%");
 		//System.out.println("");
-		return 75;
+		
+		return percentage;
 	}
 
 	public boolean canServe() {

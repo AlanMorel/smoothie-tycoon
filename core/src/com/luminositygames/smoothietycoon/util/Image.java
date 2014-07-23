@@ -15,10 +15,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
+
 public class Image {
 	
 	public static HashMap<String, Image> images;
+	
 	public static SpriteBatch batch;
+	
 	public static ShapeRenderer renderer;
 	
 	private Sprite sprite;
@@ -36,11 +48,12 @@ public class Image {
 		Image image2 = Image.get(hover);
 		
 		image1.hover = image2.getSprite();
+		
 		image1.hasHover = true;
 	}
 
 	public Sprite getSprite(){
-		if (hasHover && isHovered()){
+		if (hasHover && isHoveredOver()){
 			return hover;
 		}
 		return sprite;
@@ -54,7 +67,7 @@ public class Image {
 		return sprite.getWidth();
 	}
 
-	public boolean isHovered(){
+	public boolean isHoveredOver(){
 		Rectangle spriteRect = sprite.getBoundingRectangle();
 		float x = SmoothieTycoon.getX();
 		float y = SmoothieTycoon.getY();

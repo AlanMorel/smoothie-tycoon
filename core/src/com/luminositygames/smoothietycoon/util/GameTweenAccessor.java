@@ -3,7 +3,7 @@ package com.luminositygames.smoothietycoon.util;
 import aurelienribon.tweenengine.TweenAccessor;
 
 /**
- * This file is part of Chainball
+ * This file is part of Smoothie Tycoon
  * 
  * Copyright (c) 2013 - 2014 Luminosity Games
  * 

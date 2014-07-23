@@ -1,12 +1,16 @@
-package com.luminositygames.smoothietycoon.game;
+package com.luminositygames.smoothietycoon.entities;
+
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public class Recipe {
-
-	private static final double DEFAULT_PRICE = 0.25;
-	private static final int DEFAULT_FRUIT = 10;
-	private static final int DEFAULT_ICE = 10;
-	private static final int DEFAULT_YOGURT = 10;
-	private static final int DEFAULT_JUICE = 10;
 	
 	private double price;
 	private int fruit;
@@ -15,11 +19,11 @@ public class Recipe {
 	private int juice;
 
 	public Recipe(){
-		setPrice(DEFAULT_PRICE);
-		setFruit(DEFAULT_FRUIT);
-		setIce(DEFAULT_ICE);
-		setYogurt(DEFAULT_YOGURT);
-		setJuice(DEFAULT_JUICE);
+		setPrice(0.25);
+		setFruit(10);
+		setIce(10);
+		setYogurt(10);
+		setJuice(10);
 	}
 
 	public double getPrice() {

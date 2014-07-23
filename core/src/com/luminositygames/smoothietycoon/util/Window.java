@@ -6,13 +6,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.luminositygames.smoothietycoon.Constants;
+import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
-import com.luminositygames.smoothietycoon.game.Game;
-import com.luminositygames.smoothietycoon.game.Player;
-import com.luminositygames.smoothietycoon.game.Recipe;
+import com.luminositygames.smoothietycoon.entities.Player;
+import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.sections.Kitchen;
 import com.luminositygames.smoothietycoon.sections.Market;
 import com.luminositygames.smoothietycoon.sections.Stand;
+
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
 
 public class Window {
 
@@ -29,14 +39,15 @@ public class Window {
 	public static int SAVELOAD = 10;
 
 	private Game game;
+	
 	private int window;
 
 	public Window (Game game){
 		this.game = game;
 	}
 
-	public void open(int w){
-		window = w;
+	public void open(int windowId){
+		window = windowId;
 	}
 
 	public void close(){
@@ -160,7 +171,9 @@ public class Window {
 	}
 	
 	public void handleTouch() {
+		
 		Player player = game.getPlayer();
+		
 		if (window == STAND){
 
 			boolean downPrice = Fonts.isTouched("<", 410, 190, Fonts.BLACK_36);
@@ -210,9 +223,11 @@ public class Window {
 				recipe.setJuice(juice + 1);
 			}
 		} else if (window == REFRIDGERATOR){
+			
 			boolean option1 = Fonts.isTouched("Buy 10 ice cubes for $1.00", 450, 175, Fonts.BLACK_36);
 			boolean option2 = Fonts.isTouched("Buy 25 ice cubes for $2.00", 450, 260, Fonts.BLACK_36);
 			boolean option3 = Fonts.isTouched("Buy 100 ice cubes for $5.00", 450, 345, Fonts.BLACK_36);
+			
 			if (option1){
 				player.buyIce(10, 1.00);
 			} else if (option2){
@@ -220,10 +235,13 @@ public class Window {
 			} else if (option3){
 				player.buyIce(100, 5.00);
 			}
+			
 		} else if (window == JUICER){
+			
 			boolean option1 = Fonts.isTouched("Make 10 juice using 15 fruits", 435, 175, Fonts.BLACK_36);
 			boolean option2 = Fonts.isTouched("Make 25 juice using 30 fruits", 435, 260, Fonts.BLACK_36);
 			boolean option3 = Fonts.isTouched("Make 50 juice using 50 fruits", 435, 345, Fonts.BLACK_36);
+			
 			if (option1){
 				player.makeJuice(10, 15);
 			} else if (option2){
@@ -231,18 +249,24 @@ public class Window {
 			} else if (option3){
 				player.makeJuice(50, 50);
 			}
+			
 		} else if (window == BLENDER){
+			
 			boolean option1 = Fonts.isTouched("Refill smoothie container", 425, 175, Fonts.BLACK_36);
 			boolean option2 = Fonts.isTouched("Empty out smoothie container", 425, 260, Fonts.BLACK_36);
+			
 			if (option1){
 				game.getContainer().refill();
 			} else if (option2){
 				game.getContainer().empty();
 			}
+			
 		} else if (window == FRUIT){
+			
 			boolean option1 = Fonts.isTouched("Buy 25 fruits for $1.00", 465, 175, Fonts.BLACK_36);
 			boolean option2 = Fonts.isTouched("Buy 50 fruits for $2.00", 465, 260, Fonts.BLACK_36);
 			boolean option3 = Fonts.isTouched("Buy 100 fruits for $5.00", 465, 345, Fonts.BLACK_36);
+			
 			if (option1){
 				player.buyFruits(25, 1.00);
 			} else if (option2){
@@ -250,10 +274,13 @@ public class Window {
 			} else if (option3){
 				player.buyFruits(100, 5.00);
 			}
+			
 		} else if (window == YOGURT){
+			
 			boolean option1 = Fonts.isTouched("Buy 10 yogurt for $1.00", 465, 175, Fonts.BLACK_36);
 			boolean option2 = Fonts.isTouched("Buy 25 yogurt for $2.00", 465, 260, Fonts.BLACK_36);
 			boolean option3 = Fonts.isTouched("Buy 100 yogurt for $5.00", 465, 345, Fonts.BLACK_36);
+			
 			if (option1){
 				player.buyYogurt(10, 1.00);
 			} else if (option2){
@@ -261,10 +288,13 @@ public class Window {
 			} else if (option3){
 				player.buyYogurt(100, 5.00);
 			}
+			
 		} else if (window == CUPS){
+			
 			boolean option1 = Fonts.isTouched("Buy 25 cups for $1.00", 465, 175, Fonts.BLACK_36);
 			boolean option2 = Fonts.isTouched("Buy 50 cups for $1.50", 465, 260, Fonts.BLACK_36);
 			boolean option3 = Fonts.isTouched("Buy 100 cups for $2.00", 465, 345, Fonts.BLACK_36);
+			
 			if (option1){
 				player.buyCups(25, 1.00);
 			} else if (option2){

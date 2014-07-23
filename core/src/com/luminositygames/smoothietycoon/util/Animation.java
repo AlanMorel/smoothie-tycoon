@@ -2,6 +2,16 @@ package com.luminositygames.smoothietycoon.util;
 
 import java.util.ArrayList;
 
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2014 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
+
 public class Animation {
 
 	private ArrayList<Frame> frames;

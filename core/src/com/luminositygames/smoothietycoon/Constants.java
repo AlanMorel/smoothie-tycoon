@@ -28,7 +28,7 @@ public class Constants {
 	//VOLUME
 	public static final float VOLUME = 1.0f;
 	
-	//VIBRATION DURATION
-	public static final int VIBRATION_DURATION = 25;
+	//TUTORIAL
+	public static final boolean TUTORIAL = true;
 	
 }
