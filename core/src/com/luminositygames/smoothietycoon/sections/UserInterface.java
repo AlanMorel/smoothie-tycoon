@@ -34,14 +34,19 @@ public class UserInterface {
 	public static int SAVELOAD = 9;
 
 	public void render(Game game){
+		
 		Image.rectangle(0, 0, Constants.WIDTH, 90, 0.1f, Color.BLACK);
+		
 		renderMoney(game.getPlayer().getMoney());
 		renderDay(game);
+		
 		Player player = game.getPlayer();
 		renderIngredients(player.getFruits(), player.getIce(), player.getYogurt(), player.getJuice(), player.getCups());
 		renderThermometer(game.getTemperature());
+		
 		Image.draw("leftArrow", 50, 650);
 		Image.draw("rightArrow", Constants.WIDTH - 100, 650);
+		
 		renderContainer(game.getContainer().getServings());
 	}
 

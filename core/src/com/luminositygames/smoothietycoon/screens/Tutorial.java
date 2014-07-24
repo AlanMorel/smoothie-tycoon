@@ -28,7 +28,6 @@ public class Tutorial implements Screen2 {
 	private UserInterface ui;
 	private GameTween arrow;
 	private Section section;
-
 	private Stand stand;
 	private Kitchen kitchen;
 	private Market market;

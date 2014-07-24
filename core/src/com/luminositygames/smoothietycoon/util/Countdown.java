@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Countdown {
 
 	private boolean started;
+
 	private long duration; 
 	private long start;
 

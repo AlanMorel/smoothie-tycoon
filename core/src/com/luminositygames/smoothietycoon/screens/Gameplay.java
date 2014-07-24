@@ -10,7 +10,8 @@ import com.luminositygames.smoothietycoon.sections.Section;
 import com.luminositygames.smoothietycoon.sections.Stand;
 import com.luminositygames.smoothietycoon.sections.UserInterface;
 import com.luminositygames.smoothietycoon.util.Image;
-import com.luminositygames.smoothietycoon.util.Window;
+import com.luminositygames.smoothietycoon.util.Windows;
+import com.luminositygames.smoothietycoon.util.Windows.Window;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -26,7 +27,7 @@ public class Gameplay implements Screen2{
 
 	private Game game;
 	private UserInterface ui;
-	private Window window;
+	private Windows window;
 	private Section section;
 	private Stand stand;
 	private Kitchen kitchen;
@@ -37,7 +38,7 @@ public class Gameplay implements Screen2{
 	public void load() {
 		this.game = new Game();
 		this.ui = new UserInterface();
-		this.window = new Window(game);
+		this.window = new Windows(game);
 		this.stand = new Stand();
 		this.kitchen = new Kitchen();
 		this.market = new Market();
@@ -49,7 +50,7 @@ public class Gameplay implements Screen2{
 	public void render(float delta) {
 		section.render(delta);
 		if (section.equals(stand)){
-			game.getCustomers().render();
+			game.renderCustomers();
 		}
 		ui.render(game);
 		window.render();

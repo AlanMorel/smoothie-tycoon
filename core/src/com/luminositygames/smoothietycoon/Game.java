@@ -1,7 +1,9 @@
 package com.luminositygames.smoothietycoon;
 
+import java.util.ArrayList;
+
 import com.luminositygames.smoothietycoon.entities.Container;
-import com.luminositygames.smoothietycoon.entities.Customers;
+import com.luminositygames.smoothietycoon.entities.Customer;
 import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.util.Countdown;
@@ -17,30 +19,35 @@ import com.luminositygames.smoothietycoon.util.Countdown;
  */
 
 public class Game {
-	
+
 	private Player player;
 	private Recipe recipe;
-	private Customers customers;
 	private Container container;
 	private Countdown intermission;
-	
+	private Countdown lastSpawn;
+	private ArrayList<Customer> customers;
+
 	private int day;
 	private int temperature;
+	private int maxCustomers;
+	private int totalCustomers;
 
-	public Game(){
-		this.player = new Player(this);
+	public Game() {
+		this.player = new Player();
 		this.recipe = new Recipe();
-		this.container = new Container(this);
+		this.container = new Container();
 		this.day = 0;
-		newDay();
+		setNewDay();
 	}
 
-	public int getTemperature(){
-		return temperature;
-	}
-
-	public void setNewTemperature() {
+	public void setNewDay() {
+		this.intermission = new Countdown(10 * 1000, false);
 		this.temperature = SmoothieTycoon.rand.nextInt(100);
+		this.customers = new ArrayList<Customer>();
+		this.maxCustomers = getDay() * 5 + 20;
+		this.lastSpawn = new Countdown(getSpawnDelay(), true);
+		this.totalCustomers = 0;
+		this.day ++;
 	}
 
 	public Player getPlayer() {
@@ -51,89 +58,129 @@ public class Game {
 		return recipe;
 	}
 
-	public int getDay(){
-		return day;
-	}
-
-	public Customers getCustomers() {
-		return customers;
-	}
-
-	public Countdown getIntermission(){
+	public Countdown getIntermission() {
 		return intermission;
 	}
 
 	public Container getContainer() {
 		return container;
 	}
-	
-	public boolean isEnoughSmoothie(){
-		return getContainer().getServings() - getCustomers().getWaiting() > 0;
+
+	public int getDay() {
+		return day;
 	}
 
-	public void update(float delta){
-		getCustomers().update(delta);
+	public int getTemperature() {
+		return temperature;
 	}
 
-	public void newDay() {
-		int nightDuration = 10;
-		
-		intermission = new Countdown(nightDuration * 1000, false);
-		day++;
-		setNewTemperature();
-		customers = new Customers(this);
-	}
-
-	public int adjustPerc(int perc){
-		if (perc < 0){
-			return 0;
-		} else if (perc > 100) {
-			return 100;
-		} else {
-			return perc;
+	public void renderCustomers() {
+		for (Customer customer : customers){
+			customer.render();
 		}
 	}
-	
-	public int getPricePercentageChange(){
-		double optimalPrice = 0.25 + (day * 0.05);
-		double price = recipe.getPrice();
-		
-		int x = (int) Math.round(((optimalPrice - price) * 25));
 
-		int percentage = (x * 5 + 75);
-		
-		return adjustPerc(percentage);
+	public void update(float delta) {
+
+		boolean canBuy = getContainer().getServings() - getWaiting() > 0 && player.getCups() > 0;
+
+		for (Customer customer : customers) {
+			customer.update(delta, canBuy);
+		}
+
+		if (totalCustomers < maxCustomers) {
+			addNewCustomer();
+		} else if (!customersVisible()) {
+			if (!getIntermission().hasStarted()) {
+				getIntermission().start();
+			} else if(getIntermission().isCompleted()) {
+				setNewDay();
+			}
+		}
+
+		for (int i = 0; i < getPurchases(); i++) {
+			getPlayer().addMoney(getRecipe().getPrice());
+			getContainer().serve();
+			getPlayer().useCup();
+		}
 	}
 
-	public int getTemperatureIceChange(){
-		int ice = container.getIce();
-		int idealIce = temperature / 5;
-		int delta = Math.abs(ice - idealIce);
-		int percentage = 100 - (delta * 10);
-		return adjustPerc(percentage);
+	private void addNewCustomer() {
+		if (lastSpawn.isCompleted()){
+			totalCustomers++;
+			customers.add(new Customer(getWillBuy()));
+			lastSpawn = new Countdown(getSpawnDelay(), true);
+		}
 	}
 
-	public int getBuyPercentage(){
-		int percentage = 10;
-		
-		int pricePerc = getPricePercentageChange() * 70 / 100;
-		int tempPerc = getTemperatureIceChange() * 20 / 100;
-		
-		percentage += pricePerc;
-		percentage += tempPerc;
-		
-		//System.out.println("Current Price: " + pricePerc + "%");
-		//System.out.println("Current Temp: " + tempPerc + "%");
-		//System.out.println("Current Total: " + percentage + "%");
-		//System.out.println("");
-		
-		return percentage;
+	private int getSpawnDelay() {
+		return SmoothieTycoon.rand.nextInt(500) + 1000;
 	}
 
-	public boolean canServe() {
-		if (container.hasServings() && player.getCups() > 0){
+	private boolean customersVisible() {
+		for (Customer customer : customers){
+			if (!customer.hasLeft()){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private int getPurchases() {
+		int purchases = 0;
+		for (Customer customer : customers){
+			if (customer.isBuying()){
+				purchases++;
+			}
+		}
+		return purchases;
+	}
+
+	private int getWaiting() {
+		int waiting = 0;
+		for (Customer customer : customers){
+			if (customer.isWaiting()){
+				waiting++;
+			}
+		}
+		return waiting;
+	}
+
+	private boolean getWillBuy(){
+		int random = SmoothieTycoon.rand.nextInt(100);
+		if (random < getBuyPercentage()){
 			return true;
 		}
 		return false;
+	}
+
+	private int getPricePercentageChange(){
+		double optimalPrice = 0.25 + day * 0.05;
+		int delta = (int) Math.round((optimalPrice - recipe.getPrice()) * 25);
+		int percentage = delta * 5 + 75;
+
+		return SmoothieTycoon.fixPercentage(percentage);
+	}
+
+	private int getTemperatureIceChange(){
+		int optimalIce = temperature / 5;
+		int delta = Math.abs(optimalIce - container.getIce());
+		int percentage = 100 - delta * 10;
+
+		return SmoothieTycoon.fixPercentage(percentage);
+	}
+
+	private int getBuyPercentage(){
+		int percentage = 10;
+
+		int pricePerc = getPricePercentageChange() * 70 / 100;
+		int tempPerc = getTemperatureIceChange() * 20 / 100;
+
+		percentage += pricePerc;
+		percentage += tempPerc;
+
+		//System.out.println("Current Total: " + percentage + "%");
+
+		return percentage;
 	}
 }

@@ -16,6 +16,7 @@ public class Animation {
 
 	private ArrayList<Frame> frames;
 	private Frame frame;
+	
 	private	int counter;
 	
 	public Animation (){

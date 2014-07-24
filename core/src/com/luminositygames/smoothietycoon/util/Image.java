@@ -28,9 +28,7 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
 public class Image {
 	
 	public static HashMap<String, Image> images;
-	
 	public static SpriteBatch batch;
-	
 	public static ShapeRenderer renderer;
 	
 	private Sprite sprite;

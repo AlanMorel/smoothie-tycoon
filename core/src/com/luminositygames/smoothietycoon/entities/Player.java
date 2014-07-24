@@ -1,7 +1,5 @@
 package com.luminositygames.smoothietycoon.entities;
 
-import com.luminositygames.smoothietycoon.Game;
-
 /**
  * This file is part of Smoothie Tycoon
  * 
@@ -13,18 +11,15 @@ import com.luminositygames.smoothietycoon.Game;
  */
 
 public class Player {
-	
-	private Game game;
-	
+
 	private double money;
 	private int fruits;
 	private int ice;
 	private int yogurt;
 	private int juice;
 	private int cups;
-	
-	public Player(Game game){
-		this.game = game;
+
+	public Player(){
 		this.money = 20.00;
 		this.fruits = 0;
 		this.ice = 0;
@@ -32,61 +27,11 @@ public class Player {
 		this.juice = 0;
 		this.cups = 0;
 	}
-	
+
 	public int getFruits() {
 		return fruits;
 	}
-	
-	public boolean canPay(double price){
-		if (money >= price){
-			return true;
-		}
-		return false;
-	}
-	
-	public void makeContainer(){
-		Recipe recipe = game.getRecipe();
-		fruits -= recipe.getFruit();
-		ice -= recipe.getIce();
-		yogurt -= recipe.getYogurt();
-		juice -= recipe.getJuice();
-	}
 
-	public void buyFruits(int amount, double price){
-		if (canPay(price)){
-			fruits += amount;
-			money -= price;
-		}
-	}
-
-	public void buyIce(int amount, double price){
-		if (canPay(price)){
-			ice += amount;
-			money -= price;
-		}
-	}
-	
-	public void buyYogurt(int amount, double price){
-		if (canPay(price)){
-			yogurt += amount;
-			money -= price;
-		}
-	}
-
-	public void makeJuice(int amount, double price){
-		if (fruits >= price){
-			juice += amount;
-			fruits -= price;
-		}
-	}	
-	
-	public void buyCups(int amount, double price){
-		if (canPay(price)){
-			cups += amount;
-			money -= price;
-		}
-	}
-	
 	public int getIce() {
 		return ice;
 	}
@@ -113,5 +58,54 @@ public class Player {
 
 	public void useCup() {
 		cups --;
+	}
+
+	public boolean canPay(double price){
+		if (money >= price){
+			return true;
+		}
+		return false;
+	}
+
+	public void buyFruits(int amount, double price){
+		if (canPay(price)){
+			fruits += amount;
+			money -= price;
+		}
+	}
+
+	public void buyIce(int amount, double price){
+		if (canPay(price)){
+			ice += amount;
+			money -= price;
+		}
+	}
+
+	public void buyYogurt(int amount, double price){
+		if (canPay(price)){
+			yogurt += amount;
+			money -= price;
+		}
+	}
+
+	public void makeJuice(int amount, double price){
+		if (fruits >= price){
+			juice += amount;
+			fruits -= price;
+		}
+	}
+
+	public void buyCups(int amount, double price){
+		if (canPay(price)){
+			cups += amount;
+			money -= price;
+		}
+	}
+
+	public void makeContainer(Recipe recipe){
+		fruits -= recipe.getFruit();
+		ice -= recipe.getIce();
+		yogurt -= recipe.getYogurt();
+		juice -= recipe.getJuice();
 	}
 }
