@@ -8,7 +8,7 @@ import com.luminositygames.smoothietycoon.sections.Market;
 import com.luminositygames.smoothietycoon.sections.Office;
 import com.luminositygames.smoothietycoon.sections.Section;
 import com.luminositygames.smoothietycoon.sections.Stand;
-import com.luminositygames.smoothietycoon.sections.UserInterface;
+import com.luminositygames.smoothietycoon.ui.UserInterface;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.GameTween;
 import com.luminositygames.smoothietycoon.util.Image;

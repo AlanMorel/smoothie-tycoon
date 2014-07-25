@@ -25,7 +25,7 @@ public class Player {
 		this.ice = 0;
 		this.yogurt = 0;
 		this.juice = 0;
-		this.cups = 0;
+		this.cups = 5;
 	}
 
 	public int getFruits() {

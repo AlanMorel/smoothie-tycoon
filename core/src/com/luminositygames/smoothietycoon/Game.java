@@ -6,7 +6,9 @@ import com.luminositygames.smoothietycoon.entities.Container;
 import com.luminositygames.smoothietycoon.entities.Customer;
 import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
+import com.luminositygames.smoothietycoon.ui.Effect;
 import com.luminositygames.smoothietycoon.util.Countdown;
+import com.luminositygames.smoothietycoon.util.Fonts;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -44,7 +46,7 @@ public class Game {
 		this.intermission = new Countdown(10 * 1000, false);
 		this.temperature = SmoothieTycoon.rand.nextInt(100);
 		this.customers = new ArrayList<Customer>();
-		this.maxCustomers = getDay() * 5 + 20;
+		this.maxCustomers = getDay() * 4 + 20;
 		this.lastSpawn = new Countdown(getSpawnDelay(), true);
 		this.totalCustomers = 0;
 		this.day ++;
@@ -78,6 +80,30 @@ public class Game {
 		for (Customer customer : customers){
 			customer.render();
 		}
+		if (!intermission.hasStarted()){
+			Fonts.center(getBuyPercentage() + "% will buy", 660, Fonts.BLACK_36);
+		}
+	}
+
+	public void renderEffects() {
+		if (container.getServings() <= 1){
+			Effect.render(Effect.MISSING_SMOOTHIE);
+		}
+		if (player.getFruits() <= 9){
+			Effect.render(Effect.MISSING_FRUIT);
+		}
+		if (player.getIce() <= 9){
+			Effect.render(Effect.MISSING_ICE);
+		}
+		if (player.getYogurt() <= 9){
+			Effect.render(Effect.MISSING_YOGURT);
+		}
+		if (player.getJuice() <= 9){
+			Effect.render(Effect.MISSING_JUICE);
+		}
+		if (player.getCups() <= 3){
+			Effect.render(Effect.MISSING_CUPS);
+		}
 	}
 
 	public void update(float delta) {
@@ -103,6 +129,8 @@ public class Game {
 			getContainer().serve();
 			getPlayer().useCup();
 		}
+
+		Effect.update(delta);
 	}
 
 	private void addNewCustomer() {
@@ -171,7 +199,7 @@ public class Game {
 	}
 
 	private int getBuyPercentage(){
-		int percentage = 10;
+		int percentage = 0;
 
 		int pricePerc = getPricePercentageChange() * 70 / 100;
 		int tempPerc = getTemperatureIceChange() * 20 / 100;
@@ -179,7 +207,7 @@ public class Game {
 		percentage += pricePerc;
 		percentage += tempPerc;
 
-		//System.out.println("Current Total: " + percentage + "%");
+		//System.out.println("Price: " + getPricePercentageChange() + "% | Temp: " + getTemperatureIceChange() + "% | Total: " + percentage + "%");
 
 		return percentage;
 	}

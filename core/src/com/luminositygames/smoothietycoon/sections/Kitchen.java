@@ -15,11 +15,11 @@ import com.luminositygames.smoothietycoon.util.Image;
  */
 
 public class Kitchen implements Section {
-	
-	public static Rectangle REFRIDGERATOR_RECT = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 300); 
-	public static Rectangle JUICER_RECT = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 300); 
-	public static Rectangle BLENDER_RECT = new Rectangle(Constants.WIDTH / 2 - 650 / 2, 125, 650, 225); 
-	
+
+	public static Rectangle REFRIDGERATOR_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 300);
+	public static Rectangle JUICER_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 300);
+	public static Rectangle BLENDER_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 125);
+
 	@Override
 	public void render(float delta) {
 		Image.draw("kitchen", 0, 0);

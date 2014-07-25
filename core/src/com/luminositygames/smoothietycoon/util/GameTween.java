@@ -25,9 +25,10 @@ public class GameTween {
 	public static final int LOGO = 1;
 	public static final int ARROW = 2;
 	public static final int HAT = 2;
+	public static final int EFFECT = 3;
 
 	private TweenManager tweenManager;
-	
+
 	private float value;
 
 	public GameTween(float value, int type){
@@ -36,7 +37,7 @@ public class GameTween {
 		Tween.registerAccessor(GameTween.class, new GameTweenAccessor());
 		setTweenTo(type);
 	}
-	
+
 	public float getValue(){
 		return value;
 	}
@@ -58,6 +59,8 @@ public class GameTween {
 			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(20).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.HAT){
 			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(2).repeatYoyo(-1, 0).start(tweenManager);
+		} else if (type == GameTween.EFFECT){
+			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(100).repeatYoyo(-1, 0).start(tweenManager);
 		}
 	}
 

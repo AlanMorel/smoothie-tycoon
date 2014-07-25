@@ -1,4 +1,4 @@
-package com.luminositygames.smoothietycoon.sections;
+package com.luminositygames.smoothietycoon.ui;
 
 import java.text.NumberFormat;
 
@@ -22,31 +22,20 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class UserInterface {
 
-	public static int STAND = 0;
-	public static int REFRIDGERATOR = 1;
-	public static int JUICER = 2;
-	public static int BLENDER = 3;
-	public static int FRUIT = 4;
-	public static int YOGURT = 5;
-	public static int CUPS = 6;
-	public static int ADVERTISE = 7;
-	public static int STATISTICS = 8;
-	public static int SAVELOAD = 9;
-
 	public void render(Game game){
-		
+
 		Image.rectangle(0, 0, Constants.WIDTH, 90, 0.1f, Color.BLACK);
-		
+
 		renderMoney(game.getPlayer().getMoney());
 		renderDay(game);
-		
+
 		Player player = game.getPlayer();
 		renderIngredients(player.getFruits(), player.getIce(), player.getYogurt(), player.getJuice(), player.getCups());
 		renderThermometer(game.getTemperature());
-		
+
 		Image.draw("leftArrow", 50, 650);
 		Image.draw("rightArrow", Constants.WIDTH - 100, 650);
-		
+
 		renderContainer(game.getContainer().getServings());
 	}
 
@@ -88,8 +77,8 @@ public class UserInterface {
 	}
 
 	public void renderContainer(int servings){
-		
-		int percentage = servings * 5;
+
+		int percentage = servings * 10;
 		int realPercent = 100 - percentage;
 
 		int height = realPercent * 2 + 200;

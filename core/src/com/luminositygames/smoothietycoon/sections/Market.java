@@ -17,9 +17,9 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Market implements Section {
 	
-	public static Rectangle FRUIT_RECT = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300); 
-	public static Rectangle YOGURT_RECT = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300); 
-	public static Rectangle CUPS_RECT = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300); 
+	public static Rectangle FRUIT_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300); 
+	public static Rectangle YOGURT_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300); 
+	public static Rectangle CUPS_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300); 
 
 	@Override
 	public void render(float delta) {

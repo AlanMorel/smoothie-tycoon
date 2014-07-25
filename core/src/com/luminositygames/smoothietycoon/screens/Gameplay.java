@@ -8,10 +8,10 @@ import com.luminositygames.smoothietycoon.sections.Market;
 import com.luminositygames.smoothietycoon.sections.Office;
 import com.luminositygames.smoothietycoon.sections.Section;
 import com.luminositygames.smoothietycoon.sections.Stand;
-import com.luminositygames.smoothietycoon.sections.UserInterface;
+import com.luminositygames.smoothietycoon.ui.UserInterface;
+import com.luminositygames.smoothietycoon.ui.Windows;
+import com.luminositygames.smoothietycoon.ui.Windows.Window;
 import com.luminositygames.smoothietycoon.util.Image;
-import com.luminositygames.smoothietycoon.util.Windows;
-import com.luminositygames.smoothietycoon.util.Windows.Window;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -33,7 +33,7 @@ public class Gameplay implements Screen2{
 	private Kitchen kitchen;
 	private Market market;
 	private Office office;
-	
+
 	@Override
 	public void load() {
 		this.game = new Game();
@@ -52,6 +52,7 @@ public class Gameplay implements Screen2{
 		if (section.equals(stand)){
 			game.renderCustomers();
 		}
+		game.renderEffects();
 		ui.render(game);
 		window.render();
 	}
@@ -66,9 +67,9 @@ public class Gameplay implements Screen2{
 			handleLeft();
 		} else if (Image.get("rightArrow").isTouched()){
 			handleRight();
-		} 
+		}
 	}
-	
+
 	private void handleTouch() {
 		if (window.isOpen()){
 			if (window.isTouched()){
@@ -111,6 +112,7 @@ public class Gameplay implements Screen2{
 	}
 
 	public void handleLeft(){
+		window.close();
 		if (section.equals(stand)){
 			section = office;
 		} else if (section.equals(kitchen)){
@@ -121,8 +123,9 @@ public class Gameplay implements Screen2{
 			section = market;
 		}
 	}
-	
+
 	public void handleRight(){
+		window.close();
 		if (section.equals(stand)){
 			section = kitchen;
 		} else if (section.equals(kitchen)){

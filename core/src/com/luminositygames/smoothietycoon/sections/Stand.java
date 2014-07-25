@@ -16,7 +16,7 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Stand implements Section {
 
-	public static Rectangle STAND_RECT = new Rectangle(Constants.WIDTH / 2 - 500 / 2, 150, 500, 300); 
+	public static Rectangle STAND_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 500 / 2, 150, 500, 300); 
 
 	@Override
 	public void render(float delta) {
