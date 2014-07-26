@@ -61,10 +61,7 @@ public class Player {
 	}
 
 	public boolean canPay(double price){
-		if (money >= price){
-			return true;
-		}
-		return false;
+		return money >= price;
 	}
 
 	public void buyFruits(int amount, double price){

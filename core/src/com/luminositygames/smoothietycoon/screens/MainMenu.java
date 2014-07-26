@@ -16,16 +16,17 @@ import com.luminositygames.smoothietycoon.util.Image;
  */
 
 public class MainMenu implements Screen2 {
-	
+
 	private GameTween logoTween;
+
 	private boolean tutorial;
-	
+
 	@Override
 	public void load() {
 		logoTween = new GameTween(25, GameTween.LOGO);
 		tutorial = Constants.TUTORIAL;
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		Image.draw("salesBackground", 0, 0);
@@ -35,7 +36,7 @@ public class MainMenu implements Screen2 {
 		Image.draw("logotext", Constants.WIDTH / 2 - Image.get("logotext").getWidth() / 2, logoTween.getValue());
 		Image.draw("playbutton", Constants.WIDTH / 2 - Image.get("playbutton").getWidth() / 2, 325);
 	}
-	
+
 	@Override
 	public void update(float delta) {
 		logoTween.update(delta);
@@ -50,6 +51,6 @@ public class MainMenu implements Screen2 {
 
 	@Override
 	public void keyPress(int keycode) {
-		
+
 	}
 }

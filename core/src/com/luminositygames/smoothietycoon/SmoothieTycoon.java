@@ -35,13 +35,13 @@ public class SmoothieTycoon extends ApplicationAdapter {
 
 	public static OrthographicCamera camera;
 
-	public static Random rand;
-
 	public static Screen2 screen;
 	public static Screen2 mainMenu;
 	public static Screen2 splash;
 	public static Screen2 tutorial;
 	public static Screen2 gameplay;
+
+	public static Random random;
 
 	@Override
 	public void create () {
@@ -56,7 +56,7 @@ public class SmoothieTycoon extends ApplicationAdapter {
 	private void loadGame(){
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true, Constants.WIDTH, Constants.HEIGHT);
-		rand = new Random();
+		random = new Random();
 	}
 
 	private void loadAssets() {
@@ -116,7 +116,6 @@ public class SmoothieTycoon extends ApplicationAdapter {
 	private void loadFonts() {
 		Fonts.fonts = new HashMap<Integer, BitmapFont>();
 
-
 		Fonts.load(Fonts.BLACK_36, Color.BLACK, 36);
 		Fonts.load(Fonts.WHITE_36, Color.WHITE, 36);
 
@@ -131,30 +130,30 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		gameplay = new Gameplay();
 	}
 
-	public static void setScreen(Screen2 scr){
-		screen = scr;
+	public static void setScreen(Screen2 s){
+		screen = s;
 		screen.load();
 	}
 
 	public static float getX(){
-		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(pos);
-		return pos.x;
+		Vector3 vector = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		camera.unproject(vector);
+		return vector.x;
 	}
 
 	public static float getY(){
-		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(pos);
-		return pos.y;
+		Vector3 vector = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		camera.unproject(vector);
+		return vector.y;
 	}
 
-	public static int fixPercentage(int perc){
-		if (perc < 0){
+	public static int fixPercentage(int percentage){
+		if (percentage < 0){
 			return 0;
-		} else if (perc > 100) {
+		} else if (percentage > 100) {
 			return 100;
 		}
-		return perc;
+		return percentage;
 	}
 
 	@Override

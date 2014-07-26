@@ -112,6 +112,14 @@ public class Image {
 		draw(image, x, y);
 	}
 
+	public static Color getRandomColor(){
+		float red = SmoothieTycoon.random.nextFloat();
+		float green = SmoothieTycoon.random.nextFloat();
+		float blue = SmoothieTycoon.random.nextFloat();
+
+		return new Color(red, green, blue, 1f);
+	}
+
 	public static void rectangle(float x, float y, float width, float height, float alpha, Color color){
 		Image.batch.begin();
 		Gdx.gl.glEnable(GL20.GL_BLEND);

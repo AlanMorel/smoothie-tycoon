@@ -21,11 +21,11 @@ import com.luminositygames.smoothietycoon.screens.Screen2;
 
 public class GameTween {
 
-	public static final int SPLASH = 0;
-	public static final int LOGO = 1;
-	public static final int ARROW = 2;
-	public static final int HAT = 2;
-	public static final int EFFECT = 3;
+	public static final int SPLASH = 1;
+	public static final int LOGO = 2;
+	public static final int ARROW = 3;
+	public static final int HAT = 4;
+	public static final int EFFECT = 5;
 
 	private TweenManager tweenManager;
 
@@ -60,7 +60,7 @@ public class GameTween {
 		} else if (type == GameTween.HAT){
 			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(2).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.EFFECT){
-			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(100).repeatYoyo(-1, 0).start(tweenManager);
+			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(100).repeatYoyo(Tween.INFINITY, 0).start(tweenManager);
 		}
 	}
 

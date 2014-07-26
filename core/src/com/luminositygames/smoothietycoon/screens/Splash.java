@@ -14,16 +14,16 @@ import com.luminositygames.smoothietycoon.util.Image;
  * @version 1.0
  */
 
-public class Splash implements Screen2{
+public class Splash implements Screen2 {
 
 	private GameTween splashAlpha;
-	
+
 	@Override
 	public void load() {
 		splashAlpha = new GameTween(0, GameTween.SPLASH);
 		SmoothieTycoon.setScreen(SmoothieTycoon.mainMenu);
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		Image.batch.begin();
@@ -31,7 +31,7 @@ public class Splash implements Screen2{
 		Image.get("splash").getSprite().draw(Image.batch);
 		Image.batch.end();
 	}
-	
+
 	@Override
 	public void update(float delta) {
 		splashAlpha.update(delta);
@@ -39,6 +39,6 @@ public class Splash implements Screen2{
 
 	@Override
 	public void keyPress(int keycode) {
-		
+
 	}
 }

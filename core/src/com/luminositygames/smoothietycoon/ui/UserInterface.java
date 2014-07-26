@@ -23,7 +23,6 @@ import com.luminositygames.smoothietycoon.util.Image;
 public class UserInterface {
 
 	public void render(Game game){
-
 		Image.rectangle(0, 0, Constants.WIDTH, 90, 0.1f, Color.BLACK);
 
 		renderMoney(game.getPlayer().getMoney());
@@ -32,10 +31,7 @@ public class UserInterface {
 		Player player = game.getPlayer();
 		renderIngredients(player.getFruits(), player.getIce(), player.getYogurt(), player.getJuice(), player.getCups());
 		renderThermometer(game.getTemperature());
-
-		Image.draw("leftArrow", 50, 650);
-		Image.draw("rightArrow", Constants.WIDTH - 100, 650);
-
+		renderArrows();
 		renderContainer(game.getContainer().getServings());
 	}
 
@@ -45,7 +41,7 @@ public class UserInterface {
 	}
 
 	public void renderDay(Game game){
-		Countdown intermission = game.getIntermission();
+		Countdown intermission = game.getNight();
 		if (!intermission.hasStarted()){
 			renderDay(game.getDay());
 		} else {
@@ -76,8 +72,12 @@ public class UserInterface {
 		Fonts.center(temperature + "°", 1240, 370, Fonts.BLACK_36);
 	}
 
-	public void renderContainer(int servings){
+	private void renderArrows() {
+		Image.draw("leftArrow", 50, 650);
+		Image.draw("rightArrow", Constants.WIDTH - 100, 650);
+	}
 
+	public void renderContainer(int servings){
 		int percentage = servings * 10;
 		int realPercent = 100 - percentage;
 

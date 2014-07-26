@@ -19,83 +19,62 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Customer {
 
-	private static final int LEFT = 0;
-	private static final int RIGHT = 1;
+	private static final byte LEFT = 0;
+	private static final byte RIGHT = 1;
 
 	private Color color;
-	private Countdown purchase;
 	private GameTween hat;
+	private Countdown purchase;
 
 	private int x;
 	private int speed;
 	private int side;
-
 	private boolean buying;
 
 	public Customer(boolean buying) {
-		this.side = SmoothieTycoon.rand.nextInt(2);
 		this.buying = buying;
+		this.side = SmoothieTycoon.random.nextInt(2);
 		this.hat = new GameTween(-2, GameTween.HAT);
-
-		int purchaseDelay = SmoothieTycoon.rand.nextInt(1500) + 1000;
-		this.purchase = new Countdown(purchaseDelay, false);
+		this.purchase = new Countdown(getPurchaseDelay(), false);
+		this.color = Image.getRandomColor();
 
 		if (side == LEFT){
 			this.x = -102;
+			this.speed = 4;
 		} else if (side == RIGHT){
 			this.x = Constants.WIDTH + 2;
+			this.speed = -4;
 		}
-
-		setSpeed();
-
-		float r = SmoothieTycoon.rand.nextFloat();
-		float g = SmoothieTycoon.rand.nextFloat();
-		float b = SmoothieTycoon.rand.nextFloat();
-
-		color = new Color(r, g, b, b);
 	}
 
-	private void setSpeed() {
-		if (side == LEFT){
-			speed = 4;
-		} else if (side == RIGHT){
-			speed = -4;
-		}
+	private int getPurchaseDelay(){
+		return SmoothieTycoon.random.nextInt(1500) + 1000;
 	}
 
 	public boolean isWaiting(){
-		if (purchase.hasStarted() && !purchase.isCompleted()){
-			return true;
-		}
-		return false;
+		return purchase.hasStarted() && !purchase.isCompleted();
 	}
 
 	public boolean isBuying(){
 		if (atStand() && purchase.isCompleted()){
-			setSpeed();
+			speed = side == LEFT ? 4 : -4;
 			return true;
 		}
 		return false;
 	}
 
 	public boolean hasLeft(){
-		if (x > Constants.WIDTH + 10 || x < -110){
-			return true;
-		}
-		return false;
+		return x > Constants.WIDTH + 10 || x < -110;
 	}
 
 	public boolean atStand(){
 		int center = Constants.WIDTH / 2 - 100 / 2;
-		if (x == center && buying){
-			return true;
-		}
-		return false;
+		return x == center && buying;
 	}
 
 	public void render() {
 		Image.rectangle(x, 300, 100, 240, 1.0f, color);
-		Image.rectangle(x, 540, 100, 10, 1.0f, buying ? Color.GREEN : Color.RED);
+		Image.rectangle(x, 540, 100, 10, 0.5f, buying ? Color.GREEN : Color.RED);
 		if (side == LEFT){
 			Image.draw("hatL", x - 22, 227 + hat.getValue());
 		} else if (side == RIGHT){
