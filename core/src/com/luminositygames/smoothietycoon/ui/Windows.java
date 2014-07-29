@@ -1,7 +1,5 @@
 package com.luminositygames.smoothietycoon.ui;
 
-import java.text.NumberFormat;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,7 +11,9 @@ import com.luminositygames.smoothietycoon.Shops.Ice;
 import com.luminositygames.smoothietycoon.Shops.Juice;
 import com.luminositygames.smoothietycoon.Shops.Yogurt;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.entities.Advertisements;
 import com.luminositygames.smoothietycoon.entities.Recipe;
+import com.luminositygames.smoothietycoon.entities.Statistics.StatisticsEntry;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
 
@@ -29,76 +29,68 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Windows {
 
-	public static enum Window {NOTHING, STAND, REFRIDGERATOR, JUICER, BLENDER, FRUIT, YOGURT, CUPS, ADVERTISE, STATISTICS, SAVELOAD};
+	public static Window NOTHING;
+	public static Window STAND = new Window(150, 500, 300);
+	public static Window REFRIDGERATOR = new Window(125, 625, 300);
+	public static Window JUICER = new Window(125, 625, 300);
+	public static Window BLENDER = new Window(125, 625, 125);
+	public static Window FRUIT = new Window(125, 600, 300);
+	public static Window YOGURT = new Window(125, 600, 300);
+	public static Window CUPS = new Window(125, 600, 300);
+	public static Window ADVERTISE = new Window(125, 775, 475);
+	public static Window STATISTICS = new Window(125, 600, 300);
+	public static Window SAVELOAD = new Window(125, 600, 300);
 
-	private Window window;
+	private static Window window;
+	private static int OFFSET;
 
-	public void open(Window id){
-		window = id;
+	public static void open(Window win){
+		window = win;
 	}
 
-	public void close(){
-		window = Window.NOTHING;
+	public static void close(){
+		window = NOTHING;
 	}
 
-	public boolean isOpen() {
-		return window != Window.NOTHING;
+	public static boolean isOpen() {
+		return window != NOTHING;
 	}
 
-	public boolean isTouched() {
-		if (window == Window.STAND){
-			return isTouched(Section.STAND_RECTANGLE);
-		} else if (window == Window.REFRIDGERATOR){
-			return isTouched(Section.REFRIDGERATOR_RECTANGLE);
-		} else if (window == Window.JUICER){
-			return isTouched(Section.JUICER_RECTANGLE);
-		} else if (window == Window.BLENDER){
-			return isTouched(Section.BLENDER_RECTANGLE);
-		} else if (window == Window.FRUIT){
-			return isTouched(Section.FRUIT_RECTANGLE);
-		} else if (window == Window.YOGURT){
-			return isTouched(Section.YOGURT_RECTANGLE);
-		} else if (window == Window.CUPS){
-			return isTouched(Section.CUPS_RECTANGLE);
-		}
-		return false;
-	}
-
-	private boolean isTouched(Rectangle rect){
+	public static boolean isTouched(){
 		float x = SmoothieTycoon.getX();
 		float y = SmoothieTycoon.getY();
-		if (rect.contains(x, y) && Gdx.input.justTouched()){
-			return true;
-		}
-		return false;
+		return window.getRectangle().contains(x, y) && Gdx.input.justTouched();
 	}
 
-	public void render(Game game){
-		if (window == Window.STAND){
-			renderStandWindow(game);
-		} else if (window == Window.REFRIDGERATOR){
+	public static void render(Game game){
+		if (window == STAND){
+			Recipe recipe = game.getRecipe();
+			renderStandWindow(recipe.getPrice(), recipe.getFruit(), recipe.getIce(), recipe.getYogurt(), recipe.getJuice());
+		} else if (window == REFRIDGERATOR){
 			renderRefridgeratorWindow();
-		} else if (window == Window.JUICER){
+		} else if (window == JUICER){
 			renderJuicerWindow();
-		} else if (window == Window.BLENDER){
+		} else if (window == BLENDER){
 			renderBlenderWindow();
-		} else if (window == Window.FRUIT){
+		} else if (window == FRUIT){
 			renderFruitWindow();
-		} else if (window == Window.YOGURT){
+		} else if (window == YOGURT){
 			renderYogurtWindow();
-		} else if (window == Window.CUPS){
+		} else if (window == CUPS){
 			renderCupsWindow();
+		} else if (window == ADVERTISE){
+			renderAdvertiseWindow(game.getAds());
+		} else if (window == STATISTICS){
+			renderStatisticsWindow(game);
+		} else if (window == SAVELOAD){
+			renderSaveLoadWindow();
 		}
 	}
 
-	private void renderStandWindow(Game game){
-		Image.rectangle(Section.STAND_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderStandWindow(double price, int fruits, int ice, int yogurt, int juice){
+		Image.window(Windows.STAND);
 		String options [] = {"Price", "Fruits", "Ice Cubes", "Yogurt", "Juice"};
-		String values [] = {NumberFormat.getCurrencyInstance().format(game.getRecipe().getPrice()),
-				game.getRecipe().getFruit() + "",
-				game.getRecipe().getIce() + "",
-				game.getRecipe().getYogurt() + "",
-				game.getRecipe().getJuice() + ""};
+		String values [] = {SmoothieTycoon.format(price), fruits + "", ice + "", yogurt + "", juice + ""};
 		for (int i = 0; i < 5; i++){
 			Fonts.left("<", 410, i * 50 + 190, Fonts.BLACK_36);
 			Fonts.left(">", 850, i * 50 + 190, Fonts.BLACK_36);
@@ -107,71 +99,112 @@ public class Windows {
 		}
 	}
 
-	private void renderRefridgeratorWindow(){
-		Image.rectangle(Section.REFRIDGERATOR_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderRefridgeratorWindow(){
+		Image.window(Windows.REFRIDGERATOR);
 		for (int i = 0; i < 3; i++){
 			Image.draw("ice", 400, i * 85 + 170);
 			Fonts.left(Ice.getOptionString(i), 450, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
-	private void renderJuicerWindow(){
-		Image.rectangle(Section.JUICER_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderJuicerWindow(){
+		Image.window(Windows.JUICER);
 		for (int i = 0; i < 3; i++){
 			Image.draw("juice", 385, i * 85 + 170);
 			Fonts.left(Juice.getOptionString(i), 435, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
-	private void renderBlenderWindow(){
-		Image.rectangle(Section.BLENDER_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderBlenderWindow(){
+		Image.window(Windows.BLENDER);
 		Image.rectangle(370, 170, 34, 34, 0.9f, Color.PINK);
 		Fonts.left("Refill smoothie container", 425, 175, Fonts.BLACK_36);
 	}
 
-	private void renderFruitWindow(){
-		Image.rectangle(Section.REFRIDGERATOR_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderFruitWindow(){
+		Image.window(Windows.FRUIT);
 		for (int i = 0; i < 3; i++){
 			Image.draw("fruit", 410, i * 85 + 170);
 			Fonts.left(Fruit.getOptionString(i), 460, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
-	private void renderYogurtWindow(){
-		Image.rectangle(Section.REFRIDGERATOR_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderYogurtWindow(){
+		Image.window(Windows.YOGURT);
 		for (int i = 0; i < 3; i++){
 			Image.draw("yogurtinverted", 410, i * 85 + 170);
 			Fonts.left(Yogurt.getOptionString(i), 460, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
-	private void renderCupsWindow(){
-		Image.rectangle(Section.REFRIDGERATOR_RECTANGLE, 0.85f, Color.WHITE);
+	private static void renderCupsWindow(){
+		Image.window(Windows.CUPS);
 		for (int i = 0; i < 3; i++){
 			Image.draw("cup", 410, i * 85 + 170);
 			Fonts.left(Cups.getOptionString(i), 460, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
-	public void handleTouch(Game game) {
-		if (window == Window.STAND){
-			handleStandWindow(game);
-		} else if (window == Window.REFRIDGERATOR){
-			handleRefridgeratorWindow(game);
-		} else if (window == Window.JUICER){
-			handleJuicerWindow(game);
-		} else if (window == Window.BLENDER){
-			handleBlenderWindow(game);
-		} else if (window == Window.FRUIT){
-			handleFruitWindow(game);
-		} else if (window == Window.YOGURT){
-			handleYogurtWindow(game);
-		} else if (window == Window.CUPS){
-			handleCupsWindow(game);
+	private static void renderAdvertiseWindow(Advertisements ads) {
+		Image.window(Windows.ADVERTISE);
+		for (int i = 0; i < 5; i++){
+			Image.draw("ad", 300, i * 85 + 170);
+			Fonts.left(Advertisements.getOptionString(ads, i), 390, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
-	private void handleStandWindow(Game game){
+	private static void renderStatisticsWindow(Game game) {
+		Image.window(Windows.STATISTICS);
+		Image.draw("upArrow", 850, 150);
+		Image.draw("downArrow", 850, 325);
+		int lowerRange = getLowerRange(game);
+		for (int i = lowerRange; i < lowerRange + 3; i++){
+			StatisticsEntry entry = game.getStats().getEntry(i);
+			if (entry != null){
+				int relative = i - lowerRange + 1;
+				Image.draw("statisticsicon", 360, relative * 85 + 85);
+				Fonts.left(entry.toString(), 450, relative * 85 + 90, Fonts.BLACK_36);
+			}
+		}
+	}
+
+	private static int getLowerRange(Game game) {
+		int base = game.getDay() - 3 + OFFSET;
+		if (base < 1){
+			base = 1;
+		}
+		return base;
+	}
+
+	private static void renderSaveLoadWindow() {
+		Image.window(Windows.SAVELOAD);
+	}
+
+	public static void handleTouch(Game game) {
+		if (window == STAND){
+			handleStandWindow(game);
+		} else if (window == REFRIDGERATOR){
+			handleRefridgeratorWindow(game);
+		} else if (window == JUICER){
+			handleJuicerWindow(game);
+		} else if (window == BLENDER){
+			handleBlenderWindow(game);
+		} else if (window == FRUIT){
+			handleFruitWindow(game);
+		} else if (window == YOGURT){
+			handleYogurtWindow(game);
+		} else if (window == CUPS){
+			handleCupsWindow(game);
+		} else if (window == ADVERTISE){
+			handleAdvertiseWindow(game);
+		} else if (window == STATISTICS){
+			handleStatisticsWindow(game);
+		} else if (window == SAVELOAD){
+			handleSaveLoadWindow(game);
+		}
+	}
+
+	private static void handleStandWindow(Game game){
 		boolean downPrice = Fonts.isTouched("<", 410, 190, Fonts.BLACK_36);
 		boolean upPrice = Fonts.isTouched(">", 850, 190, Fonts.BLACK_36);
 		boolean downFruits = Fonts.isTouched("<", 410, 240, Fonts.BLACK_36);
@@ -214,7 +247,7 @@ public class Windows {
 		}
 	}
 
-	private void handleRefridgeratorWindow(Game game){
+	private static void handleRefridgeratorWindow(Game game){
 		for (int i = 0; i < 3; i++){
 			if (Fonts.isTouched(Ice.getOptionString(i), 450, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyIce(Ice.getAmount(i), Ice.getPrice(i));
@@ -223,7 +256,7 @@ public class Windows {
 		}
 	}
 
-	private void handleJuicerWindow(Game game){
+	private static void handleJuicerWindow(Game game){
 		for (int i = 0; i < 3; i++){
 			if (Fonts.isTouched(Juice.getOptionString(i), 435, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().makeJuice(Juice.getAmount(i), Juice.getPrice(i));
@@ -232,14 +265,14 @@ public class Windows {
 		}
 	}
 
-	private void handleBlenderWindow(Game game){
+	private static void handleBlenderWindow(Game game){
 		if (Fonts.isTouched("Refill smoothie container", 425, 175, Fonts.BLACK_36)){
 			game.getContainer().refill(game);
 			close();
 		}
 	}
 
-	private void handleFruitWindow(Game game){
+	private static void handleFruitWindow(Game game){
 		for (int i = 0; i < 3; i++){
 			if (Fonts.isTouched(Fruit.getOptionString(i), 465, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyFruits(Fruit.getAmount(i), Fruit.getPrice(i));
@@ -248,7 +281,7 @@ public class Windows {
 		}
 	}
 
-	private void handleYogurtWindow(Game game){
+	private static void handleYogurtWindow(Game game){
 		for (int i = 0; i < 3; i++){
 			if (Fonts.isTouched(Yogurt.getOptionString(i), 465, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyYogurt(Yogurt.getAmount(i), Yogurt.getPrice(i));
@@ -257,12 +290,53 @@ public class Windows {
 		}
 	}
 
-	private void handleCupsWindow(Game game){
+	private static void handleCupsWindow(Game game){
 		for (int i = 0; i < 3; i++){
 			if (Fonts.isTouched(Cups.getOptionString(i), 465, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyCups(Cups.getAmount(i), Cups.getPrice(i));
 				close();
 			}
+		}
+	}
+
+	private static void handleAdvertiseWindow(Game game) {
+		for (int i = 0; i < 5; i++){
+			if (Fonts.isTouched(Advertisements.getOptionString(game.getAds(), i), 390, i * 85 + 175, Fonts.BLACK_36)){
+				game.getPlayer().buyAd(game.getAds(), i);
+				game.setNewMaxCustomers();
+				close();
+			}
+		}
+	}
+
+	private static void handleStatisticsWindow(Game game) {
+		if (Image.get("upArrow").isTouched()){
+			if (OFFSET > - game.getDay() + 4){
+				OFFSET--;
+			}
+		}
+		if (Image.get("downArrow").isTouched()){
+			if (OFFSET < 0){
+				OFFSET++;
+			}
+		}
+	}
+
+	private static void handleSaveLoadWindow(Game game) {
+
+	}
+
+	public static class Window {
+
+		private Rectangle rectangle;
+
+		public Window(int y, int width, int height){
+			int x = (Constants.WIDTH - width) /2;
+			this.rectangle = new Rectangle(x, y, width, height);
+		}
+
+		public Rectangle getRectangle(){
+			return rectangle;
 		}
 	}
 }

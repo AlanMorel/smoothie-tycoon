@@ -2,10 +2,12 @@ package com.luminositygames.smoothietycoon;
 
 import java.util.ArrayList;
 
+import com.luminositygames.smoothietycoon.entities.Advertisements;
 import com.luminositygames.smoothietycoon.entities.Container;
 import com.luminositygames.smoothietycoon.entities.Customer;
 import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
+import com.luminositygames.smoothietycoon.entities.Statistics;
 import com.luminositygames.smoothietycoon.ui.Effect;
 import com.luminositygames.smoothietycoon.ui.Section;
 import com.luminositygames.smoothietycoon.util.Countdown;
@@ -26,10 +28,11 @@ public class Game {
 	private Player player;
 	private Recipe recipe;
 	private Container container;
+	private Advertisements ads;
+	private Statistics stats;
 	private Countdown night;
 	private Countdown lastSpawn;
 	private ArrayList<Customer> customers;
-
 	private int day;
 	private int temperature;
 	private int maxCustomers;
@@ -39,18 +42,22 @@ public class Game {
 		this.player = new Player();
 		this.recipe = new Recipe();
 		this.container = new Container();
+		this.ads = new Advertisements();
+		this.stats = new Statistics();
 		this.day = 0;
 		startNewDay();
 	}
 
 	private void startNewDay() {
+		this.stats.addEntry(day, player.getMoney());
+		this.day ++;
 		this.night = new Countdown(10 * 1000, false);
 		this.temperature = SmoothieTycoon.random.nextInt(100);
 		this.customers = new ArrayList<Customer>();
-		this.maxCustomers = getDay() * 4 + 20;
+		this.maxCustomers = getMaxCustomers();
 		this.lastSpawn = new Countdown(getSpawnDelay(), true);
 		this.totalCustomers = 0;
-		this.day ++;
+		this.ads.use();
 	}
 
 	public Player getPlayer() {
@@ -63,6 +70,14 @@ public class Game {
 
 	public Container getContainer() {
 		return container;
+	}
+
+	public Advertisements getAds(){
+		return ads;
+	}
+
+	public Statistics getStats(){
+		return stats;
 	}
 
 	public Countdown getNight() {
@@ -144,6 +159,18 @@ public class Game {
 		}
 	}
 
+	private int getMaxCustomers(){
+		int base = 20;
+		int dayBonus = day * 4;
+		int adBonus = getAds().getTotalCustomers();
+		int max = base + dayBonus + adBonus;
+		return max;
+	}
+
+	public void setNewMaxCustomers() {
+		maxCustomers = getMaxCustomers();
+	}
+
 	private void addNewCustomer() {
 		if (lastSpawn.isCompleted()){
 			totalCustomers++;
@@ -153,7 +180,10 @@ public class Game {
 	}
 
 	private int getSpawnDelay() {
-		return SmoothieTycoon.random.nextInt(500) + 1000;
+		int base = 1000 - getAds().getTotalCustomers() * 10;
+		int variable = 500;
+		int spawnDelay = SmoothieTycoon.random.nextInt(variable) + base;
+		return spawnDelay;
 	}
 
 	private boolean dayStillRunning() {
@@ -205,13 +235,10 @@ public class Game {
 
 	private int getBuyPercentage(){
 		int percentage = 0;
-
 		int pricePerc = getPricePercentageChange() * 70 / 100;
 		int tempPerc = getTemperatureIceChange() * 20 / 100;
-
 		percentage += pricePerc;
 		percentage += tempPerc;
-
 		return percentage;
 	}
 }

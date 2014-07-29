@@ -6,7 +6,6 @@ import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.ui.Section;
 import com.luminositygames.smoothietycoon.ui.UserInterface;
 import com.luminositygames.smoothietycoon.ui.Windows;
-import com.luminositygames.smoothietycoon.ui.Windows.Window;
 import com.luminositygames.smoothietycoon.util.Image;
 
 /**
@@ -24,14 +23,12 @@ public class Gameplay implements Screen2 {
 	private Game game;
 	private Section section;
 	private UserInterface ui;
-	private Windows window;
 
 	@Override
 	public void load() {
 		this.game = new Game();
 		this.section = new Section();
 		this.ui = new UserInterface();
-		this.window = new Windows();
 	}
 
 	@Override
@@ -39,7 +36,6 @@ public class Gameplay implements Screen2 {
 		section.render(delta);
 		game.render(section, delta);
 		ui.render(game);
-		window.render(game);
 	}
 
 	@Override
@@ -53,41 +49,6 @@ public class Gameplay implements Screen2 {
 		}
 	}
 
-	private void handleTouch() {
-		if (!Gdx.input.justTouched()){
-			return;
-		}
-		if (window.isOpen()){
-			if (window.isTouched()){
-				window.handleTouch(game);
-			} else {
-				window.close();
-			}
-		} else {
-			if (section.isStand()){
-				if (Image.get("stand").isTouched()){
-					window.open(Window.STAND);
-				}
-			} else if (section.isKitchen()){
-				if (Image.get("refridgerator").isTouched()){
-					window.open(Window.REFRIDGERATOR);
-				} else if (Image.get("juicer").isTouched()){
-					window.open(Window.JUICER);
-				} else if (Image.get("blender").isTouched()){
-					window.open(Window.BLENDER);
-				}
-			} else if (section.isMarket()){
-				if (Image.get("fruitstand").isTouched()){
-					window.open(Window.FRUIT);
-				} else if (Image.get("yogurtstand").isTouched()){
-					window.open(Window.YOGURT);
-				} else if (Image.get("cupstand").isTouched()){
-					window.open(Window.CUPS);
-				}
-			}
-		}
-	}
-
 	@Override
 	public void keyPress(int keycode) {
 		if (keycode == Keys.LEFT){
@@ -97,8 +58,23 @@ public class Gameplay implements Screen2 {
 		}
 	}
 
+	private void handleTouch() {
+		if (!Gdx.input.justTouched()){
+			return;
+		}
+		if (Windows.isOpen()){
+			if (Windows.isTouched()){
+				Windows.handleTouch(game);
+			} else {
+				Windows.close();
+			}
+		} else {
+			section.handleTouch();
+		}
+	}
+
 	public void handleLeft(){
-		window.close();
+		Windows.close();
 		if (section.isStand()){
 			section.setSection(Section.OFFICE);
 		} else if (section.isKitchen()){
@@ -111,7 +87,7 @@ public class Gameplay implements Screen2 {
 	}
 
 	public void handleRight(){
-		window.close();
+		Windows.close();
 		if (section.isStand()){
 			section.setSection(Section.KITCHEN);
 		} else if (section.isKitchen()){

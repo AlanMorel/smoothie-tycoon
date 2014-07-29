@@ -1,5 +1,6 @@
 package com.luminositygames.smoothietycoon;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -34,14 +35,13 @@ import com.luminositygames.smoothietycoon.util.KeyProcessor;
 public class SmoothieTycoon extends ApplicationAdapter {
 
 	public static OrthographicCamera camera;
-
 	public static Screen2 screen;
 	public static Screen2 mainMenu;
 	public static Screen2 splash;
 	public static Screen2 tutorial;
 	public static Screen2 gameplay;
-
 	public static Random random;
+	public static NumberFormat formatter;
 
 	@Override
 	public void create () {
@@ -57,6 +57,7 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true, Constants.WIDTH, Constants.HEIGHT);
 		random = new Random();
+		formatter = NumberFormat.getCurrencyInstance();
 	}
 
 	private void loadAssets() {
@@ -93,6 +94,9 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("kitchen");
 		Image.load("market");
 		Image.load("office");
+		Image.load("advertise");
+		Image.load("statistics");
+		Image.load("saveload");
 		Image.load("refridgerator");
 		Image.load("juicer");
 		Image.load("blender");
@@ -102,6 +106,8 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("yogurtstand");
 		Image.load("cupstand");
 		Image.load("yogurtinverted");
+		Image.load("ad");
+		Image.load("statisticsicon");
 		Image.addHover("playbutton", "playbutton2");
 	}
 
@@ -154,6 +160,10 @@ public class SmoothieTycoon extends ApplicationAdapter {
 			return 100;
 		}
 		return percentage;
+	}
+
+	public static String format(double amount){
+		return formatter.format(amount);
 	}
 
 	@Override

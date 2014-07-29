@@ -18,7 +18,6 @@ import com.luminositygames.smoothietycoon.util.Image;
 public class MainMenu implements Screen2 {
 
 	private GameTween logoTween;
-
 	private boolean tutorial;
 
 	@Override
@@ -40,6 +39,10 @@ public class MainMenu implements Screen2 {
 	@Override
 	public void update(float delta) {
 		logoTween.update(delta);
+		handleTouch();
+	}
+
+	private void handleTouch() {
 		if (Image.get("playbutton").isTouched()){
 			if (tutorial){
 				SmoothieTycoon.setScreen(SmoothieTycoon.tutorial);

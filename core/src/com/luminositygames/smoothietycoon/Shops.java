@@ -1,6 +1,5 @@
 package com.luminositygames.smoothietycoon;
 
-import java.text.NumberFormat;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -14,15 +13,13 @@ import java.text.NumberFormat;
 
 public class Shops {
 
-	private static final NumberFormat money = NumberFormat.getCurrencyInstance();
-
 	public static class Ice {
 
 		private static final int[] AMOUNT = {10, 25, 50};
 		private static final double[] PRICE = {1.00, 2.00, 3.00};
 
 		public static String getOptionString(int option) {
-			return "Buy " + AMOUNT[option] + " ice cubes for " + money.format(PRICE[option]);
+			return "Buy " + AMOUNT[option] + " ice cubes for " + SmoothieTycoon.format(PRICE[option]);
 		}
 
 		public static int getAmount(int option) {
@@ -59,7 +56,7 @@ public class Shops {
 		private static final double[] PRICE = {2.00, 3.00, 5.00};
 
 		public static String getOptionString(int option) {
-			return "Buy " + AMOUNT[option] + " fruits for " + money.format(PRICE[option]);
+			return "Buy " + AMOUNT[option] + " fruits for " + SmoothieTycoon.format(PRICE[option]);
 		}
 
 		public static int getAmount(int option) {
@@ -77,7 +74,7 @@ public class Shops {
 		private static final double[] PRICE = {1.00, 2.00, 3.00};
 
 		public static String getOptionString(int option) {
-			return "Buy " + AMOUNT[option] + " yogurt for " + money.format(PRICE[option]);
+			return "Buy " + AMOUNT[option] + " yogurt for " + SmoothieTycoon.format(PRICE[option]);
 		}
 
 		public static int getAmount(int option) {
@@ -95,7 +92,7 @@ public class Shops {
 		private static final double[] PRICE = {1.00, 2.00, 3.00};
 
 		public static String getOptionString(int option) {
-			return "Buy " + AMOUNT[option] + " cups for " + money.format(PRICE[option]);
+			return "Buy " + AMOUNT[option] + " cups for " + SmoothieTycoon.format(PRICE[option]);
 		}
 
 		public static int getAmount(int option) {

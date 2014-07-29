@@ -21,17 +21,17 @@ import com.luminositygames.smoothietycoon.screens.Screen2;
 
 public class GameTween {
 
-	public static final int SPLASH = 1;
-	public static final int LOGO = 2;
-	public static final int ARROW = 3;
-	public static final int HAT = 4;
-	public static final int EFFECT = 5;
+	public static final byte SPLASH = 0;
+	public static final byte LOGO = 1;
+	public static final byte ARROW = 2;
+	public static final byte HAT = 3;
+	public static final byte EFFECT = 4;
 
 	private TweenManager tweenManager;
 
 	private float value;
 
-	public GameTween(float value, int type){
+	public GameTween(float value, byte type){
 		this.value = value;
 		this.tweenManager = new TweenManager();
 		Tween.registerAccessor(GameTween.class, new GameTweenAccessor());
@@ -50,7 +50,7 @@ public class GameTween {
 		tweenManager.update(delta);
 	}
 
-	public void setTweenTo(int type){
+	public void setTweenTo(byte type){
 		if (type == GameTween.SPLASH){
 			Tween.to(this, GameTweenAccessor.VALUE, 1f).target(1).repeatYoyo(1, Constants.SPLASH_DURATION).setCallback(setScreenTo(SmoothieTycoon.mainMenu)).start(tweenManager);
 		} else if (type == GameTween.LOGO){
@@ -58,7 +58,7 @@ public class GameTween {
 		} else if (type == GameTween.ARROW){
 			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(20).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.HAT){
-			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(2).repeatYoyo(-1, 0).start(tweenManager);
+			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(10).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.EFFECT){
 			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(100).repeatYoyo(Tween.INFINITY, 0).start(tweenManager);
 		}

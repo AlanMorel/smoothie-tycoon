@@ -1,6 +1,5 @@
 package com.luminositygames.smoothietycoon.ui;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
@@ -17,18 +16,10 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Section {
 
-	public static final Rectangle STAND_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 500 / 2, 150, 500, 300);
-	public static final Rectangle REFRIDGERATOR_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 300);
-	public static final Rectangle JUICER_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 300);
-	public static final Rectangle BLENDER_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 625 / 2, 125, 625, 125);
-	public static final Rectangle FRUIT_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300);
-	public static final Rectangle YOGURT_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300);
-	public static final Rectangle CUPS_RECTANGLE = new Rectangle(Constants.WIDTH / 2 - 600 / 2, 125, 600, 300);
-
-	public static final byte STAND = 1;
-	public static final byte KITCHEN = 2;
-	public static final byte MARKET = 3;
-	public static final byte OFFICE = 4;
+	public static final byte STAND = 0;
+	public static final byte KITCHEN = 1;
+	public static final byte MARKET = 2;
+	public static final byte OFFICE = 3;
 
 	private int section;
 
@@ -57,27 +48,93 @@ public class Section {
 	}
 
 	public void render(float delta){
-		if (section == STAND){
-			Image.draw("salesBackground", 0, 0);
-			Image.draw("player", Constants.WIDTH /2 - Image.get("player").getWidth() / 2, 250);
-			Image.draw("stand", Constants.WIDTH /2 - Image.get("stand").getWidth() / 2, 175);
-			Image.draw("slantedsign", 650, 175);
-		} else if (section == KITCHEN){
-			Image.draw("kitchen", 0, 0);
-			Image.draw("refridgerator", 150, 94);
-			Image.draw("juicer", 750, 224);
-			Image.draw("blender", 975, 208);
-		} else if (section == MARKET){
-			Image.draw("market", 0, 0);
-			Image.draw("fruitstand", 165, 170);
-			Image.draw("yogurtstand", 520, 170);
-			Image.draw("cupstand", 895, 170);
+		if (isStand()){
+			renderStand();
+		} else if (isKitchen()){
+			renderKitchen();
+		} else if (isMarket()){
+			renderMarket();
+		} else if (isOffice()){
+			renderOffice();
+		}
+	}
 
-			Fonts.left("Fruits", 220, 425, Fonts.WHITE_36);
-			Fonts.left("Yogurt", 570, 425, Fonts.WHITE_36);
-			Fonts.left("Cups", 965, 425, Fonts.WHITE_36);
-		} else if (section == OFFICE){
-			Image.draw("office", 0, 0);
+	private void renderStand() {
+		Image.draw("salesBackground", 0, 0);
+		Image.draw("player", Constants.WIDTH /2 - Image.get("player").getWidth() / 2, 250);
+		Image.draw("stand", Constants.WIDTH /2 - Image.get("stand").getWidth() / 2, 175);
+		Image.draw("slantedsign", 650, 175);
+	}
+
+	private void renderKitchen() {
+		Image.draw("kitchen", 0, 0);
+		Image.draw("refridgerator", 150, 94);
+		Image.draw("juicer", 750, 224);
+		Image.draw("blender", 975, 208);
+	}
+
+	private void renderMarket() {
+		Image.draw("market", 0, 0);
+		Image.draw("fruitstand", 165, 170);
+		Image.draw("yogurtstand", 520, 170);
+		Image.draw("cupstand", 895, 170);
+		Fonts.left("Fruits", 220, 425, Fonts.WHITE_36);
+		Fonts.left("Yogurt", 570, 425, Fonts.WHITE_36);
+		Fonts.left("Cups", 965, 425, Fonts.WHITE_36);
+	}
+
+	private void renderOffice() {
+		Image.draw("office", 0, 0);
+		Image.draw("advertise", 130, 213);
+		Image.draw("statistics", 520, 203);
+		Image.draw("saveload", 910, 220);
+	}
+
+	public void handleTouch() {
+		if (isStand()){
+			handleStand();
+		} else if (isKitchen()){
+			handleKitchen();
+		} else if (isMarket()){
+			handleMarket();
+		} else if (isOffice()){
+			handleOffice();
+		}
+	}
+
+	private void handleStand() {
+		if (Image.get("stand").isTouched()){
+			Windows.open(Windows.STAND);
+		}
+	}
+
+	private void handleKitchen() {
+		if (Image.get("refridgerator").isTouched()){
+			Windows.open(Windows.REFRIDGERATOR);
+		} else if (Image.get("juicer").isTouched()){
+			Windows.open(Windows.JUICER);
+		} else if (Image.get("blender").isTouched()){
+			Windows.open(Windows.BLENDER);
+		}
+	}
+
+	private void handleMarket() {
+		if (Image.get("fruitstand").isTouched()){
+			Windows.open(Windows.FRUIT);
+		} else if (Image.get("yogurtstand").isTouched()){
+			Windows.open(Windows.YOGURT);
+		} else if (Image.get("cupstand").isTouched()){
+			Windows.open(Windows.CUPS);
+		}
+	}
+
+	private void handleOffice() {
+		if (Image.get("advertise").isTouched()){
+			Windows.open(Windows.ADVERTISE);
+		} else if (Image.get("statistics").isTouched()){
+			Windows.open(Windows.STATISTICS);
+		} else if (Image.get("saveload").isTouched()){
+			Windows.open(Windows.SAVELOAD);
 		}
 	}
 }

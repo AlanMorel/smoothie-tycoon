@@ -1,10 +1,9 @@
 package com.luminositygames.smoothietycoon.ui;
 
-import java.text.NumberFormat;
-
 import com.badlogic.gdx.graphics.Color;
 import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.Game;
+import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
@@ -24,33 +23,34 @@ public class UserInterface {
 
 	public void render(Game game){
 		Image.rectangle(0, 0, Constants.WIDTH, 90, 0.1f, Color.BLACK);
-
 		renderMoney(game.getPlayer().getMoney());
 		renderDay(game);
-
-		Player player = game.getPlayer();
-		renderIngredients(player.getFruits(), player.getIce(), player.getYogurt(), player.getJuice(), player.getCups());
+		renderIngredients(game.getPlayer());
 		renderThermometer(game.getTemperature());
 		renderArrows();
 		renderContainer(game.getContainer().getServings());
+		Windows.render(game);
 	}
 
 	public void renderMoney(double amount){
-		NumberFormat formatter = NumberFormat.getCurrencyInstance();
-		Fonts.left(formatter.format(amount), 25, 20, Fonts.BLACK_48);
+		Fonts.left(SmoothieTycoon.format(amount), 25, 20, Fonts.BLACK_48);
 	}
 
 	public void renderDay(Game game){
-		Countdown intermission = game.getNight();
-		if (!intermission.hasStarted()){
+		Countdown nightTime = game.getNight();
+		if (!nightTime.hasStarted()){
 			renderDay(game.getDay());
 		} else {
-			Fonts.left("Night " + intermission.getPercentage() + "%", 275, 25, Fonts.BLACK_36);
+			Fonts.left("Night " + nightTime.getPercentage() + "%", 275, 25, Fonts.BLACK_36);
 		}
 	}
 
 	public void renderDay(int day) {
 		Fonts.left("Day " + day, 300, 25, Fonts.BLACK_36);
+	}
+
+	public void renderIngredients(Player player){
+		renderIngredients(player.getFruits(), player.getIce(), player.getYogurt(), player.getJuice(), player.getCups());
 	}
 
 	public void renderIngredients(int fruits, int ice, int yogurt, int juice, int cups){
@@ -80,7 +80,6 @@ public class UserInterface {
 	public void renderContainer(int servings){
 		int percentage = servings * 10;
 		int realPercent = 100 - percentage;
-
 		int height = realPercent * 2 + 200;
 		int length = percentage * 2;
 

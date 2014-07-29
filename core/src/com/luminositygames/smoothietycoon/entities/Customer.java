@@ -21,23 +21,20 @@ public class Customer {
 
 	private static final byte LEFT = 0;
 	private static final byte RIGHT = 1;
-
-	private Color color;
-	private GameTween hat;
-	private Countdown purchase;
-
 	private int x;
 	private int speed;
 	private int side;
 	private boolean buying;
+	private Color color;
+	private GameTween hat;
+	private Countdown purchase;
 
 	public Customer(boolean buying) {
 		this.buying = buying;
 		this.side = SmoothieTycoon.random.nextInt(2);
-		this.hat = new GameTween(-2, GameTween.HAT);
+		this.hat = new GameTween(-10, GameTween.HAT);
 		this.purchase = new Countdown(getPurchaseDelay(), false);
 		this.color = Image.getRandomColor();
-
 		if (side == LEFT){
 			this.x = -102;
 			this.speed = 4;
@@ -74,11 +71,11 @@ public class Customer {
 
 	public void render() {
 		Image.rectangle(x, 300, 100, 240, 1.0f, color);
-		Image.rectangle(x, 540, 100, 10, 0.5f, buying ? Color.GREEN : Color.RED);
+		Image.rectangle(x, 540, 100, 10, 0.75f, buying ? Color.GREEN : Color.RED);
 		if (side == LEFT){
-			Image.draw("hatL", x - 22, 227 + hat.getValue());
+			Image.draw("hatL", x - 22, 240 + hat.getValue());
 		} else if (side == RIGHT){
-			Image.draw("hatR", x - 20, 227 + hat.getValue());
+			Image.draw("hatR", x - 22, 240 + hat.getValue());
 		}
 	}
 

@@ -23,14 +23,14 @@ public class Effect {
 	public static final byte JUICE = 4;
 	public static final byte CUPS = 5;
 
-	public static GameTween effect = new GameTween(0, GameTween.EFFECT);
+	private static GameTween effect = new GameTween(0, GameTween.EFFECT);
 
 	public static void update(float delta){
 		effect.update(delta);
 	}
 
-	public static void render(int id){
-		Color color = new Color(Color.RED);
+	public static void render(byte id){
+		Color color = Color.RED;
 		float alpha = effect.getValue() * 3 /1000;
 		float radius = effect.getValue() * 14 / 100 + 18;
 

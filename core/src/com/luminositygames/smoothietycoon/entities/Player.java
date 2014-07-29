@@ -1,5 +1,6 @@
 package com.luminositygames.smoothietycoon.entities;
 
+
 /**
  * This file is part of Smoothie Tycoon
  * 
@@ -104,5 +105,23 @@ public class Player {
 		ice -= recipe.getIce();
 		yogurt -= recipe.getYogurt();
 		juice -= recipe.getJuice();
+	}
+
+	public void buyAd(Advertisements ad, int id) {
+		double cost = Advertisements.getPrice(id);
+		if(canPay(cost)){
+			money -= cost;
+			if (id == 0){
+				ad.buyFlyers();
+			} else if (id == 1){
+				ad.buySocialAds();
+			} else if (id == 2){
+				ad.buyNewspaperAds();
+			} else if (id == 3){
+				ad.buyRadioAds();
+			} else if (id == 4){
+				ad.buyTVAds();
+			}
+		}
 	}
 }

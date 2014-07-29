@@ -26,13 +26,10 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
 public class Fonts {
 
 	public static HashMap<Integer, BitmapFont> fonts;
-
 	public static final byte BLACK_36 = 0;
 	public static final byte WHITE_36 = 1;
-
 	public static final byte BLACK_48 = 2;
 	public static final byte WHITE_48 = 3;
-
 
 	public static void load(int ID, Color color, int size){
 		FreeTypeFontGenerator font_gen = new FreeTypeFontGenerator(Gdx.files.internal("font.otf"));
@@ -78,7 +75,7 @@ public class Fonts {
 		Image.batch.end();
 	}
 
-	public static boolean isTouched (String str, float x, float y, int fontSize){
+	public static boolean isTouched(String str, float x, float y, int fontSize){
 		if (!Gdx.input.justTouched()){
 			return false;
 		}
@@ -91,9 +88,6 @@ public class Fonts {
 		float touchedX = SmoothieTycoon.getX();
 		float touchedY = SmoothieTycoon.getY();
 
-		if (rect.contains(touchedX, touchedY)){
-			return true;
-		}
-		return false;
+		return rect.contains(touchedX, touchedY);
 	}
 }
