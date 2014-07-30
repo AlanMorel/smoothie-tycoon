@@ -37,15 +37,15 @@ public class Effect {
 		if (id == SMOOTHIE){
 			Image.circle(40, 382, radius, color, alpha);
 		} else if (id == FRUIT){
-			Image.circle(609, 37, radius, color, alpha);
+			Image.circle(610, 37, radius, color, alpha);
 		} else if (id == ICE){
-			Image.circle(759, 37, radius, color, alpha);
+			Image.circle(760, 37, radius, color, alpha);
 		} else if (id == YOGURT){
-			Image.circle(909, 37, radius, color, alpha);
+			Image.circle(910, 37, radius, color, alpha);
 		} else if (id == JUICE){
-			Image.circle(1059, 37, radius, color, alpha);
+			Image.circle(1060, 37, radius, color, alpha);
 		} else if (id == CUPS){
-			Image.circle(1209, 37, radius, color, alpha);
+			Image.circle(1210, 37, radius, color, alpha);
 		}
 	}
 }

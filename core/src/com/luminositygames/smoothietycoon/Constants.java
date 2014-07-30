@@ -22,7 +22,7 @@ public class Constants {
 	//FRAMES PER SECOND
 	public static final float FRAMES_PER_SECOND = 60;
 
-	//SPLASH
+	//SPLASH DURATION
 	public static final float SPLASH_DURATION = 0.0f;
 
 	//VOLUME

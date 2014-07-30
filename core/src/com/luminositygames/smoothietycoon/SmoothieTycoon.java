@@ -108,6 +108,17 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("yogurtinverted");
 		Image.load("ad");
 		Image.load("statisticsicon");
+		Image.load("swagR");
+		Image.load("swagL");
+		Image.load("achievement");
+		Image.load("tip");
+		Image.load("customerOverlay");
+		Image.load("cowR");
+		Image.load("cowL");
+		Image.load("winterR");
+		Image.load("winterL");
+		Image.load("policeR");
+		Image.load("policeL");
 		Image.addHover("playbutton", "playbutton2");
 	}
 
