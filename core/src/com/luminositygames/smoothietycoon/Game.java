@@ -51,9 +51,6 @@ public class Game {
 		Notifications.load();
 		Achievements.load();
 		Tips.load();
-		Tips.displayRandomTip();
-		Tips.displayRandomTip();
-		Tips.displayRandomTip();
 		startNewDay();
 	}
 

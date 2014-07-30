@@ -100,8 +100,6 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("refridgerator");
 		Image.load("juicer");
 		Image.load("blender");
-		Image.load("hatR");
-		Image.load("hatL");
 		Image.load("fruitstand");
 		Image.load("yogurtstand");
 		Image.load("cupstand");
