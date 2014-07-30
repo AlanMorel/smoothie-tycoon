@@ -21,19 +21,18 @@ public class Customer {
 
 	private static final byte LEFT = 0;
 	private static final byte RIGHT = 1;
-
 	private int x;
 	private int speed;
 	private int side;
 	private boolean buying;
 	private Color color;
-	private Hat hat;
+	private GameTween hat;
 	private Countdown purchase;
 
 	public Customer(boolean buying) {
 		this.buying = buying;
 		this.side = SmoothieTycoon.random.nextInt(2);
-		this.hat = new Hat(side);
+		this.hat = new GameTween(-10, GameTween.HAT);
 		this.purchase = new Countdown(getPurchaseDelay(), false);
 		this.color = Image.getRandomColor();
 		if (side == LEFT){
@@ -72,9 +71,12 @@ public class Customer {
 
 	public void render() {
 		Image.rectangle(x, 300, 100, 240, 1.0f, color);
-		Image.rectangle(x, 540, 100, 10, 1.0f, buying ? Color.GREEN : Color.RED);
-		Image.draw("customerOverlay", x, 300);
-		hat.render(x);
+		Image.rectangle(x, 540, 100, 10, 0.75f, buying ? Color.GREEN : Color.RED);
+		if (side == LEFT){
+			Image.draw("hatL", x - 22, 240 + hat.getValue());
+		} else if (side == RIGHT){
+			Image.draw("hatR", x - 22, 240 + hat.getValue());
+		}
 	}
 
 	public void update(float delta, boolean canBuy) {
@@ -83,50 +85,6 @@ public class Customer {
 		if (atStand() && !purchase.hasStarted() && canBuy){
 			purchase.start();
 			speed = 0;
-		}
-	}
-
-	public class Hat {
-
-		private static final byte SWAG = 0;
-		private static final byte COWBOY = 1;
-		private static final byte WINTER = 2;
-		private static final byte POLICE = 3;
-
-		private GameTween hatTween;
-		private String hat;
-		private int x;
-		private int y;
-
-		public Hat(int side){
-			this.hatTween = new GameTween(-10, GameTween.HAT);
-			int random = SmoothieTycoon.random.nextInt(4);
-			if (random == SWAG){
-				this.hat = "swag";
-				this.x = -22;
-				this.y = 240;
-			} else if (random == COWBOY){
-				this.hat = "cow";
-				this.x = -22;
-				this.y = 260;
-			} else if (random == WINTER){
-				this.hat = "winter";
-				this.x = -4;
-				this.y = 238;
-			} else if (random == POLICE){
-				this.hat = "police";
-				this.x = -22;
-				this.y = 238;
-			}
-			this.hat += side == 0 ? "L" : "R";
-		}
-
-		public void render(int customerX){
-			Image.draw(hat, customerX + x, y + hatTween.getValue());
-		}
-
-		public void update(float delta){
-			hatTween.update(delta);
 		}
 	}
 }

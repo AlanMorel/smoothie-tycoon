@@ -31,7 +31,7 @@ public class Advertisements {
 		tv = 0;
 	}
 
-	public void useAds(){
+	public void use(){
 		if (flyers > 0){
 			flyers --;
 		}
@@ -69,7 +69,7 @@ public class Advertisements {
 		tv = 5;
 	}
 
-	public byte getFlyersAds(){
+	public byte getFlyersDuration(){
 		return flyers;
 	}
 
@@ -89,43 +89,63 @@ public class Advertisements {
 		return tv;
 	}
 
-	public static int getCustomers(int option) {
-		return CUSTOMERS[option];
+	public boolean hasFlyers(){
+		return flyers > 0;
 	}
 
-	public static double getPrice(int option) {
-		return PRICE[option];
+	public boolean hasSocialAds(){
+		return social > 0;
+	}
+
+	public boolean hasNewspaperAds(){
+		return newspapers > 0;
+	}
+
+	public boolean hasRadioAds(){
+		return radio > 0;
+	}
+
+	public boolean hasTVAds(){
+		return tv > 0;
 	}
 
 	public static String getOptionString(Advertisements ads, int option) {
 		String string = "";
 		if (option == 0){
 			string = "Put up flyers for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getFlyersAds() > 0){
-				string += " (" + ads.getFlyersAds() + "d)";
+			if (ads.hasFlyers()){
+				string += " (" + ads.getFlyersDuration() + "d)";
 			}
 		} else if (option == 1){
 			string = "Buy social media ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getSocialAds() > 0){
+			if (ads.hasSocialAds()){
 				string += " (" + ads.getSocialAds() + "d)";
 			}
 		} else if (option == 2){
 			string = "Buy newspaper ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getNewspaperAds() > 0){
+			if (ads.hasNewspaperAds()){
 				string += " (" + ads.getNewspaperAds() + "d)";
 			}
 		} else if (option == 3){
 			string = "Buy radio ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getRadioAds() > 0){
+			if (ads.hasRadioAds()){
 				string += " (" + ads.getRadioAds() + "d)";
 			}
 		} else if (option == 4){
 			string = "Buy TV ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getTVAds() > 0){
+			if (ads.hasTVAds()){
 				string += " (" + ads.getTVAds() + "d)";
 			}
 		}
 		return string;
+	}
+
+	public static int getCustomers(int option) {
+		return CUSTOMERS[option];
+	}
+
+	public static double getPrice(int option) {
+		return PRICE[option];
 	}
 
 	public int getTotalCustomers(){

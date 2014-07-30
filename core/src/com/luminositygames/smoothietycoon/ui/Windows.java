@@ -31,15 +31,15 @@ public class Windows {
 
 	public static Window NOTHING;
 	public static Window STAND = new Window(150, 500, 300);
-	public static Window REFRIDGERATOR = new Window(150, 625, 300);//25
-	public static Window JUICER = new Window(150, 625, 300);// 25
-	public static Window BLENDER = new Window(150, 625, 125);// 25
-	public static Window FRUIT = new Window(150, 600, 300);// 25
-	public static Window YOGURT = new Window(150, 600, 300);// 25
-	public static Window CUPS = new Window(150, 600, 300);// 25
-	public static Window ADVERTISE = new Window(150, 775, 475);//25
-	public static Window STATISTICS = new Window(150, 600, 300);// 25
-	public static Window SAVELOAD = new Window(150, 600, 300);// 25
+	public static Window REFRIDGERATOR = new Window(125, 625, 300);
+	public static Window JUICER = new Window(125, 625, 300);
+	public static Window BLENDER = new Window(125, 625, 125);
+	public static Window FRUIT = new Window(125, 600, 300);
+	public static Window YOGURT = new Window(125, 600, 300);
+	public static Window CUPS = new Window(125, 600, 300);
+	public static Window ADVERTISE = new Window(125, 775, 475);
+	public static Window STATISTICS = new Window(125, 600, 300);
+	public static Window SAVELOAD = new Window(125, 600, 300);
 
 	private static Window window;
 	private static int OFFSET;
@@ -102,68 +102,68 @@ public class Windows {
 	private static void renderRefridgeratorWindow(){
 		Image.window(Windows.REFRIDGERATOR);
 		for (int i = 0; i < 3; i++){
-			Image.draw("ice", 400, i * 85 + 195);
-			Fonts.left(Ice.getOptionString(i), 450, i * 85 + 200, Fonts.BLACK_36);
+			Image.draw("ice", 400, i * 85 + 170);
+			Fonts.left(Ice.getOptionString(i), 450, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
 	private static void renderJuicerWindow(){
 		Image.window(Windows.JUICER);
 		for (int i = 0; i < 3; i++){
-			Image.draw("juice", 385, i * 85 + 195);
-			Fonts.left(Juice.getOptionString(i), 435, i * 85 + 200, Fonts.BLACK_36);
+			Image.draw("juice", 385, i * 85 + 170);
+			Fonts.left(Juice.getOptionString(i), 435, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
 	private static void renderBlenderWindow(){
 		Image.window(Windows.BLENDER);
-		Image.rectangle(370, 195, 34, 34, 0.9f, Color.PINK);
-		Fonts.left("Refill smoothie container", 425, 200, Fonts.BLACK_36);
+		Image.rectangle(370, 170, 34, 34, 0.9f, Color.PINK);
+		Fonts.left("Refill smoothie container", 425, 175, Fonts.BLACK_36);
 	}
 
 	private static void renderFruitWindow(){
 		Image.window(Windows.FRUIT);
 		for (int i = 0; i < 3; i++){
-			Image.draw("fruit", 410, i * 85 + 195);
-			Fonts.left(Fruit.getOptionString(i), 460, i * 85 + 200, Fonts.BLACK_36);
+			Image.draw("fruit", 410, i * 85 + 170);
+			Fonts.left(Fruit.getOptionString(i), 460, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
 	private static void renderYogurtWindow(){
 		Image.window(Windows.YOGURT);
 		for (int i = 0; i < 3; i++){
-			Image.draw("yogurtinverted", 410, i * 85 + 195);
-			Fonts.left(Yogurt.getOptionString(i), 460, i * 85 + 200, Fonts.BLACK_36);
+			Image.draw("yogurtinverted", 410, i * 85 + 170);
+			Fonts.left(Yogurt.getOptionString(i), 460, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
 	private static void renderCupsWindow(){
 		Image.window(Windows.CUPS);
 		for (int i = 0; i < 3; i++){
-			Image.draw("cup", 410, i * 85 + 195);
-			Fonts.left(Cups.getOptionString(i), 460, i * 85 + 200, Fonts.BLACK_36);
+			Image.draw("cup", 410, i * 85 + 170);
+			Fonts.left(Cups.getOptionString(i), 460, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
 	private static void renderAdvertiseWindow(Advertisements ads) {
 		Image.window(Windows.ADVERTISE);
 		for (int i = 0; i < 5; i++){
-			Image.draw("ad", 300, i * 85 + 195);
-			Fonts.left(Advertisements.getOptionString(ads, i), 390, i * 85 + 200, Fonts.BLACK_36);
+			Image.draw("ad", 300, i * 85 + 170);
+			Fonts.left(Advertisements.getOptionString(ads, i), 390, i * 85 + 175, Fonts.BLACK_36);
 		}
 	}
 
 	private static void renderStatisticsWindow(Game game) {
 		Image.window(Windows.STATISTICS);
-		Image.draw("upArrow", 850, 175);
-		Image.draw("downArrow", 850, 350);
+		Image.draw("upArrow", 850, 150);
+		Image.draw("downArrow", 850, 325);
 		int lowerRange = getLowerRange(game);
 		for (int i = lowerRange; i < lowerRange + 3; i++){
 			StatisticsEntry entry = game.getStats().getEntry(i);
 			if (entry != null){
 				int relative = i - lowerRange + 1;
-				Image.draw("statisticsicon", 360, relative * 85 + 110);
-				Fonts.left(entry.toString(), 450, relative * 85 + 115, Fonts.BLACK_36);
+				Image.draw("statisticsicon", 360, relative * 85 + 85);
+				Fonts.left(entry.toString(), 450, relative * 85 + 90, Fonts.BLACK_36);
 			}
 		}
 	}
@@ -249,7 +249,7 @@ public class Windows {
 
 	private static void handleRefridgeratorWindow(Game game){
 		for (int i = 0; i < 3; i++){
-			if (Fonts.isTouched(Ice.getOptionString(i), 450, i * 85 + 200, Fonts.BLACK_36)){
+			if (Fonts.isTouched(Ice.getOptionString(i), 450, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyIce(Ice.getAmount(i), Ice.getPrice(i));
 				close();
 			}
@@ -258,7 +258,7 @@ public class Windows {
 
 	private static void handleJuicerWindow(Game game){
 		for (int i = 0; i < 3; i++){
-			if (Fonts.isTouched(Juice.getOptionString(i), 435, i * 85 + 200, Fonts.BLACK_36)){
+			if (Fonts.isTouched(Juice.getOptionString(i), 435, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().makeJuice(Juice.getAmount(i), Juice.getPrice(i));
 				close();
 			}
@@ -274,7 +274,7 @@ public class Windows {
 
 	private static void handleFruitWindow(Game game){
 		for (int i = 0; i < 3; i++){
-			if (Fonts.isTouched(Fruit.getOptionString(i), 465, i * 85 + 200, Fonts.BLACK_36)){
+			if (Fonts.isTouched(Fruit.getOptionString(i), 465, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyFruits(Fruit.getAmount(i), Fruit.getPrice(i));
 				close();
 			}
@@ -283,7 +283,7 @@ public class Windows {
 
 	private static void handleYogurtWindow(Game game){
 		for (int i = 0; i < 3; i++){
-			if (Fonts.isTouched(Yogurt.getOptionString(i), 465, i * 85 + 200, Fonts.BLACK_36)){
+			if (Fonts.isTouched(Yogurt.getOptionString(i), 465, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyYogurt(Yogurt.getAmount(i), Yogurt.getPrice(i));
 				close();
 			}
@@ -292,7 +292,7 @@ public class Windows {
 
 	private static void handleCupsWindow(Game game){
 		for (int i = 0; i < 3; i++){
-			if (Fonts.isTouched(Cups.getOptionString(i), 465, i * 85 + 200, Fonts.BLACK_36)){
+			if (Fonts.isTouched(Cups.getOptionString(i), 465, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyCups(Cups.getAmount(i), Cups.getPrice(i));
 				close();
 			}
@@ -301,7 +301,7 @@ public class Windows {
 
 	private static void handleAdvertiseWindow(Game game) {
 		for (int i = 0; i < 5; i++){
-			if (Fonts.isTouched(Advertisements.getOptionString(game.getAds(), i), 390, i * 85 + 200, Fonts.BLACK_36)){
+			if (Fonts.isTouched(Advertisements.getOptionString(game.getAds(), i), 390, i * 85 + 175, Fonts.BLACK_36)){
 				game.getPlayer().buyAd(game.getAds(), i);
 				game.setNewMaxCustomers();
 				close();
