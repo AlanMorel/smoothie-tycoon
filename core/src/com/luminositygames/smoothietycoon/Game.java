@@ -8,8 +8,11 @@ import com.luminositygames.smoothietycoon.entities.Customer;
 import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.entities.Statistics;
+import com.luminositygames.smoothietycoon.ui.Achievements;
 import com.luminositygames.smoothietycoon.ui.Effect;
+import com.luminositygames.smoothietycoon.ui.Notifications;
 import com.luminositygames.smoothietycoon.ui.Section;
+import com.luminositygames.smoothietycoon.ui.Tips;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
 
@@ -45,6 +48,12 @@ public class Game {
 		this.ads = new Advertisements();
 		this.stats = new Statistics();
 		this.day = 0;
+		Notifications.load();
+		Achievements.load();
+		Tips.load();
+		Tips.displayRandomTip();
+		Tips.displayRandomTip();
+		Tips.displayRandomTip();
 		startNewDay();
 	}
 
@@ -57,7 +66,7 @@ public class Game {
 		this.maxCustomers = getMaxCustomers();
 		this.lastSpawn = new Countdown(getSpawnDelay(), true);
 		this.totalCustomers = 0;
-		this.ads.use();
+		this.ads.useAds();
 	}
 
 	public Player getPlayer() {
@@ -97,6 +106,7 @@ public class Game {
 		if (section.isStand()){
 			renderStand();
 		}
+		Notifications.render();
 	}
 
 	private void renderStand() {
@@ -131,13 +141,17 @@ public class Game {
 
 	public void update(float delta) {
 		Effect.update(delta);
+		Notifications.update();
 		updateCustomers(delta);
 		processPurchases();
 		if (totalCustomers < maxCustomers) {
-			addNewCustomer();
+			for (int i = 0; i < maxCustomers; i++){
+				addNewCustomer();
+			}
 		} else if (!dayStillRunning()) {
 			if (!getNight().hasStarted()) {
 				getNight().start();
+				Tips.displayRandomTip();
 			} else if(getNight().isCompleted()) {
 				startNewDay();
 			}
@@ -153,9 +167,13 @@ public class Game {
 
 	private void processPurchases(){
 		for (int i = 0; i < getPurchases(); i++) {
+			if (container.getServings() <= 0 || player.getCups() <= 0){
+				return;
+			}
 			getPlayer().addMoney(getRecipe().getPrice());
 			getContainer().serve();
 			getPlayer().useCup();
+			Achievements.unlock(Achievements.BUSINESSMAN);
 		}
 	}
 
