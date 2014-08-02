@@ -28,7 +28,6 @@ public class GameTween {
 	public static final byte EFFECT = 4;
 
 	private TweenManager tweenManager;
-
 	private float value;
 
 	public GameTween(float value, byte type){

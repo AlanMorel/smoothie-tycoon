@@ -68,6 +68,9 @@ public class UserInterface {
 	}
 
 	public void renderThermometer(int temperature){
+		int y = 310 - temperature;
+		int height = 15 + temperature;
+		Image.rectangle(1230, y, 15, height, 1.0f, Color.RED);
 		Image.draw("thermometer", Constants.WIDTH - 60, 200);
 		Fonts.center(temperature + "°", 1240, 370, Fonts.BLACK_36);
 	}

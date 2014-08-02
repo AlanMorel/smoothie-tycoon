@@ -16,14 +16,14 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Effect {
 
+	private static GameTween effect = new GameTween(0, GameTween.EFFECT);
+
 	public static final byte SMOOTHIE = 0;
 	public static final byte FRUIT = 1;
 	public static final byte ICE = 2;
 	public static final byte YOGURT = 3;
 	public static final byte JUICE = 4;
 	public static final byte CUPS = 5;
-
-	private static GameTween effect = new GameTween(0, GameTween.EFFECT);
 
 	public static void update(float delta){
 		effect.update(delta);

@@ -6,6 +6,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -21,6 +23,8 @@ import com.luminositygames.smoothietycoon.screens.Tutorial;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
 import com.luminositygames.smoothietycoon.util.KeyProcessor;
+import com.luminositygames.smoothietycoon.util.Songs;
+import com.luminositygames.smoothietycoon.util.Sounds;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -73,6 +77,7 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.renderer = new ShapeRenderer();
 
 		Image.load("splash");
+		Image.load("mainmenu");
 		Image.load("salesBackground");
 		Image.load("stand");
 		Image.load("slantedsign");
@@ -96,7 +101,8 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("office");
 		Image.load("advertise");
 		Image.load("statistics");
-		Image.load("saveload");
+		Image.load("upgrades");
+		Image.load("upgradesIcon");
 		Image.load("refridgerator");
 		Image.load("juicer");
 		Image.load("blender");
@@ -117,15 +123,28 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("winterL");
 		Image.load("policeR");
 		Image.load("policeL");
+		Image.load("pirateR");
+		Image.load("pirateL");
+		Image.load("fruitSeller");
+		Image.load("yogurtSeller");
+		Image.load("cupSeller");
 		Image.addHover("playbutton", "playbutton2");
 	}
 
 	private void loadMusic(){
-
+		Songs.songs = new HashMap<String, Music>();
+		Songs.load("gameplay", 0.5f);
 	}
 
 	private void loadSounds(){
-
+		Sounds.sounds = new HashMap<String, Sound>();
+		Sounds.load("achievement", "mp3");
+		Sounds.load("purchase", "mp3");
+		Sounds.load("supplies", "wav");
+		Sounds.load("refill", "wav");
+		Sounds.load("morning", "mp3");
+		Sounds.load("tip", "wav");
+		Sounds.load("adPurchase", "mp3");
 	}
 
 	private void loadFonts() {

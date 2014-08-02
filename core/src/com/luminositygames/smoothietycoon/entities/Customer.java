@@ -21,6 +21,7 @@ public class Customer {
 
 	private static final byte LEFT = 0;
 	private static final byte RIGHT = 1;
+
 	private int x;
 	private int speed;
 	private int side;
@@ -70,10 +71,18 @@ public class Customer {
 	}
 
 	public void render() {
-		Image.rectangle(x, 300, 100, 240, 1.0f, color);
+		renderCustomer();
+		hat.render(x);
+	}
+
+	public void renderCustomer(){
+		double tweenValue = hat.getHatTween().getValue();
+		int length = 240 - (int) tweenValue;
+		int height = 300 + (int) tweenValue;
+
+		Image.rectangle(x, height, 100, length, 1.0f, color);
 		Image.rectangle(x, 540, 100, 10, 1.0f, buying ? Color.GREEN : Color.RED);
 		Image.draw("customerOverlay", x, 300);
-		hat.render(x);
 	}
 
 	public void update(float delta, boolean canBuy) {
@@ -92,6 +101,7 @@ public class Customer {
 		private static final byte COWBOY = 1;
 		private static final byte WINTER = 2;
 		private static final byte POLICE = 3;
+		private static final byte PIRATE = 4;
 
 		private GameTween hatTween;
 		private String hat;
@@ -100,7 +110,7 @@ public class Customer {
 
 		public Hat(int side){
 			this.hatTween = new GameTween(-10, GameTween.HAT);
-			int random = SmoothieTycoon.random.nextInt(4);
+			int random = SmoothieTycoon.random.nextInt(5);
 			if (random == SWAG){
 				this.hat = "swag";
 				this.x = -22;
@@ -117,8 +127,16 @@ public class Customer {
 				this.hat = "police";
 				this.x = -22;
 				this.y = 238;
+			} else if (random == PIRATE){
+				this.hat = "pirate";
+				this.x = -12;
+				this.y = 259;
 			}
 			this.hat += side == 0 ? "L" : "R";
+		}
+
+		public GameTween getHatTween(){
+			return hatTween;
 		}
 
 		public void render(int customerX){

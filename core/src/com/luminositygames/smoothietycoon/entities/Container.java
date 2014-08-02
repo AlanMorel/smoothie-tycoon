@@ -1,6 +1,7 @@
 package com.luminositygames.smoothietycoon.entities;
 
 import com.luminositygames.smoothietycoon.Game;
+import com.luminositygames.smoothietycoon.ui.Achievements;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -22,6 +23,10 @@ public class Container {
 
 	public Container() {
 		this.servings = 5;
+		this.fruit = 10;
+		this.ice = 10;
+		this.yogurt = 10;
+		this.juice = 10;
 	}
 
 	public int getFruit() {
@@ -64,6 +69,7 @@ public class Container {
 			this.yogurt = game.getRecipe().getYogurt();
 			this.juice = game.getRecipe().getJuice();
 			game.getPlayer().makeContainer(game.getRecipe());
+			Achievements.progress(Achievements.REFILLS, 1);
 		}
 	}
 }

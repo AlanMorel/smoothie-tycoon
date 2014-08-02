@@ -1,6 +1,8 @@
 package com.luminositygames.smoothietycoon.entities;
 
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.ui.Achievements;
+import com.luminositygames.smoothietycoon.util.Sounds;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -12,139 +14,90 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
  * @version 1.0
  */
 
-public class Advertisements {
+public enum Advertisements {
 
-	private static final int[] CUSTOMERS = {5, 10, 15, 20, 25};
-	private static final double[] PRICE = {5.00, 10.00, 25.00, 50.00, 100.00};
+	FLYERS(5, 10.00, "Put up flyers for "),
+	SOCIAL(10, 20.00, "Buy social media ads for "),
+	NEWSPAPER(15, 35.00, "Buy newspaper ads for "),
+	RADIO(20, 75.00, "Buy radio ads for "),
+	TV(25, 100.00, "Buy TV ads for ");
 
-	private byte flyers;
-	private byte social;
-	private byte newspapers;
-	private byte radio;
-	private byte tv;
+	public static Advertisements[] ALL = {FLYERS, SOCIAL, NEWSPAPER, RADIO, TV};
 
-	public Advertisements(){
-		flyers = 0;
-		social = 0;
-		newspapers = 0;
-		radio = 0;
-		tv = 0;
+	private int customers;
+	private double price;
+	private int days;
+	private String prefix;
+
+	private Advertisements(int customers, double price, String prefix) {
+		this.customers = customers;
+		this.price = price;
+		this.prefix = prefix;
+		this.days = 0;
 	}
 
-	public void useAds(){
-		if (flyers > 0){
-			flyers --;
+	public int getCustomers(){
+		return customers;
+	}
+
+	public int getDays(){
+		return days;
+	}
+
+	public void use(){
+		if (days > 0){
+			days -= 1;
 		}
-		if (social > 0){
-			social --;
+	}
+
+	public void buy(Player player){
+		if (player.getMoney() >= price && days < 5){
+			player.addMoney(-price);
+			Sounds.play("adPurchase", 0.2f);
+			days = 5;
+			Achievements.progress(Achievements.FIRST_AD, 1);
+			if (getTotalCustomers() == 75){
+				Achievements.progress(Achievements.ALL_ADS, 1);
+			}
 		}
-		if (newspapers > 0){
-			newspapers --;
-		}
-		if (radio > 0){
-			radio --;
-		}
-		if (tv > 0){
-			tv --;
-		}
 	}
 
-	public void buyFlyers(){
-		flyers = 5;
-	}
-
-	public void buySocialAds(){
-		social = 5;
-	}
-
-	public void buyNewspaperAds(){
-		newspapers = 5;
-	}
-
-	public void buyRadioAds(){
-		radio = 5;
-	}
-
-	public void buyTVAds(){
-		tv = 5;
-	}
-
-	public byte getFlyersAds(){
-		return flyers;
-	}
-
-	public byte getSocialAds(){
-		return social;
-	}
-
-	public byte getNewspaperAds(){
-		return newspapers;
-	}
-
-	public byte getRadioAds(){
-		return radio;
-	}
-
-	public byte getTVAds(){
-		return tv;
-	}
-
-	public static int getCustomers(int option) {
-		return CUSTOMERS[option];
-	}
-
-	public static double getPrice(int option) {
-		return PRICE[option];
-	}
-
-	public static String getOptionString(Advertisements ads, int option) {
-		String string = "";
-		if (option == 0){
-			string = "Put up flyers for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getFlyersAds() > 0){
-				string += " (" + ads.getFlyersAds() + "d)";
-			}
-		} else if (option == 1){
-			string = "Buy social media ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getSocialAds() > 0){
-				string += " (" + ads.getSocialAds() + "d)";
-			}
-		} else if (option == 2){
-			string = "Buy newspaper ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getNewspaperAds() > 0){
-				string += " (" + ads.getNewspaperAds() + "d)";
-			}
-		} else if (option == 3){
-			string = "Buy radio ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getRadioAds() > 0){
-				string += " (" + ads.getRadioAds() + "d)";
-			}
-		} else if (option == 4){
-			string = "Buy TV ads for " + SmoothieTycoon.format(PRICE[option]);
-			if (ads.getTVAds() > 0){
-				string += " (" + ads.getTVAds() + "d)";
-			}
+	public String getString() {
+		String string = prefix + SmoothieTycoon.format(price);
+		if (days > 0){
+			string += " (" + days + "d)";
 		}
 		return string;
 	}
 
-	public int getTotalCustomers(){
+	public static Advertisements getById(int option){
+		for (int i = 0; i < ALL.length; i++){
+			if (i == option){
+				return ALL[i];
+			}
+		}
+		return null;
+	}
+
+	public static int getTotalCustomers(){
 		int total = 0;
-		if (flyers > 0){
-			total += getCustomers(0);
-		}
-		if (social > 0){
-			total += getCustomers(1);
-		}
-		if (newspapers > 0){
-			total += getCustomers(2);
-		}
-		if (radio > 0){
-			total += getCustomers(3);
-		}
-		if (tv > 0){
-			total += getCustomers(4);
+		for (int i = 0; i < ALL.length; i++){
+			if (ALL[i].getDays() > 0){
+				total += ALL[i].getCustomers();
+			}
 		}
 		return total;
 	}
+
+	public static void useAds(){
+		for (int i = 0; i < ALL.length; i++){
+			ALL[i].use();
+		}
+	}
+
+	public static String getString(int option){
+		Advertisements ad = Advertisements.getById(option);
+		return ad.getString();
+	}
 }
+

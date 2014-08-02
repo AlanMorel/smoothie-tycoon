@@ -7,6 +7,7 @@ import com.luminositygames.smoothietycoon.ui.Section;
 import com.luminositygames.smoothietycoon.ui.UserInterface;
 import com.luminositygames.smoothietycoon.ui.Windows;
 import com.luminositygames.smoothietycoon.util.Image;
+import com.luminositygames.smoothietycoon.util.Songs;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -29,6 +30,7 @@ public class Gameplay implements Screen2 {
 		this.game = new Game();
 		this.section = new Section();
 		this.ui = new UserInterface();
+		Songs.play("gameplay");
 	}
 
 	@Override

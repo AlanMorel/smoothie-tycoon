@@ -11,7 +11,7 @@ package com.luminositygames.smoothietycoon.entities;
  */
 
 public class Recipe {
-	
+
 	private double price;
 	private int fruit;
 	private int ice;
@@ -31,7 +31,9 @@ public class Recipe {
 	}
 
 	public void setPrice(double price) {
-		this.price = price;
+		if (price >= 0.05){
+			this.price = price;
+		}
 	}
 
 	public int getFruit() {
@@ -39,7 +41,9 @@ public class Recipe {
 	}
 
 	public void setFruit(int fruit) {
-		this.fruit = fruit;
+		if (fruit > 0){
+			this.fruit = fruit;
+		}
 	}
 
 	public int getIce() {
@@ -47,7 +51,9 @@ public class Recipe {
 	}
 
 	public void setIce(int ice) {
-		this.ice = ice;
+		if (ice > 0){
+			this.ice = ice;
+		}
 	}
 
 	public int getYogurt() {
@@ -55,7 +61,9 @@ public class Recipe {
 	}
 
 	public void setYogurt(int yogurt) {
-		this.yogurt = yogurt;
+		if (yogurt > 0){
+			this.yogurt = yogurt;
+		}
 	}
 
 	public int getJuice() {
@@ -63,6 +71,8 @@ public class Recipe {
 	}
 
 	public void setJuice(int juice) {
-		this.juice = juice;
+		if (juice > 0){
+			this.juice = juice;
+		}
 	}
 }

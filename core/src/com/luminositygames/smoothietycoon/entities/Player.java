@@ -1,5 +1,8 @@
 package com.luminositygames.smoothietycoon.entities;
 
+import com.luminositygames.smoothietycoon.ui.Achievements;
+import com.luminositygames.smoothietycoon.util.Sounds;
+
 
 /**
  * This file is part of Smoothie Tycoon
@@ -55,6 +58,9 @@ public class Player {
 
 	public void addMoney(double money) {
 		this.money += money;
+		if (money > 0){
+			Achievements.progress(Achievements.MONEY, money);
+		}
 	}
 
 	public void useCup() {
@@ -62,13 +68,18 @@ public class Player {
 	}
 
 	public boolean canPay(double price){
-		return money >= price;
+		if (money >= price){
+			Sounds.play("supplies", 0.5f);
+			return true;
+		}
+		return false;
 	}
 
 	public void buyFruits(int amount, double price){
 		if (canPay(price)){
 			fruits += amount;
 			money -= price;
+			Achievements.progress(Achievements.FRUIT_PURCHASED, amount);
 		}
 	}
 
@@ -76,6 +87,7 @@ public class Player {
 		if (canPay(price)){
 			ice += amount;
 			money -= price;
+			Achievements.progress(Achievements.ICE_PURCHASED, amount);
 		}
 	}
 
@@ -83,6 +95,7 @@ public class Player {
 		if (canPay(price)){
 			yogurt += amount;
 			money -= price;
+			Achievements.progress(Achievements.YOGURT_PURCHASED, amount);
 		}
 	}
 
@@ -90,6 +103,7 @@ public class Player {
 		if (fruits >= price){
 			juice += amount;
 			fruits -= price;
+			Achievements.progress(Achievements.JUICE_MADE, amount);
 		}
 	}
 
@@ -97,6 +111,7 @@ public class Player {
 		if (canPay(price)){
 			cups += amount;
 			money -= price;
+			Achievements.progress(Achievements.CUPS_PURCHASED, amount);
 		}
 	}
 
@@ -105,23 +120,6 @@ public class Player {
 		ice -= recipe.getIce();
 		yogurt -= recipe.getYogurt();
 		juice -= recipe.getJuice();
-	}
-
-	public void buyAd(Advertisements ad, int id) {
-		double cost = Advertisements.getPrice(id);
-		if(canPay(cost)){
-			money -= cost;
-			if (id == 0){
-				ad.buyFlyers();
-			} else if (id == 1){
-				ad.buySocialAds();
-			} else if (id == 2){
-				ad.buyNewspaperAds();
-			} else if (id == 3){
-				ad.buyRadioAds();
-			} else if (id == 4){
-				ad.buyTVAds();
-			}
-		}
+		Sounds.play("refill", 0.5f);
 	}
 }

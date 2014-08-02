@@ -19,7 +19,9 @@ public class DesktopLauncher {
 		config.initialBackgroundColor = Color.valueOf("FFFFFF");
 		config.resizable = false;
 		config.vSyncEnabled = true;
-		config.addIcon("icon.png", FileType.Internal);
+		config.addIcon("icon_16.png", FileType.Internal);
+		config.addIcon("icon_32.png", FileType.Internal);
+		config.addIcon("icon_128.png", FileType.Internal);
 		new LwjglApplication(new SmoothieTycoon(), config);
 	}
 }

@@ -28,7 +28,7 @@ public class MainMenu implements Screen2 {
 
 	@Override
 	public void render(float delta) {
-		Image.draw("salesBackground", 0, 0);
+		Image.draw("mainmenu", 0, 0);
 		Image.draw("stand", 50, 175);
 		Image.draw("stand", Constants.WIDTH - 50 - Image.get("stand").getWidth(), 175);
 		Image.draw("player", 325, 300);

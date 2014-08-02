@@ -26,6 +26,7 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
 public class Fonts {
 
 	public static HashMap<Integer, BitmapFont> fonts;
+
 	public static final byte BLACK_36 = 0;
 	public static final byte WHITE_36 = 1;
 	public static final byte BLACK_48 = 2;

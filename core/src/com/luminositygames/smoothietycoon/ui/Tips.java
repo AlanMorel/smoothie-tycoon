@@ -1,8 +1,7 @@
 package com.luminositygames.smoothietycoon.ui;
 
-import java.util.ArrayList;
-
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.util.Sounds;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -16,37 +15,32 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
 
 public class Tips {
 
-	public static ArrayList<Tip> tips;
+	public static String [] tip = {
+		"People like more ice on hotter days",
+		"Lower the price for more customers",
+		"Buy in bulk to save money",
+		"Advertise to draw in customers",
+		"Track progress by viewing your statistics",
+		"Avoid too much ice on cold days",
+		"Buy upgrades for a more efficient business",
+		"Keep an eye on your supply of ingredients",
+		"You will need cups to sell smoothies in",
+		"Use the night to restock",
+		"People are drawn to high-quality smoothies",
+		"Be prepared to refill your container at all times",
+		"Don't be cheap on ingredients",
+		"Advertisements last 5 days each",
+		"Advertisements begin immediately",
+		"Happy customers will Instagram their drinks",
+		"Buyers that can't buy a drink will be upset",
+		"Have some excess money? Buy an ad",
+		"Keep your eyes on the servings left",
+		"Keep your customers cool on hot days",
+	};
 
-	public static void load(){
-		tips = new ArrayList<Tip>();
-		tips.add(new Tip("People like more ice on hotter days"));
-		tips.add(new Tip("Lower the price for more customers"));
-		tips.add(new Tip("Buy in bulk to save money"));
-		tips.add(new Tip("Advertise to draw in customers"));
-		tips.add(new Tip("Track progress by viewing your statistics"));
-		tips.add(new Tip("Avoid too much ice on cold days"));
-		tips.add(new Tip("Buy upgrades for a more efficient business"));
-		tips.add(new Tip("Keep an eye on your supply of ingredients"));
-		tips.add(new Tip("You will need cups to sell smoothies in"));
-		tips.add(new Tip("Use the night to restock"));
-	}
-
-	public static void displayRandomTip(){
-		int random = SmoothieTycoon.random.nextInt(tips.size());
-		tips.get(random).show();
-	}
-
-	public static class Tip {
-
-		private String message;
-
-		public Tip(String message){
-			this.message = message;
-		}
-
-		public void show(){
-			Notifications.show(message, Notifications.TIP);
-		}
+	public static void displayTip(){
+		int random = SmoothieTycoon.random.nextInt(tip.length);
+		Notifications.show(tip[random], Notifications.TIP);
+		Sounds.play("tip", 1.0f);
 	}
 }

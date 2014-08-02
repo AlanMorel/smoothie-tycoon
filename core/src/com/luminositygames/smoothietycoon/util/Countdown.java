@@ -27,26 +27,26 @@ public class Countdown {
 	}
 
 	public boolean isCompleted(){
-		long time = TimeUtils.millis();
-		return time - start >= duration && hasStarted();
-	}
-
-	public void start() {
-		this.start = TimeUtils.millis();
-		this.started = true;
+		return TimeUtils.millis() - start >= duration && started;
 	}
 
 	public boolean hasStarted() {
 		return started;
 	}
 
+	public void start() {
+		start = TimeUtils.millis();
+		started = true;
+	}
+
+
 	public int getPercentage(){
-		int percentage =  (int)((TimeUtils.millis() - start) * 100 / duration);
 		if (!hasStarted()){
 			return 0;
 		} else if (isCompleted()){
 			return 100;
 		} else {
+			int percentage = (int)((TimeUtils.millis() - start) * 100 / duration);
 			return percentage;
 		}
 	}

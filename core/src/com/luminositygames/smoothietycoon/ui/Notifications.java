@@ -51,7 +51,7 @@ public class Notifications {
 
 	public static class Notification {
 
-		private static final int DURATION = 5 * 1000;
+		private static final int DURATION = 10 * 1000;
 		private static final float ALPHA = 0.75f;
 		private static final Color COLOR = Color.WHITE;
 

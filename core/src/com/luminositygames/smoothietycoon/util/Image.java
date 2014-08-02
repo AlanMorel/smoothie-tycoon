@@ -31,6 +31,7 @@ public class Image {
 	public static HashMap<String, Image> images;
 	public static SpriteBatch batch;
 	public static ShapeRenderer renderer;
+
 	private Sprite sprite;
 	private Sprite hover;
 	private boolean hasHover;
@@ -38,14 +39,6 @@ public class Image {
 	public Image(Sprite s){
 		this.sprite = s;
 		this.hasHover = false;
-	}
-
-	public static void addHover(String image, String hover) {
-		Image image1 = Image.get(image);
-		Image image2 = Image.get(hover);
-
-		image1.hover = image2.getSprite();
-		image1.hasHover = true;
 	}
 
 	public Sprite getSprite(){
@@ -75,6 +68,14 @@ public class Image {
 		float x = SmoothieTycoon.getX();
 		float y = SmoothieTycoon.getY();
 		return spriteRect.contains(x, y) && Gdx.input.justTouched();
+	}
+
+	public static void addHover(String image, String hover) {
+		Image image1 = Image.get(image);
+		Image image2 = Image.get(hover);
+
+		image1.hover = image2.getSprite();
+		image1.hasHover = true;
 	}
 
 	public static void load(String name) {

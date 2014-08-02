@@ -75,6 +75,9 @@ public class Section {
 
 	private void renderMarket() {
 		Image.draw("market", 0, 0);
+		Image.draw("fruitSeller", 215, 250);
+		Image.draw("yogurtSeller", 575, 250);
+		Image.draw("cupSeller", 950, 250);
 		Image.draw("fruitstand", 165, 170);
 		Image.draw("yogurtstand", 520, 170);
 		Image.draw("cupstand", 895, 170);
@@ -87,7 +90,7 @@ public class Section {
 		Image.draw("office", 0, 0);
 		Image.draw("advertise", 130, 213);
 		Image.draw("statistics", 520, 203);
-		Image.draw("saveload", 910, 220);
+		Image.draw("upgrades", 910, 188);
 	}
 
 	public void handleTouch() {
@@ -133,8 +136,8 @@ public class Section {
 			Windows.open(Windows.ADVERTISE);
 		} else if (Image.get("statistics").isTouched()){
 			Windows.open(Windows.STATISTICS);
-		} else if (Image.get("saveload").isTouched()){
-			Windows.open(Windows.SAVELOAD);
+		} else if (Image.get("upgrades").isTouched()){
+			Windows.open(Windows.UPGRADES);
 		}
 	}
 }
