@@ -56,15 +56,36 @@ public class Player {
 		return money;
 	}
 
-	public void addMoney(double money) {
-		this.money += money;
-		if (money > 0){
-			Achievements.progress(Achievements.MONEY, money);
-		}
+	public void setFruits(int f) {
+		fruits = f;;
 	}
 
-	public void useCup() {
-		cups --;
+	public void setIce(int i) {
+		ice = i;
+	}
+
+	public void setYogurt(int y) {
+		yogurt = y;
+	}
+
+	public void setCups(int c) {
+		cups = c;
+	}
+
+	public void setJuice(int j) {
+		juice = j;
+	}
+
+	public void setMoney(double m) {
+		money = m;
+	}
+
+	public void addMoney(double money) {
+		setMoney(getMoney() + money);
+		if (money > 0){
+			Achievements.progress(Achievements.EARNINGS, money);
+		}
+		Achievements.check(Achievements.MONEY, getMoney());
 	}
 
 	public boolean canPay(double price){
@@ -75,51 +96,56 @@ public class Player {
 		return false;
 	}
 
+	public void useCup() {
+		setCups(getCups() - 1);
+	}
+
 	public void buyFruits(int amount, double price){
 		if (canPay(price)){
-			fruits += amount;
-			money -= price;
+			setFruits(getFruits() + amount);
+			setMoney(getMoney() - price);
 			Achievements.progress(Achievements.FRUIT_PURCHASED, amount);
 		}
 	}
 
 	public void buyIce(int amount, double price){
 		if (canPay(price)){
-			ice += amount;
-			money -= price;
+			setIce(getIce() + amount);
+			setMoney(getMoney() - price);
 			Achievements.progress(Achievements.ICE_PURCHASED, amount);
 		}
 	}
 
 	public void buyYogurt(int amount, double price){
 		if (canPay(price)){
-			yogurt += amount;
-			money -= price;
+			setYogurt(getYogurt() + amount);
+			setMoney(getMoney() - price);
 			Achievements.progress(Achievements.YOGURT_PURCHASED, amount);
 		}
 	}
 
 	public void makeJuice(int amount, double price){
-		if (fruits >= price){
-			juice += amount;
-			fruits -= price;
+		if (getFruits() >= price){
+			setJuice(getJuice() + amount);
+			setFruits(getFruits() - (int) price);
 			Achievements.progress(Achievements.JUICE_MADE, amount);
+			Sounds.play("supplies", 0.5f);
 		}
 	}
 
 	public void buyCups(int amount, double price){
 		if (canPay(price)){
-			cups += amount;
-			money -= price;
+			setCups(getCups() + amount);
+			setMoney(getMoney() - price);
 			Achievements.progress(Achievements.CUPS_PURCHASED, amount);
 		}
 	}
 
 	public void makeContainer(Recipe recipe){
-		fruits -= recipe.getFruit();
-		ice -= recipe.getIce();
-		yogurt -= recipe.getYogurt();
-		juice -= recipe.getJuice();
+		setFruits(getFruits() - recipe.getFruit());
+		setIce(getIce() - recipe.getIce());
+		setYogurt(getYogurt() - recipe.getYogurt());
+		setJuice(getJuice() - recipe.getJuice());
 		Sounds.play("refill", 0.5f);
 	}
 }

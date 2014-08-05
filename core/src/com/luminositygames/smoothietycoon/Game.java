@@ -10,6 +10,7 @@ import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.entities.Statistics;
 import com.luminositygames.smoothietycoon.ui.Achievements;
 import com.luminositygames.smoothietycoon.ui.Effect;
+import com.luminositygames.smoothietycoon.ui.Event;
 import com.luminositygames.smoothietycoon.ui.Notifications;
 import com.luminositygames.smoothietycoon.ui.Section;
 import com.luminositygames.smoothietycoon.ui.Tips;
@@ -36,6 +37,7 @@ public class Game {
 	private Countdown night;
 	private Countdown lastSpawn;
 	private ArrayList<Customer> customers;
+	private boolean paused;
 	private int day;
 	private int temperature;
 	private int maxCustomers;
@@ -47,8 +49,10 @@ public class Game {
 		this.container = new Container();
 		this.stats = new Statistics();
 		this.day = 0;
+		this.paused = false;
 		Notifications.load();
 		Achievements.load();
+		Event.load();
 		startNewDay();
 	}
 
@@ -133,10 +137,17 @@ public class Game {
 	}
 
 	public void update(float delta) {
-		Effect.update(delta);
-		Notifications.update();
-		updateCustomers(delta);
-		processPurchases();
+		if (!paused){
+			Effect.update(delta);
+			Notifications.update();
+			Event.handle(player);
+			updateCustomers(delta);
+			processPurchases();
+			updateGame();
+		}
+	}
+
+	private void updateGame() {
 		if (totalCustomers < maxCustomers) {
 			addNewCustomer();
 		} else if (!dayStillRunning()) {
@@ -144,6 +155,7 @@ public class Game {
 				getNight().start();
 				Tips.displayTip();
 			} else if(getNight().isCompleted()) {
+				Event.initiate();
 				startNewDay();
 			}
 		}
@@ -161,12 +173,9 @@ public class Game {
 			if (container.getServings() <= 0 || player.getCups() <= 0){
 				return;
 			}
-			if (recipe.getPrice() >= 5.00){
-				Achievements.progress(Achievements.HIGH_PRICE, 1);
-			}
-			if (container.getFruit() + container.getJuice() + container.getYogurt() >= 60){
-				Achievements.progress(Achievements.HIGH_QUALITY, 1);
-			}
+			int quality = container.getFruit() + container.getJuice() + container.getYogurt();
+			Achievements.check(Achievements.HIGH_PRICE, recipe.getPrice());
+			Achievements.check(Achievements.HIGH_QUALITY, quality);
 			getPlayer().addMoney(getRecipe().getPrice());
 			getContainer().serve();
 			getPlayer().useCup();
@@ -196,7 +205,7 @@ public class Game {
 	}
 
 	private int getSpawnDelay() {
-		int base = 1000 - Advertisements.getTotalCustomers() * 10;
+		int base = 1000 - Advertisements.getTotalCustomers() * 5;
 		int variable = 500;
 		int spawnDelay = SmoothieTycoon.random.nextInt(variable) + base;
 		return spawnDelay;
@@ -235,37 +244,49 @@ public class Game {
 		return SmoothieTycoon.random.nextInt(100) < getBuyPercentage();
 	}
 
+	//No Max
 	private int getPricePercentageChange(){
-		double optimalPrice = 0.25 + day * 0.03;
+		double optimalPrice = 0.25 + day * 0.05;
 		int delta = (int) Math.round((optimalPrice - recipe.getPrice()) * 25);
-		int percentage = delta * 5 + 75;
-		return SmoothieTycoon.fixPercentage(percentage);
+		int percentage = delta * 10 + 25;
+		//System.out.println("Price percentage: " + percentage);
+		return percentage;
 	}
 
+	//Max 10
 	private int getTemperatureIceChange(){
 		int optimalIce = temperature / 5;
 		int delta = Math.abs(optimalIce - container.getIce());
-		int percentage = 100 - delta * 10;
-		return SmoothieTycoon.fixPercentage(percentage);
+		int percentage = 10 - delta;
+		//System.out.println("Temp percentage: " + percentage);
+		return percentage;
 	}
 
+	//Max 10
 	private int getQualityChange(){
 		int standardQuality = 30;
 		int currentQuality = container.getFruit() + container.getJuice() + container.getYogurt();
-		int delta = currentQuality - standardQuality;
-		int percentage = delta * 4;
-		System.out.println("Quality percentage: " + percentage);
-		return SmoothieTycoon.fixPercentage(percentage);
+		int delta = (currentQuality - standardQuality) / 3;
+		int percentage = delta;
+		//System.out.println("Quality percentage: " + percentage);
+		return percentage;
 	}
 
+	//Max 100
 	private int getBuyPercentage(){
 		int percentage = 0;
-		int pricePerc = getPricePercentageChange() * 60 / 100;
-		int tempPerc = getTemperatureIceChange() * 20 / 100;
-		int qualityPerc = getQualityChange() * 20 / 100;
+		int pricePerc = getPricePercentageChange();
+		int tempPerc = getTemperatureIceChange();
+		int qualityPerc = getQualityChange();
 		percentage += pricePerc;
 		percentage += tempPerc;
 		percentage += qualityPerc;
-		return percentage;
+		//System.out.println("Total percentage: " + percentage);
+		//System.out.println("");
+		return SmoothieTycoon.fixPercentage(percentage);
+	}
+
+	public void togglePause() {
+		paused = !paused;
 	}
 }

@@ -16,10 +16,10 @@ import com.luminositygames.smoothietycoon.util.Sounds;
 
 public enum Advertisements {
 
-	FLYERS(5, 10.00, "Put up flyers for "),
-	SOCIAL(10, 20.00, "Buy social media ads for "),
-	NEWSPAPER(15, 35.00, "Buy newspaper ads for "),
-	RADIO(20, 75.00, "Buy radio ads for "),
+	FLYERS(5, 20.00, "Put up flyers for "),
+	SOCIAL(10, 35.00, "Buy social media ads for "),
+	NEWSPAPER(15, 55.00, "Buy newspaper ads for "),
+	RADIO(20, 80.00, "Buy radio ads for "),
 	TV(25, 100.00, "Buy TV ads for ");
 
 	public static Advertisements[] ALL = {FLYERS, SOCIAL, NEWSPAPER, RADIO, TV};

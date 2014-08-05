@@ -1,7 +1,6 @@
 package com.luminositygames.smoothietycoon.ui;
 
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
-import com.luminositygames.smoothietycoon.util.Sounds;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -41,6 +40,5 @@ public class Tips {
 	public static void displayTip(){
 		int random = SmoothieTycoon.random.nextInt(tip.length);
 		Notifications.show(tip[random], Notifications.TIP);
-		Sounds.play("tip", 1.0f);
 	}
 }

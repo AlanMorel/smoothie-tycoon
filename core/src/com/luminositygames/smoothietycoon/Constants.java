@@ -25,11 +25,7 @@ public class Constants {
 	//SPLASH DURATION
 	public static final float SPLASH_DURATION = 0.0f;
 
-	//VOLUME
-	public static final float VOLUME = 1.0f;
-
 	//TUTORIAL
 	public static final boolean TUTORIAL = false;
-
 
 }

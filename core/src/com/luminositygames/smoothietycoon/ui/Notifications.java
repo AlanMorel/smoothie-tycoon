@@ -7,6 +7,7 @@ import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
+import com.luminositygames.smoothietycoon.util.Sounds;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -24,6 +25,7 @@ public class Notifications {
 
 	public static final String TIP = "tip";
 	public static final String ACHIEVEMENT = "achievement";
+	public static final String EVENT = "event";
 
 	public static void load(){
 		notifications = new ArrayList<Notification>();
@@ -51,17 +53,17 @@ public class Notifications {
 
 	public static class Notification {
 
-		private static final int DURATION = 10 * 1000;
+		private static final int DURATION = 7 * 1000;
 		private static final float ALPHA = 0.75f;
 		private static final Color COLOR = Color.WHITE;
 
 		private String message;
 		private Countdown duration;
-		private String icon;
+		private String type;
 
 		public Notification(String message, String type){
 			this.message = message;
-			this.icon = type;
+			this.type = type;
 			this.duration = new Countdown(DURATION, false);
 		}
 
@@ -72,10 +74,11 @@ public class Notifications {
 		public void render() {
 			if (!duration.hasStarted()){
 				duration.start();
+				Sounds.play(type, 1.0f);
 			}
 			float width = Fonts.get(Fonts.BLACK_36).getBounds(message).width + 125;
 			Image.rectangle(Constants.WIDTH / 2 - width / 2, 90, width - 50, 50, ALPHA, COLOR);
-			Image.draw(icon, Constants.WIDTH / 2 - width / 2 + 10, 95);
+			Image.draw(type, Constants.WIDTH / 2 - width / 2 + 10, 95);
 			Fonts.center(message, 100, Fonts.BLACK_36);
 		}
 	}

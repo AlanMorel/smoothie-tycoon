@@ -104,7 +104,7 @@ public class Tutorial implements Screen2 {
 			section.setSection(Section.KITCHEN);
 		} else if (currentStage == TutorialStage.BUY_CUPS){
 			section.setSection(Section.MARKET);
-		} else if (currentStage == TutorialStage.SAVELOAD){
+		} else if (currentStage == TutorialStage.UPGRADES){
 			section.setSection(Section.OFFICE);
 		}
 		if (currentStage < TutorialStage.INTRO){
@@ -167,18 +167,18 @@ public class Tutorial implements Screen2 {
 			Fonts.center("You can get ice from your refridgerator.", textHeight, Fonts.BLACK_48);
 			Image.draw("leftArrow", 400 + arrow.getValue(), 200);
 		} else if (currentStage == TutorialStage.JUICER){
-			Image.draw("upArrow", 820, 425 + arrow.getValue());
+			Image.draw("upArrow", 815, 425 + arrow.getValue());
 			Fonts.center("You make juice by juicing your fruit.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.BLENDER){
-			Image.draw("upArrow", 1015, 425 + arrow.getValue());
+			Image.draw("upArrow", 1005, 420 + arrow.getValue());
 			Fonts.center("You make smoothie with this blender.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.MARKET){
 			Fonts.center("This is the market.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.BUY_FRUITS){
 			Fonts.center("You can buy fruit here.", textHeight, Fonts.BLACK_48);
-			Image.draw("upArrow", 238, 500 + arrow.getValue());
+			Image.draw("upArrow", 240, 500 + arrow.getValue());
 		} else if (currentStage == TutorialStage.BUY_YOGURT){
-			Image.draw("upArrow", 614, 500 + arrow.getValue());
+			Image.draw("upArrow", 605, 500 + arrow.getValue());
 			Fonts.center("You can buy yogurt here.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.BUY_CUPS){
 			Image.draw("upArrow", 975, 500 + arrow.getValue());
@@ -187,12 +187,12 @@ public class Tutorial implements Screen2 {
 			Fonts.center("This is your office.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.ADVERTISE){
 			Fonts.center("You can advertise here.", textHeight, Fonts.BLACK_48);
-			Image.draw("upArrow", 230, 500 + arrow.getValue());
+			Image.draw("upArrow", 245, 525 + arrow.getValue());
 		} else if (currentStage == TutorialStage.STATISTICS){
-			Image.draw("upArrow", 614, 500 + arrow.getValue());
+			Image.draw("upArrow", 635, 525 + arrow.getValue());
 			Fonts.center("You can check statistics here.", textHeight, Fonts.BLACK_48);
-		} else if (currentStage == TutorialStage.SAVELOAD){
-			Image.draw("upArrow", 980, 500 + arrow.getValue());
+		} else if (currentStage == TutorialStage.UPGRADES){
+			Image.draw("upArrow", 1030, 525 + arrow.getValue());
 			Fonts.center("You can save and load your game here.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.JOB){
 			Fonts.center("Your job is simple. Make money.", textHeight, Fonts.BLACK_48);
@@ -230,7 +230,7 @@ public class Tutorial implements Screen2 {
 		public static final byte OFFICE = 21;
 		public static final byte ADVERTISE = 22;
 		public static final byte STATISTICS = 23;
-		public static final byte SAVELOAD = 24;
+		public static final byte UPGRADES = 24;
 		//STAND
 		public static final byte JOB = 25;
 		public static final byte START = 26;

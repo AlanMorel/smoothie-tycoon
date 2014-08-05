@@ -57,6 +57,8 @@ public class Gameplay implements Screen2 {
 			handleLeft();
 		} else if (keycode == Keys.RIGHT){
 			handleRight();
+		} else if (keycode == Keys.SPACE || keycode == Keys.ESCAPE){
+			game.togglePause();
 		}
 	}
 
