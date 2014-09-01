@@ -44,15 +44,15 @@ public class Tutorial implements Screen2 {
 	}
 
 	private void renderTutorialUI() {
-		double money = 12.50;
-		int day = 16;
-		int fruits = 999;
-		int ice = 999;
-		int yogurt = 999;
-		int juice = 999;
-		int cups = 999;
+		double money = 20.00;
+		int day = 0;
+		int fruits = 0;
+		int ice = 0;
+		int yogurt = 0;
+		int juice = 0;
+		int cups = 0;
 		int temperature = 74;
-		int servings = 9;
+		int servings = 10;
 
 		Image.rectangle(0, 0, Constants.WIDTH, 90, 0.1f, Color.BLACK);
 		ui.renderDay(day);
@@ -89,7 +89,7 @@ public class Tutorial implements Screen2 {
 			section.setSection(Section.MARKET);
 		} else if (currentStage == TutorialStage.OFFICE){
 			section.setSection(Section.OFFICE);
-		} else if (currentStage == TutorialStage.JOB){
+		} else if (currentStage == TutorialStage.MOM){
 			section.setSection(Section.STAND);
 		} else if (currentStage > TutorialStage.START){
 			SmoothieTycoon.setScreen(SmoothieTycoon.gameplay);
@@ -193,10 +193,17 @@ public class Tutorial implements Screen2 {
 			Fonts.center("You can check statistics here.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.UPGRADES){
 			Image.draw("upArrow", 1030, 525 + arrow.getValue());
-			Fonts.center("You can save and load your game here.", textHeight, Fonts.BLACK_48);
+			Fonts.center("(Upgrades are coming soon!)", textHeight, Fonts.BLACK_48);
+		} else if (currentStage == TutorialStage.MOM){
+			Fonts.center("Your mom gives you a dollar every morning.", textHeight, Fonts.BLACK_48);
+		} else if (currentStage == TutorialStage.COUNTING){
+			Image.draw("upArrow", 50, 90 + arrow.getValue());
+			Fonts.center("She's counting on you to help her with the bills.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.JOB){
-			Fonts.center("Your job is simple. Make money.", textHeight, Fonts.BLACK_48);
+			Image.draw("upArrow", 300, 90 + arrow.getValue());
+			Fonts.center("You have " + Constants.COMPLETION_DAY + " days to make money and her proud.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.START){
+			Image.draw("rightArrow", 450 + arrow.getValue(), 250);
 			Fonts.center("Let's get started! Good luck.", textHeight, Fonts.BLACK_48);
 		}
 	}
@@ -232,7 +239,9 @@ public class Tutorial implements Screen2 {
 		public static final byte STATISTICS = 23;
 		public static final byte UPGRADES = 24;
 		//STAND
-		public static final byte JOB = 25;
-		public static final byte START = 26;
+		public static final byte MOM = 25;
+		public static final byte COUNTING = 26;
+		public static final byte JOB = 27;
+		public static final byte START = 28;
 	}
 }

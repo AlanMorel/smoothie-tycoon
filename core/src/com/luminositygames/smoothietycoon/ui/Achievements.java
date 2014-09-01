@@ -2,6 +2,8 @@ package com.luminositygames.smoothietycoon.ui;
 
 import java.util.HashMap;
 
+import com.luminositygames.smoothietycoon.Constants;
+
 
 /**
  * This file is part of Smoothie Tycoon
@@ -67,6 +69,8 @@ public class Achievements {
 	public static int FIRST_AD = 37;
 	public static int ALL_ADS = 38;
 
+	public static int COMPLETED = 39;
+
 	public static int [] CUP_SOLD = {PRESS_START, BUSINESS, COMPANY, CORPORATION, MONOPOLY};
 	public static int [] FRUIT_PURCHASED = {FRUIT_NINJA_I, FRUIT_NINJA_II, FRUIT_NINJA_III};
 	public static int [] ICE_PURCHASED = {ICEMAN_I, ICEMAN_II, ICEMAN_III};
@@ -115,9 +119,9 @@ public class Achievements {
 		achievements.put(EARNINGS_II, new Achievement("Earnings II: $100 in lifetime earnings", 100));
 		achievements.put(EARNINGS_III, new Achievement("Earnings III: $1000 in lifetime earnings", 1000));
 
-		achievements.put(MONEY_I, new Achievement("Money I: Reached $10", 10));
-		achievements.put(MONEY_II, new Achievement("Money II: Reached $100", 100));
-		achievements.put(MONEY_III, new Achievement("Money III: Reached $1,000", 1000));
+		achievements.put(MONEY_I, new Achievement("Money I: Reached $100", 100));
+		achievements.put(MONEY_II, new Achievement("Money II: Reached $1,000", 1000));
+		achievements.put(MONEY_III, new Achievement("Money III: Reached $10,000", 10000));
 
 		achievements.put(DAY_I, new Achievement("Day I: Reached day 10", 10));
 		achievements.put(DAY_II, new Achievement("Day II: Reached day 25", 25));
@@ -130,6 +134,8 @@ public class Achievements {
 		achievements.put(HIGH_PRICE, new Achievement("Smucci: Sold expensive smoothie", 5));
 		achievements.put(FIRST_AD, new Achievement("Limited-time Offer: Purchased first ad", 1));
 		achievements.put(ALL_ADS, new Achievement("Advertising King: Have all ads active", 1));
+
+		achievements.put(COMPLETED, new Achievement("Happy Mom: You've reached Day " + Constants.COMPLETION_DAY + "!", Constants.COMPLETION_DAY));
 
 	}
 

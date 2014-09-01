@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.ui.Windows;
 import com.luminositygames.smoothietycoon.ui.Windows.Window;
 
 /**
@@ -116,6 +117,9 @@ public class Image {
 	public static void window(Window window){
 		float alpha = 0.85f;
 		Color color = Color.WHITE;
+		if (window.equals(Windows.GAME_OVER)){
+			color = Color.BLACK;
+		}
 		rectangle(window.getRectangle(), alpha, color);
 	}
 

@@ -1,9 +1,11 @@
 package com.luminositygames.smoothietycoon.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.util.GameTween;
 import com.luminositygames.smoothietycoon.util.Image;
+import com.luminositygames.smoothietycoon.util.Songs;
 
 /**
  * This file is part of Smoothie Tycoon
@@ -18,12 +20,11 @@ import com.luminositygames.smoothietycoon.util.Image;
 public class MainMenu implements Screen2 {
 
 	private GameTween logoTween;
-	private boolean tutorial;
 
 	@Override
 	public void load() {
 		logoTween = new GameTween(25, GameTween.LOGO);
-		tutorial = Constants.TUTORIAL;
+		Songs.play("mainmenu");
 	}
 
 	@Override
@@ -34,6 +35,7 @@ public class MainMenu implements Screen2 {
 		Image.draw("player", 325, 300);
 		Image.draw("logotext", Constants.WIDTH / 2 - Image.get("logotext").getWidth() / 2, logoTween.getValue());
 		Image.draw("playbutton", Constants.WIDTH / 2 - Image.get("playbutton").getWidth() / 2, 325);
+		Image.draw("credits", 725, 600);
 	}
 
 	@Override
@@ -44,11 +46,9 @@ public class MainMenu implements Screen2 {
 
 	private void handleTouch() {
 		if (Image.get("playbutton").isTouched()){
-			if (tutorial){
-				SmoothieTycoon.setScreen(SmoothieTycoon.tutorial);
-			} else {
-				SmoothieTycoon.setScreen(SmoothieTycoon.gameplay);
-			}
+			SmoothieTycoon.setScreen(SmoothieTycoon.tutorial);
+		} else if (Image.get("credits").isTouched()){
+			Gdx.net.openURI("http://luminositygames.com/");
 		}
 	}
 

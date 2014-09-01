@@ -1,6 +1,6 @@
 package com.luminositygames.smoothietycoon.screens;
 
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.badlogic.gdx.Gdx;
 import com.luminositygames.smoothietycoon.util.GameTween;
 import com.luminositygames.smoothietycoon.util.Image;
 
@@ -21,7 +21,6 @@ public class Splash implements Screen2 {
 	@Override
 	public void load() {
 		splashAlpha = new GameTween(0, GameTween.SPLASH);
-		SmoothieTycoon.setScreen(SmoothieTycoon.mainMenu);
 	}
 
 	@Override
@@ -35,6 +34,13 @@ public class Splash implements Screen2 {
 	@Override
 	public void update(float delta) {
 		splashAlpha.update(delta);
+		handleTouch();
+	}
+
+	private void handleTouch() {
+		if (Gdx.input.justTouched()){
+			Gdx.net.openURI("http://luminositygames.com/");
+		}
 	}
 
 	@Override

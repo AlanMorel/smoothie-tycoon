@@ -78,6 +78,7 @@ public class SmoothieTycoon extends ApplicationAdapter {
 
 		Image.load("splash");
 		Image.load("mainmenu");
+		Image.load("credits");
 		Image.load("salesBackground");
 		Image.load("stand");
 		Image.load("slantedsign");
@@ -134,7 +135,8 @@ public class SmoothieTycoon extends ApplicationAdapter {
 
 	private void loadMusic(){
 		Songs.songs = new HashMap<String, Music>();
-		Songs.load("gameplay", 0.20f);
+		Songs.load("gameplay", 0.25f);
+		Songs.load("mainmenu", 0.25f);
 	}
 
 	private void loadSounds(){

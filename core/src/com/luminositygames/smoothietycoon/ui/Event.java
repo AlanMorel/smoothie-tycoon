@@ -17,8 +17,8 @@ public class Event {
 		JUICE_SPILLED = false;
 	}
 
-	public static void initiate(){
-		int chance = 25;
+	public static void nextEvent(){
+		int chance = 20;
 		boolean initiate = SmoothieTycoon.random.nextInt(100) < chance;
 		if (initiate){
 			int event = SmoothieTycoon.random.nextInt(4);

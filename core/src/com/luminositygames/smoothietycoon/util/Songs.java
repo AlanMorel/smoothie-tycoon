@@ -18,6 +18,7 @@ import com.badlogic.gdx.audio.Music;
 public class Songs {
 
 	public static HashMap<String, Music> songs;
+	public static Music currentlyPlayingSong;
 
 	public static void load(String name, float volume) {
 		Music music = Gdx.audio.newMusic(Gdx.files.internal(name + ".mp3"));
@@ -27,6 +28,11 @@ public class Songs {
 	}
 
 	public static void play(String name){
-		songs.get(name).play();
+		Music song = songs.get(name);
+		if (currentlyPlayingSong != null){
+			currentlyPlayingSong.stop();
+		}
+		currentlyPlayingSong = song;
+		currentlyPlayingSong.play();
 	}
 }

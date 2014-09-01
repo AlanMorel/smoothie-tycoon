@@ -80,10 +80,13 @@ public class Player {
 		money = m;
 	}
 
-	public void addMoney(double money) {
-		setMoney(getMoney() + money);
-		if (money > 0){
-			Achievements.progress(Achievements.EARNINGS, money);
+	public void addMoney(double amount) {
+		setMoney(getMoney() + amount);
+		if (amount > 0){
+			Achievements.progress(Achievements.EARNINGS, amount);
+		}
+		if (money < 0){
+			money = 0;
 		}
 		Achievements.check(Achievements.MONEY, getMoney());
 	}

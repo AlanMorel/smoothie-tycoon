@@ -14,6 +14,7 @@ import com.luminositygames.smoothietycoon.ui.Event;
 import com.luminositygames.smoothietycoon.ui.Notifications;
 import com.luminositygames.smoothietycoon.ui.Section;
 import com.luminositygames.smoothietycoon.ui.Tips;
+import com.luminositygames.smoothietycoon.ui.Windows;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Sounds;
@@ -42,6 +43,8 @@ public class Game {
 	private int temperature;
 	private int maxCustomers;
 	private int totalCustomers;
+	private double finalMoney;
+	private boolean gameOverWindowOpened;
 
 	public Game() {
 		this.player = new Player();
@@ -49,7 +52,9 @@ public class Game {
 		this.container = new Container();
 		this.stats = new Statistics();
 		this.day = 0;
+		this.finalMoney = 0;
 		this.paused = false;
+		this.gameOverWindowOpened = false;
 		Notifications.load();
 		Achievements.load();
 		Event.load();
@@ -59,6 +64,7 @@ public class Game {
 	private void startNewDay() {
 		this.stats.addEntry(day, player.getMoney());
 		this.day ++;
+		this.player.addMoney(1); //Thanks, Mom!
 		this.night = new Countdown(10 * 1000, false);
 		this.temperature = SmoothieTycoon.random.nextInt(100);
 		this.customers = new ArrayList<Customer>();
@@ -67,7 +73,7 @@ public class Game {
 		this.totalCustomers = 0;
 		Advertisements.useAds();
 		Achievements.progress(Achievements.DAY, 1);
-		Sounds.play("morning", 0.20f);
+		Sounds.play("morning", 0.10f);
 	}
 
 	public Player getPlayer() {
@@ -111,7 +117,7 @@ public class Game {
 			customer.render();
 		}
 		if (!night.hasStarted()){
-			Fonts.center(getBuyPercentage() + "% will buy", 660, Fonts.BLACK_36);
+			Fonts.center(getBuyPercentage() + "% will purchase", 660, Fonts.BLACK_36);
 		}
 	}
 
@@ -151,14 +157,24 @@ public class Game {
 		if (totalCustomers < maxCustomers) {
 			addNewCustomer();
 		} else if (!dayStillRunning()) {
-			if (!getNight().hasStarted()) {
+			if (day == Constants.COMPLETION_DAY && (Windows.isOpen() || !gameOverWindowOpened)){ //this is hacky
+				gameOver();
+			} else if (!getNight().hasStarted()) {
 				getNight().start();
 				Tips.displayTip();
 			} else if(getNight().isCompleted()) {
-				Event.initiate();
+				Event.nextEvent();
 				startNewDay();
 			}
 		}
+	}
+
+	private void gameOver() {
+		Windows.close();
+		Windows.open(Windows.GAME_OVER);
+		gameOverWindowOpened = true;
+		finalMoney = player.getMoney();
+		Achievements.check(Achievements.COMPLETED, day);
 	}
 
 	private void updateCustomers(float delta){

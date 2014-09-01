@@ -23,9 +23,8 @@ public class Constants {
 	public static final float FRAMES_PER_SECOND = 60;
 
 	//SPLASH DURATION
-	public static final float SPLASH_DURATION = 0.0f;
+	public static final float SPLASH_DURATION = 1.0f;
 
-	//TUTORIAL
-	public static final boolean TUTORIAL = false;
+	public static final int COMPLETION_DAY = 30;
 
 }

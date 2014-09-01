@@ -22,7 +22,7 @@ public class Container {
 	private int juice;
 
 	public Container() {
-		this.servings = 5;
+		this.servings = 10;
 		this.fruit = 10;
 		this.ice = 10;
 		this.yogurt = 10;

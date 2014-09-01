@@ -7,6 +7,7 @@ import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.entities.Advertisements;
+import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.entities.Statistics.StatisticsEntry;
 import com.luminositygames.smoothietycoon.util.Fonts;
@@ -35,6 +36,7 @@ public class Windows {
 	public static Window ADVERTISE = new Window(150, 775, 475);
 	public static Window STATISTICS = new Window(150, 600, 300);
 	public static Window UPGRADES = new Window(150, 600, 300);
+	public static Window GAME_OVER = new Window(150, 700, 300);
 
 	private static Window window;
 	private static int OFFSET;
@@ -79,6 +81,8 @@ public class Windows {
 			renderStatisticsWindow(game);
 		} else if (window == UPGRADES){
 			renderUpgradesWindow();
+		} else if (window == GAME_OVER){
+			renderGameOverWindow(game.getPlayer());
 		}
 	}
 
@@ -170,10 +174,18 @@ public class Windows {
 
 	private static void renderUpgradesWindow() {
 		Image.window(Windows.UPGRADES);
-		for (int i = 0; i < 3; i++){
-			Image.draw("upgradesIcon", 410, i * 85 + 195);
-			Fonts.left("Upgrade #" + i, 460, i * 85 + 200, Fonts.BLACK_36);
-		}
+		Fonts.left("Upgrades are coming soon!", 410, 250, Fonts.BLACK_36);
+		//for (int i = 0; i < 3; i++){
+		//	Image.draw("upgradesIcon", 410, i * 85 + 195);
+		//	Fonts.left("Upgrade #" + i, 460, i * 85 + 200, Fonts.BLACK_36);
+		//}
+	}
+
+	private static void renderGameOverWindow(Player player) {
+		Image.window(Windows.GAME_OVER);
+		Fonts.center("You have made mom proud!", 200, Fonts.WHITE_36);
+		Fonts.center("You finished with " + SmoothieTycoon.format(player.getMoney()) + "!", 285, Fonts.WHITE_48);
+		Fonts.center("Close to keep playing!", 400, Fonts.WHITE_36);
 	}
 
 	public static void handleTouch(Game game) {
@@ -197,6 +209,8 @@ public class Windows {
 			handleStatisticsWindow(game);
 		} else if (window == UPGRADES){
 			handleUpgradesWindow(game);
+		} else if (window == GAME_OVER){
+			handleGameOverWindow(game);
 		}
 	}
 
@@ -318,6 +332,10 @@ public class Windows {
 	}
 
 	private static void handleUpgradesWindow(Game game) {
+		//Coming soon
+	}
+
+	private static void handleGameOverWindow(Game game) {
 
 	}
 
