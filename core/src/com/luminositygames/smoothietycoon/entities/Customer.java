@@ -61,8 +61,8 @@ public class Customer {
 		return false;
 	}
 
-	public boolean hasLeft(){
-		return x > Constants.WIDTH + 10 || x < -110;
+	public boolean hasLeftScreen(){
+		return x > Constants.WIDTH + 50 || x < -150;
 	}
 
 	public boolean atStand(){
@@ -71,8 +71,10 @@ public class Customer {
 	}
 
 	public void render() {
-		renderCustomer();
-		hat.render(x);
+		if (!hasLeftScreen()){
+			renderCustomer();
+			hat.render(x);
+		}
 	}
 
 	public void renderCustomer(){
@@ -102,6 +104,7 @@ public class Customer {
 		private static final byte WINTER = 2;
 		private static final byte POLICE = 3;
 		private static final byte PIRATE = 4;
+		private static final byte BROWN = 5;
 
 		private GameTween hatTween;
 		private String hat;
@@ -110,7 +113,7 @@ public class Customer {
 
 		public Hat(int side){
 			this.hatTween = new GameTween(-10, GameTween.HAT);
-			int random = SmoothieTycoon.random.nextInt(5);
+			int random = SmoothieTycoon.random.nextInt(6);
 			if (random == SWAG){
 				this.hat = "swag";
 				this.x = -22;
@@ -131,6 +134,10 @@ public class Customer {
 				this.hat = "pirate";
 				this.x = -12;
 				this.y = 259;
+			} else if (random == BROWN){
+				this.hat = "brownHat";
+				this.x = -20;
+				this.y = 240;
 			}
 			this.hat += side == 0 ? "L" : "R";
 		}

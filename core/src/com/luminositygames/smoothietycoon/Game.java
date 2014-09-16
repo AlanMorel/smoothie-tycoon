@@ -43,7 +43,6 @@ public class Game {
 	private int temperature;
 	private int maxCustomers;
 	private int totalCustomers;
-	private double finalMoney;
 	private boolean gameOverWindowOpened;
 
 	public Game() {
@@ -52,7 +51,6 @@ public class Game {
 		this.container = new Container();
 		this.stats = new Statistics();
 		this.day = 0;
-		this.finalMoney = 0;
 		this.paused = false;
 		this.gameOverWindowOpened = false;
 		Notifications.load();
@@ -173,7 +171,6 @@ public class Game {
 		Windows.close();
 		Windows.open(Windows.GAME_OVER);
 		gameOverWindowOpened = true;
-		finalMoney = player.getMoney();
 		Achievements.check(Achievements.COMPLETED, day);
 	}
 
@@ -229,7 +226,7 @@ public class Game {
 
 	private boolean dayStillRunning() {
 		for (Customer customer : customers){
-			if (!customer.hasLeft()){
+			if (!customer.hasLeftScreen()){
 				return true;
 			}
 		}

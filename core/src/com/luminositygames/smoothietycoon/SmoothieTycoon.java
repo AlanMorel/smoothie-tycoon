@@ -127,6 +127,8 @@ public class SmoothieTycoon extends ApplicationAdapter {
 		Image.load("policeL");
 		Image.load("pirateR");
 		Image.load("pirateL");
+		Image.load("brownHatR");
+		Image.load("brownHatL");
 		Image.load("fruitSeller");
 		Image.load("yogurtSeller");
 		Image.load("cupSeller");
