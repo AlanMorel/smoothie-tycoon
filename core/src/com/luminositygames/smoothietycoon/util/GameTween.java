@@ -51,15 +51,15 @@ public class GameTween {
 
 	public void setTweenTo(byte type){
 		if (type == GameTween.SPLASH){
-			Tween.to(this, GameTweenAccessor.VALUE, 1f).target(1).repeatYoyo(1, Constants.SPLASH_DURATION).setCallback(setScreenTo(SmoothieTycoon.mainMenu)).start(tweenManager);
+			Tween.to(this, 0, 1f).target(1).repeatYoyo(1, Constants.SPLASH_DURATION).setCallback(setScreenTo(SmoothieTycoon.mainMenu)).start(tweenManager);
 		} else if (type == GameTween.LOGO){
-			Tween.to(this, GameTweenAccessor.VALUE, 1f).target(75).repeatYoyo(-1, 0).start(tweenManager);
+			Tween.to(this, 0, 1f).target(75).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.ARROW){
-			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(20).repeatYoyo(-1, 0).start(tweenManager);
+			Tween.to(this, 0, 0.5f).target(20).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.HAT){
-			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(10).repeatYoyo(-1, 0).start(tweenManager);
+			Tween.to(this, 0, 0.5f).target(10).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.EFFECT){
-			Tween.to(this, GameTweenAccessor.VALUE, 0.5f).target(100).repeatYoyo(Tween.INFINITY, 0).start(tweenManager);
+			Tween.to(this, 0, 0.5f).target(100).repeatYoyo(Tween.INFINITY, 0).start(tweenManager);
 		}
 	}
 

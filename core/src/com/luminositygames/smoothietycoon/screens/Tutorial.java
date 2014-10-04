@@ -193,7 +193,7 @@ public class Tutorial implements Screen2 {
 			Fonts.center("You can check statistics here.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.UPGRADES){
 			Image.draw("upArrow", 1030, 525 + arrow.getValue());
-			Fonts.center("(Upgrades are coming soon!)", textHeight, Fonts.BLACK_48);
+			Fonts.center("You can buy upgrades here.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.MOM){
 			Fonts.center("Your mom gives you a dollar every morning.", textHeight, Fonts.BLACK_48);
 		} else if (currentStage == TutorialStage.COUNTING){

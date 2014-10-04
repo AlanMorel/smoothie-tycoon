@@ -197,7 +197,12 @@ public class SmoothieTycoon extends ApplicationAdapter {
 	}
 
 	public static String format(double amount){
-		return formatter.format(amount);
+		String formatted = formatter.format(amount);
+		if (amount > 0){
+			return formatted;
+		} else {
+			return "-" + formatted.substring(1, formatted.length() - 1);
+		}
 	}
 
 	@Override

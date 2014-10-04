@@ -36,7 +36,7 @@ public class Event {
 
 	public static void handle(Player player) {
 		if(Event.ROBBERY){
-			player.addMoney(- player.getMoney() / 5);
+			player.payMoney(player.getMoney() / 5);
 			Notifications.show("You were robbed of some of your money.", Notifications.EVENT);
 			Event.ROBBERY = false;
 		} else if(Event.FRUIT_EXPIRED){

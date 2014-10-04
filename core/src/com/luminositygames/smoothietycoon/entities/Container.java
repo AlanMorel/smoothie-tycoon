@@ -50,10 +50,22 @@ public class Container {
 	}
 
 	public void serve(){
-		servings --;
+		servings -= 1;
 	}
 
 	public void refill(Game game) {
+		if(canRefill(game)){
+			this.servings = 10;
+			this.fruit = game.getRecipe().getFruit();
+			this.ice = game.getRecipe().getIce();
+			this.yogurt = game.getRecipe().getYogurt();
+			this.juice = game.getRecipe().getJuice();
+			game.getPlayer().refillContainer(game.getRecipe());
+			Achievements.progress(Achievements.REFILLS, 1);
+		}
+	}
+
+	public boolean canRefill(Game game){
 		Recipe recipe = game.getRecipe();
 		Player player = game.getPlayer();
 
@@ -62,14 +74,13 @@ public class Container {
 		boolean enoughYogurt = player.getYogurt() >= recipe.getYogurt();
 		boolean enoughJuice = player.getJuice() >= recipe.getJuice();
 
-		if (enoughFruits && enoughIce && enoughYogurt && enoughJuice){
-			this.servings = 10;
-			this.fruit = game.getRecipe().getFruit();
-			this.ice = game.getRecipe().getIce();
-			this.yogurt = game.getRecipe().getYogurt();
-			this.juice = game.getRecipe().getJuice();
-			game.getPlayer().makeContainer(game.getRecipe());
-			Achievements.progress(Achievements.REFILLS, 1);
+		return enoughFruits && enoughIce && enoughYogurt && enoughJuice;
+	}
+
+	public void autoRefill(Game game) {
+		boolean canAutoRefill = Upgrades.HAS_AUTO_REFILL && canRefill(game) && getServings() == 0;
+		if (canAutoRefill){
+			refill(game);
 		}
 	}
 }

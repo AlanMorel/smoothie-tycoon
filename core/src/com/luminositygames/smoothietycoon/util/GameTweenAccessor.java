@@ -14,28 +14,14 @@ import aurelienribon.tweenengine.TweenAccessor;
 
 public class GameTweenAccessor implements TweenAccessor<GameTween> {
 
-	public static final int VALUE = 0;
-	
 	@Override
 	public int getValues(GameTween target, int tweenType, float[] returnValues) {
-		switch(tweenType) {
-		case VALUE:
-			returnValues[0] = target.getValue();
-			return 1;
-		default:
-			assert false;
-			return -1;
-		}
+		returnValues[0] = target.getValue();
+		return 1;
 	}
 
 	@Override
 	public void setValues(GameTween target, int tweenType, float[] newValues) {
-		switch(tweenType) {
-		case VALUE:
-			target.setValue(newValues[0]);
-			break;
-		default:
-			assert false;
-		}
+		target.setValue(newValues[0]);
 	}
 }

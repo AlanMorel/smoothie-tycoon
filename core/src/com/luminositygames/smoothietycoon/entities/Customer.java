@@ -24,7 +24,7 @@ public class Customer {
 
 	private int x;
 	private int speed;
-	private int side;
+	private int facing;
 	private boolean buying;
 	private Color color;
 	private Hat hat;
@@ -32,14 +32,14 @@ public class Customer {
 
 	public Customer(boolean buying) {
 		this.buying = buying;
-		this.side = SmoothieTycoon.random.nextInt(2);
-		this.hat = new Hat(side);
+		this.facing = SmoothieTycoon.random.nextInt(2);
+		this.hat = new Hat(facing);
 		this.purchase = new Countdown(getPurchaseDelay(), false);
 		this.color = Image.getRandomColor();
-		if (side == LEFT){
+		if (facing == LEFT){
 			this.x = -102;
 			this.speed = 4;
-		} else if (side == RIGHT){
+		} else if (facing == RIGHT){
 			this.x = Constants.WIDTH + 2;
 			this.speed = -4;
 		}
@@ -55,7 +55,7 @@ public class Customer {
 
 	public boolean isBuying(){
 		if (atStand() && purchase.isCompleted()){
-			speed = side == LEFT ? 4 : -4;
+			speed = facing == LEFT ? 4 : -4;
 			return true;
 		}
 		return false;

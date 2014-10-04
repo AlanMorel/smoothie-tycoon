@@ -39,7 +39,6 @@ public class Countdown {
 		started = true;
 	}
 
-
 	public int getPercentage(){
 		if (!hasStarted()){
 			return 0;

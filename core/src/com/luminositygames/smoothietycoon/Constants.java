@@ -25,6 +25,7 @@ public class Constants {
 	//SPLASH DURATION
 	public static final float SPLASH_DURATION = 1.0f;
 
+	//COMPLETION DAY
 	public static final int COMPLETION_DAY = 30;
 
 }

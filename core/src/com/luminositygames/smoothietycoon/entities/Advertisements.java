@@ -22,8 +22,6 @@ public enum Advertisements {
 	RADIO(20, 80.00, "Buy radio ads for "),
 	TV(25, 100.00, "Buy TV ads for ");
 
-	public static Advertisements[] ALL = {FLYERS, SOCIAL, NEWSPAPER, RADIO, TV};
-
 	private int customers;
 	private double price;
 	private int days;
@@ -52,7 +50,7 @@ public enum Advertisements {
 
 	public void buy(Player player){
 		if (player.getMoney() >= price && days < 5){
-			player.addMoney(-price);
+			player.payMoney(price);
 			Sounds.play("adPurchase", 0.2f);
 			days = 5;
 			Achievements.progress(Achievements.FIRST_AD, 1);
@@ -71,9 +69,9 @@ public enum Advertisements {
 	}
 
 	public static Advertisements getById(int option){
-		for (int i = 0; i < ALL.length; i++){
+		for (int i = 0; i < Advertisements.values().length; i++){
 			if (i == option){
-				return ALL[i];
+				return Advertisements.values()[i];
 			}
 		}
 		return null;
@@ -81,17 +79,17 @@ public enum Advertisements {
 
 	public static int getTotalCustomers(){
 		int total = 0;
-		for (int i = 0; i < ALL.length; i++){
-			if (ALL[i].getDays() > 0){
-				total += ALL[i].getCustomers();
+		for (int i = 0; i < Advertisements.values().length; i++){
+			if (Advertisements.values()[i].getDays() > 0){
+				total += Advertisements.values()[i].getCustomers();
 			}
 		}
 		return total;
 	}
 
 	public static void useAds(){
-		for (int i = 0; i < ALL.length; i++){
-			ALL[i].use();
+		for (int i = 0; i < Advertisements.values().length; i++){
+			Advertisements.values()[i].use();
 		}
 	}
 

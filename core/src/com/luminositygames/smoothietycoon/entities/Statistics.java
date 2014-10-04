@@ -20,7 +20,7 @@ public class Statistics {
 	private double lastBalance;
 
 	public Statistics(){
-		entries = new ArrayList<StatisticsEntry> ();
+		entries = new ArrayList<StatisticsEntry>();
 		lastBalance = 0;
 	}
 

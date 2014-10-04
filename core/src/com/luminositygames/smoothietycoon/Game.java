@@ -195,6 +195,7 @@ public class Game {
 			Sounds.play("purchase", 0.5f);
 			Achievements.progress(Achievements.CUP_SOLD, 1);
 		}
+		getContainer().autoRefill(this);
 	}
 
 	private int getMaxCustomers(){
@@ -262,30 +263,27 @@ public class Game {
 		double optimalPrice = 0.25 + day * 0.05;
 		int delta = (int) Math.round((optimalPrice - recipe.getPrice()) * 25);
 		int percentage = delta * 10 + 25;
-		//System.out.println("Price percentage: " + percentage);
 		return percentage;
 	}
 
-	//Max 10
+	//Max 10%
 	private int getTemperatureIceChange(){
 		int optimalIce = temperature / 5;
 		int delta = Math.abs(optimalIce - container.getIce());
 		int percentage = 10 - delta;
-		//System.out.println("Temp percentage: " + percentage);
 		return percentage;
 	}
 
-	//Max 10
+	//Max 10%
 	private int getQualityChange(){
 		int standardQuality = 30;
 		int currentQuality = container.getFruit() + container.getJuice() + container.getYogurt();
 		int delta = (currentQuality - standardQuality) / 3;
 		int percentage = delta;
-		//System.out.println("Quality percentage: " + percentage);
 		return percentage;
 	}
 
-	//Max 100
+	//Max 100%
 	private int getBuyPercentage(){
 		int percentage = 0;
 		int pricePerc = getPricePercentageChange();
@@ -294,8 +292,6 @@ public class Game {
 		percentage += pricePerc;
 		percentage += tempPerc;
 		percentage += qualityPerc;
-		//System.out.println("Total percentage: " + percentage);
-		//System.out.println("");
 		return SmoothieTycoon.fixPercentage(percentage);
 	}
 

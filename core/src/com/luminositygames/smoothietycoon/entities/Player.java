@@ -24,7 +24,7 @@ public class Player {
 	private int cups;
 
 	public Player(){
-		this.money = 20.00;
+		this.money = 19.00; //Mom makes it $20 to start off with!
 		this.fruits = 0;
 		this.ice = 0;
 		this.yogurt = 0;
@@ -80,12 +80,16 @@ public class Player {
 		money = m;
 	}
 
+	public void payMoney(double amount){
+		setMoney(getMoney() - amount);
+	}
+
 	public void addMoney(double amount) {
 		setMoney(getMoney() + amount);
 		if (amount > 0){
 			Achievements.progress(Achievements.EARNINGS, amount);
 		}
-		if (money < 0){
+		if (money < 0){ //Code smell?
 			money = 0;
 		}
 		Achievements.check(Achievements.MONEY, getMoney());
@@ -144,7 +148,7 @@ public class Player {
 		}
 	}
 
-	public void makeContainer(Recipe recipe){
+	public void refillContainer(Recipe recipe){
 		setFruits(getFruits() - recipe.getFruit());
 		setIce(getIce() - recipe.getIce());
 		setYogurt(getYogurt() - recipe.getYogurt());

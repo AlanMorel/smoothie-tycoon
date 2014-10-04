@@ -10,6 +10,7 @@ import com.luminositygames.smoothietycoon.entities.Advertisements;
 import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.entities.Statistics.StatisticsEntry;
+import com.luminositygames.smoothietycoon.entities.Upgrades;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
 
@@ -25,7 +26,6 @@ import com.luminositygames.smoothietycoon.util.Image;
 
 public class Windows {
 
-	public static Window NOTHING;
 	public static Window STAND = new Window(150, 500, 300);
 	public static Window REFRIDGERATOR = new Window(150, 625, 300);
 	public static Window JUICER = new Window(150, 625, 300);
@@ -46,11 +46,11 @@ public class Windows {
 	}
 
 	public static void close(){
-		window = NOTHING;
+		window = null;
 	}
 
 	public static boolean isOpen() {
-		return window != NOTHING;
+		return window != null;
 	}
 
 	public static boolean isTouched(){
@@ -174,11 +174,11 @@ public class Windows {
 
 	private static void renderUpgradesWindow() {
 		Image.window(Windows.UPGRADES);
-		Fonts.left("Upgrades are coming soon!", 410, 250, Fonts.BLACK_36);
-		//for (int i = 0; i < 3; i++){
-		//	Image.draw("upgradesIcon", 410, i * 85 + 195);
-		//	Fonts.left("Upgrade #" + i, 460, i * 85 + 200, Fonts.BLACK_36);
-		//}
+		for (int i = 0; i < 1; i++){
+			Image.draw("upgradesIcon", 410, i * 85 + 195);
+		}
+		String refillExtra = Upgrades.HAS_AUTO_REFILL ? "(Purchased!)" : "($" + Upgrades.AUTO_REFILL_PRICE + ")";
+		Fonts.left("Auto-Refill " + refillExtra, 460, 200, Fonts.BLACK_36);
 	}
 
 	private static void renderGameOverWindow(Player player) {
@@ -332,11 +332,19 @@ public class Windows {
 	}
 
 	private static void handleUpgradesWindow(Game game) {
-		//Coming soon
+		String refillExtra = Upgrades.HAS_AUTO_REFILL ? "(Purchased!)" : "($" + Upgrades.AUTO_REFILL_PRICE + ")";
+		if (Fonts.isTouched("Auto-Refill " + refillExtra, 460, 200, Fonts.BLACK_36)){
+			if (!Upgrades.HAS_AUTO_REFILL && game.getPlayer().canPay(Upgrades.AUTO_REFILL_PRICE)){
+				game.getPlayer().payMoney(Upgrades.AUTO_REFILL_PRICE);
+				Notifications.show("You've purchased auto-refill!", Notifications.ACHIEVEMENT);
+				Upgrades.HAS_AUTO_REFILL = true;
+				close();
+			}
+		}
 	}
 
 	private static void handleGameOverWindow(Game game) {
-
+		//Nothing to handle
 	}
 
 	public static class Window {
