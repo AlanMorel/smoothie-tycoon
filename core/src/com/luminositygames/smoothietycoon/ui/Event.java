@@ -5,10 +5,10 @@ import com.luminositygames.smoothietycoon.entities.Player;
 
 public class Event {
 
-	public static boolean ROBBERY;
-	public static boolean FRUIT_EXPIRED;
-	public static boolean YOGURT_EXPIRED;
-	public static boolean JUICE_SPILLED;
+	private static boolean ROBBERY;
+	private static boolean FRUIT_EXPIRED;
+	private static boolean YOGURT_EXPIRED;
+	private static boolean JUICE_SPILLED;
 
 	public static void load(){
 		ROBBERY = false;
@@ -18,7 +18,7 @@ public class Event {
 	}
 
 	public static void nextEvent(){
-		int chance = 20;
+		int chance = 15;
 		boolean initiate = SmoothieTycoon.random.nextInt(100) < chance;
 		if (initiate){
 			int event = SmoothieTycoon.random.nextInt(4);

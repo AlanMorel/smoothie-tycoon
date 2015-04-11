@@ -2,7 +2,7 @@ package com.luminositygames.smoothietycoon.entities;
 
 public class Upgrades {
 
-	public static int AUTO_REFILL_PRICE = 5;
-	public static boolean HAS_AUTO_REFILL = false;
+	public static int DOUBLE_CONTAINER_PRICE = 100;
+	public static boolean HAS_DOUBLE_CONTAINER = true;
 
 }

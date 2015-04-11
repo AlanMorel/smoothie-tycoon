@@ -77,7 +77,7 @@ public class Gameplay implements Screen2 {
 		}
 	}
 
-	public void handleLeft(){
+	private void handleLeft(){
 		Windows.close();
 		if (section.isStand()){
 			section.setSection(Section.OFFICE);
@@ -90,7 +90,7 @@ public class Gameplay implements Screen2 {
 		}
 	}
 
-	public void handleRight(){
+	private void handleRight(){
 		Windows.close();
 		if (section.isStand()){
 			section.setSection(Section.KITCHEN);

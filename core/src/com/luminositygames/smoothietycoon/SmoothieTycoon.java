@@ -41,11 +41,12 @@ public class SmoothieTycoon extends ApplicationAdapter {
 	public static OrthographicCamera camera;
 	public static Screen2 screen;
 	public static Screen2 mainMenu;
-	public static Screen2 splash;
 	public static Screen2 tutorial;
 	public static Screen2 gameplay;
 	public static Random random;
-	public static NumberFormat formatter;
+
+	private static Screen2 splash;
+	private static NumberFormat formatter;
 
 	@Override
 	public void create () {

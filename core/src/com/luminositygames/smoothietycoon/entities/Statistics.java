@@ -30,7 +30,7 @@ public class Statistics {
 		lastBalance = balance;
 	}
 
-	public StatisticsEntry getEntry(int day){
+	public StatisticsEntry getEntryByDay(int day){
 		for (StatisticsEntry entry : entries){
 			if(entry.getDay() == day){
 				return entry;
@@ -44,7 +44,7 @@ public class Statistics {
 		private int day;
 		private double profit;
 
-		public StatisticsEntry(int day, double profit){
+		private StatisticsEntry(int day, double profit){
 			this.day = day;
 			this.profit = profit;
 		}

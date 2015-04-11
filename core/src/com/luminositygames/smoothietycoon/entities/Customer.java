@@ -65,7 +65,7 @@ public class Customer {
 		return x > Constants.WIDTH + 50 || x < -150;
 	}
 
-	public boolean atStand(){
+	private boolean atStand(){
 		int center = Constants.WIDTH / 2 - 100 / 2;
 		return x == center && buying;
 	}
@@ -77,10 +77,10 @@ public class Customer {
 		}
 	}
 
-	public void renderCustomer(){
-		double tweenValue = hat.getHatTween().getValue();
-		int length = 240 - (int) tweenValue;
-		int height = 300 + (int) tweenValue;
+	private void renderCustomer(){
+		int tweenValue = (int) hat.getHatTween().getValue();
+		int length = 240 - tweenValue;
+		int height = 300 + tweenValue;
 
 		Image.rectangle(x, height, 100, length, 1.0f, color);
 		Image.rectangle(x, 540, 100, 10, 1.0f, buying ? Color.GREEN : Color.RED);
@@ -97,7 +97,7 @@ public class Customer {
 	}
 
 
-	public class Hat {
+	private class Hat {
 
 		private static final byte SWAG = 0;
 		private static final byte COWBOY = 1;
@@ -111,7 +111,7 @@ public class Customer {
 		private int x;
 		private int y;
 
-		public Hat(int side){
+		private Hat(int side){
 			this.hatTween = new GameTween(-10, GameTween.HAT);
 			int random = SmoothieTycoon.random.nextInt(6);
 			if (random == SWAG){
@@ -146,11 +146,11 @@ public class Customer {
 			return hatTween;
 		}
 
-		public void render(int customerX){
+		private void render(int customerX){
 			Image.draw(hat, customerX + x, y + hatTween.getValue());
 		}
 
-		public void update(float delta){
+		private void update(float delta){
 			hatTween.update(delta);
 		}
 	}

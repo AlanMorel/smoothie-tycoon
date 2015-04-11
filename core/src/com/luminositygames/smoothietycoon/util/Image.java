@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
-import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.ui.Windows;
 import com.luminositygames.smoothietycoon.ui.Windows.Window;
@@ -37,7 +36,7 @@ public class Image {
 	private Sprite hover;
 	private boolean hasHover;
 
-	public Image(Sprite s){
+	private Image(Sprite s){
 		this.sprite = s;
 		this.hasHover = false;
 	}
@@ -101,11 +100,6 @@ public class Image {
 		Image.batch.end();
 	}
 
-	public static void center(String image, float y){
-		float x = Constants.WIDTH / 2 - Image.get(image).getWidth() / 2;
-		draw(image, x, y);
-	}
-
 	public static Color getRandomColor(){
 		float red = SmoothieTycoon.random.nextFloat();
 		float green = SmoothieTycoon.random.nextFloat();
@@ -123,7 +117,7 @@ public class Image {
 		rectangle(window.getRectangle(), alpha, color);
 	}
 
-	public static void rectangle(Rectangle rect, float alpha, Color color){
+	private static void rectangle(Rectangle rect, float alpha, Color color){
 		rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), alpha, color);
 	}
 

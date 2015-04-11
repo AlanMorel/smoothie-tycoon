@@ -141,14 +141,15 @@ public class Game {
 	}
 
 	public void update(float delta) {
-		if (!paused){
-			Effect.update(delta);
-			Notifications.update();
-			Event.handle(player);
-			updateCustomers(delta);
-			processPurchases();
-			updateGame();
+		if (paused){
+			return;
 		}
+		Effect.update(delta);
+		Notifications.update();
+		Event.handle(player);
+		updateCustomers(delta);
+		processPurchases();
+		updateGame();
 	}
 
 	private void updateGame() {
@@ -195,12 +196,11 @@ public class Game {
 			Sounds.play("purchase", 0.5f);
 			Achievements.progress(Achievements.CUP_SOLD, 1);
 		}
-		getContainer().autoRefill(this);
 	}
 
 	private int getMaxCustomers(){
 		int base = 20;
-		int dayBonus = day * 3;
+		int dayBonus = day * 2;
 		int adBonus = Advertisements.getTotalCustomers();
 		int max = base + dayBonus + adBonus;
 		return max;
@@ -219,7 +219,7 @@ public class Game {
 	}
 
 	private int getSpawnDelay() {
-		int base = 1000 - Advertisements.getTotalCustomers() * 5;
+		int base = 1250 - Advertisements.getTotalCustomers() * 5;
 		int variable = 500;
 		int spawnDelay = SmoothieTycoon.random.nextInt(variable) + base;
 		return spawnDelay;

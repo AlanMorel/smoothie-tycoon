@@ -5,6 +5,7 @@ import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.SmoothieTycoon;
 import com.luminositygames.smoothietycoon.entities.Player;
+import com.luminositygames.smoothietycoon.entities.Upgrades;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
@@ -36,7 +37,7 @@ public class UserInterface {
 		Fonts.left(SmoothieTycoon.format(amount), 25, 20, Fonts.BLACK_48);
 	}
 
-	public void renderDay(Game game){
+	private void renderDay(Game game){
 		Countdown nightTime = game.getNight();
 		if (!nightTime.hasStarted()){
 			renderDay(game.getDay());
@@ -49,7 +50,7 @@ public class UserInterface {
 		Fonts.left("Day " + day, 300, 25, Fonts.BLACK_36);
 	}
 
-	public void renderIngredients(Player player){
+	private void renderIngredients(Player player){
 		renderIngredients(player.getFruits(), player.getIce(), player.getYogurt(), player.getJuice(), player.getCups());
 	}
 
@@ -81,7 +82,7 @@ public class UserInterface {
 	}
 
 	public void renderContainer(int servings){
-		int percentage = servings * 10;
+		int percentage = Upgrades.HAS_DOUBLE_CONTAINER ? servings * 5 : servings * 10;
 		int realPercent = 100 - percentage;
 		int height = realPercent * 2 + 200;
 		int length = percentage * 2;

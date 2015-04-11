@@ -70,7 +70,7 @@ public class Fonts {
 		Fonts.draw(Image.batch, str, x - width, y, font);
 	}
 
-	public static void draw(Batch batch, CharSequence str, float x, float y, BitmapFont font){
+	private static void draw(Batch batch, CharSequence str, float x, float y, BitmapFont font){
 		Image.batch.begin();
 		font.draw(Image.batch, str, x, y);
 		Image.batch.end();

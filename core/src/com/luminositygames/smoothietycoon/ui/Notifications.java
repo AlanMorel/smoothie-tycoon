@@ -21,11 +21,11 @@ import com.luminositygames.smoothietycoon.util.Sounds;
 
 public class Notifications {
 
-	public static ArrayList<Notification> notifications;
-
 	public static final String TIP = "tip";
 	public static final String ACHIEVEMENT = "achievement";
 	public static final String EVENT = "event";
+
+	private static ArrayList<Notification> notifications;
 
 	public static void load(){
 		notifications = new ArrayList<Notification>();
@@ -51,7 +51,7 @@ public class Notifications {
 		}
 	}
 
-	public static class Notification {
+	private static class Notification {
 
 		private static final int DURATION = 7 * 1000;
 		private static final float ALPHA = 0.75f;
@@ -61,13 +61,13 @@ public class Notifications {
 		private Countdown duration;
 		private String type;
 
-		public Notification(String message, String type){
+		private Notification(String message, String type){
 			this.message = message;
 			this.type = type;
 			this.duration = new Countdown(DURATION, false);
 		}
 
-		public boolean keepDisplaying(){
+		private boolean keepDisplaying(){
 			return !duration.isCompleted();
 		}
 

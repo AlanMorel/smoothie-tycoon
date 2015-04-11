@@ -158,7 +158,7 @@ public class Windows {
 		Image.draw("downArrow", 850, 350);
 		int lowerRange = getLowerRange(game);
 		for (int i = lowerRange; i < lowerRange + 3; i++){
-			StatisticsEntry entry = game.getStats().getEntry(i);
+			StatisticsEntry entry = game.getStats().getEntryByDay(i);
 			if (entry != null){
 				int relative = i - lowerRange + 1;
 				Image.draw("statisticsicon", 360, relative * 85 + 110);
@@ -177,8 +177,8 @@ public class Windows {
 		for (int i = 0; i < 1; i++){
 			Image.draw("upgradesIcon", 410, i * 85 + 195);
 		}
-		String refillExtra = Upgrades.HAS_AUTO_REFILL ? "(Purchased!)" : "($" + Upgrades.AUTO_REFILL_PRICE + ")";
-		Fonts.left("Auto-Refill " + refillExtra, 460, 200, Fonts.BLACK_36);
+		String refillExtra = Upgrades.HAS_DOUBLE_CONTAINER ? "(Purchased!)" : "($" + Upgrades.DOUBLE_CONTAINER_PRICE + ")";
+		Fonts.left("Double Container " + refillExtra, 460, 200, Fonts.BLACK_36);
 	}
 
 	private static void renderGameOverWindow(Player player) {
@@ -332,12 +332,12 @@ public class Windows {
 	}
 
 	private static void handleUpgradesWindow(Game game) {
-		String refillExtra = Upgrades.HAS_AUTO_REFILL ? "(Purchased!)" : "($" + Upgrades.AUTO_REFILL_PRICE + ")";
-		if (Fonts.isTouched("Auto-Refill " + refillExtra, 460, 200, Fonts.BLACK_36)){
-			if (!Upgrades.HAS_AUTO_REFILL && game.getPlayer().canPay(Upgrades.AUTO_REFILL_PRICE)){
-				game.getPlayer().payMoney(Upgrades.AUTO_REFILL_PRICE);
-				Notifications.show("You've purchased auto-refill!", Notifications.ACHIEVEMENT);
-				Upgrades.HAS_AUTO_REFILL = true;
+		String refillExtra = Upgrades.HAS_DOUBLE_CONTAINER ? "(Purchased!)" : "($" + Upgrades.DOUBLE_CONTAINER_PRICE + ")";
+		if (Fonts.isTouched("Double container " + refillExtra, 460, 200, Fonts.BLACK_36)){
+			if (!Upgrades.HAS_DOUBLE_CONTAINER && game.getPlayer().canPay(Upgrades.DOUBLE_CONTAINER_PRICE)){
+				game.getPlayer().payMoney(Upgrades.DOUBLE_CONTAINER_PRICE);
+				Notifications.show("You've purchased a double container!", Notifications.ACHIEVEMENT);
+				Upgrades.HAS_DOUBLE_CONTAINER = true;
 				close();
 			}
 		}
@@ -351,7 +351,7 @@ public class Windows {
 
 		private Rectangle rectangle;
 
-		public Window(int y, int width, int height){
+		private Window(int y, int width, int height){
 			int x = (Constants.WIDTH - width) / 2;
 			this.rectangle = new Rectangle(x, y, width, height);
 		}

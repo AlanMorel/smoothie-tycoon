@@ -17,7 +17,7 @@ import com.luminositygames.smoothietycoon.Constants;
 
 public class Achievements {
 
-	public static HashMap<Integer, Achievement> achievements;
+	private static HashMap<Integer, Achievement> achievements;
 
 	public static int PRESS_START = 0;
 	public static int BUSINESS = 1;
@@ -159,14 +159,14 @@ public class Achievements {
 		achievements.get(id).check(toCheck);
 	}
 
-	public static class Achievement {
+	private static class Achievement {
 
 		private String message;
 		private double goal;
 		private double progression;
 		private boolean completed;
 
-		public Achievement(String message, double goal){
+		private Achievement(String message, double goal){
 			this.message = message;
 			this.goal = goal;
 			this.progression = 0;

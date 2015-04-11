@@ -13,7 +13,7 @@ package com.luminositygames.smoothietycoon.screens;
 public interface Screen2 {
 
 	public void load();
-	
+
 	public void render (float delta);
 
 	public void update(float delta);

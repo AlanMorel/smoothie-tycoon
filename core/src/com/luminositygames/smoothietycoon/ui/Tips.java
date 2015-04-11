@@ -14,7 +14,7 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
 
 public class Tips {
 
-	public static String [] tip = {
+	private static String [] tip = {
 		"People like more ice on hotter days",
 		"Lower the price for more customers",
 		"Buy in bulk to save money",
