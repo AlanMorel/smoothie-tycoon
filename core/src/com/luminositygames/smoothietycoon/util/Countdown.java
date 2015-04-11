@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -18,11 +18,11 @@ public class Countdown {
 	private long duration;
 	private long start;
 
-	public Countdown (long duration, boolean startImmediately){
-		this.duration = duration;
+	public Countdown (long dur, boolean startImmediately){
+		duration = dur;
 		if (startImmediately){
-			this.start = TimeUtils.millis();
-			this.started = true;
+			start = TimeUtils.millis();
+			started = true;
 		}
 	}
 

@@ -12,7 +12,7 @@ import com.luminositygames.smoothietycoon.util.Sounds;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -44,16 +44,15 @@ public class Notifications {
 
 	public static void update(){
 		for (int i = 0; i < notifications.size(); i++) {
-			Notification notif = notifications.get(i);
-			if (!notif.keepDisplaying()){
-				notifications.remove(notif);
+			if (!notifications.get(i).keepDisplaying()){
+				notifications.remove(i);
 			}
 		}
 	}
 
 	private static class Notification {
 
-		private static final int DURATION = 7 * 1000;
+		private static final int DURATION = 7;
 		private static final float ALPHA = 0.75f;
 		private static final Color COLOR = Color.WHITE;
 
@@ -64,7 +63,7 @@ public class Notifications {
 		private Notification(String message, String type){
 			this.message = message;
 			this.type = type;
-			this.duration = new Countdown(DURATION, false);
+			this.duration = new Countdown(DURATION * 1000, false);
 		}
 
 		private boolean keepDisplaying(){
@@ -76,10 +75,10 @@ public class Notifications {
 				duration.start();
 				Sounds.play(type, 1.0f);
 			}
-			float width = Fonts.get(Fonts.BLACK_36).getBounds(message).width + 125;
+			float width = Fonts.get(Color.BLACK, 36).getBounds(message).width + 125;
 			Image.rectangle(Constants.WIDTH / 2 - width / 2, 90, width - 50, 50, ALPHA, COLOR);
 			Image.draw(type, Constants.WIDTH / 2 - width / 2 + 10, 95);
-			Fonts.center(message, 100, Fonts.BLACK_36);
+			Fonts.center(message, 100, Color.BLACK, 36);
 		}
 	}
 }

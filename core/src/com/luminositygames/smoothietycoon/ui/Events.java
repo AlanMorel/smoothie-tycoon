@@ -1,9 +1,19 @@
 package com.luminositygames.smoothietycoon.ui;
 
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 import com.luminositygames.smoothietycoon.entities.Player;
 
-public class Event {
+/**
+ * This file is part of Smoothie Tycoon
+ * 
+ * Copyright (c) 2013 - 2015 Luminosity Games
+ * 
+ * @author Alan Morel
+ * @since July 1, 2014
+ * @version 1.0
+ */
+
+public class Events {
 
 	private static boolean ROBBERY;
 	private static boolean FRUIT_EXPIRED;
@@ -19,9 +29,9 @@ public class Event {
 
 	public static void nextEvent(){
 		int chance = 15;
-		boolean initiate = SmoothieTycoon.random.nextInt(100) < chance;
+		boolean initiate = Main.random.nextInt(100) < chance;
 		if (initiate){
-			int event = SmoothieTycoon.random.nextInt(4);
+			int event = Main.random.nextInt(4);
 			if (event == 0){
 				ROBBERY = true;
 			} else if (event == 1){
@@ -35,22 +45,22 @@ public class Event {
 	}
 
 	public static void handle(Player player) {
-		if(Event.ROBBERY){
+		if(Events.ROBBERY){
 			player.payMoney(player.getMoney() / 5);
 			Notifications.show("You were robbed of some of your money.", Notifications.EVENT);
-			Event.ROBBERY = false;
-		} else if(Event.FRUIT_EXPIRED){
+			Events.ROBBERY = false;
+		} else if(Events.FRUIT_EXPIRED){
 			player.setFruits(0);
 			Notifications.show("All your fruit spoiled overnight.", Notifications.EVENT);
-			Event.FRUIT_EXPIRED = false;
-		} else if(Event.YOGURT_EXPIRED){
+			Events.FRUIT_EXPIRED = false;
+		} else if(Events.YOGURT_EXPIRED){
 			player.setYogurt(0);
 			Notifications.show("All your yogurt spoiled overnight.", Notifications.EVENT);
-			Event.YOGURT_EXPIRED = false;
-		} else if(Event.JUICE_SPILLED){
+			Events.YOGURT_EXPIRED = false;
+		} else if(Events.JUICE_SPILLED){
 			player.setJuice(0);
 			Notifications.show("You spilled your juice container.", Notifications.EVENT);
-			Event.JUICE_SPILLED = false;
+			Events.JUICE_SPILLED = false;
 		}
 	}
 }

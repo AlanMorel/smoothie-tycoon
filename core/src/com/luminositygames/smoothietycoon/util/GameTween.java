@@ -6,13 +6,13 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.luminositygames.smoothietycoon.Constants;
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 import com.luminositygames.smoothietycoon.screens.Screen2;
 
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -51,7 +51,7 @@ public class GameTween {
 
 	public void setTweenTo(byte type){
 		if (type == GameTween.SPLASH){
-			Tween.to(this, 0, 1f).target(1).repeatYoyo(1, Constants.SPLASH_DURATION).setCallback(setScreenTo(SmoothieTycoon.mainMenu)).start(tweenManager);
+			Tween.to(this, 0, 1f).target(1).repeatYoyo(1, Constants.SPLASH_DURATION).setCallback(setScreenTo(Main.mainMenu)).start(tweenManager);
 		} else if (type == GameTween.LOGO){
 			Tween.to(this, 0, 1f).target(75).repeatYoyo(-1, 0).start(tweenManager);
 		} else if (type == GameTween.ARROW){
@@ -67,7 +67,7 @@ public class GameTween {
 		TweenCallback tweenCallback = new TweenCallback() {
 			@Override
 			public void onEvent(int type, BaseTween<?> source) {
-				SmoothieTycoon.setScreen(scr);
+				Main.setScreen(scr);
 			}
 		};
 		return tweenCallback;

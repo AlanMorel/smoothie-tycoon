@@ -8,7 +8,7 @@ import com.luminositygames.smoothietycoon.Constants;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -166,20 +166,20 @@ public class Achievements {
 		private double progression;
 		private boolean completed;
 
-		private Achievement(String message, double goal){
-			this.message = message;
-			this.goal = goal;
-			this.progression = 0;
-			this.completed = false;
+		private Achievement(String msg, double g){
+			message = msg;
+			goal = g;
+			progression = 0;
+			completed = false;
 		}
 
-		private void check (double toCheck){
+		private void check(double toCheck){
 			if (toCheck >= goal && isUncompleted()){
 				complete();
 			}
 		}
 
-		private void progress (double progress){
+		private void progress(double progress){
 			progression += progress;
 			if (progression >= goal && isUncompleted()){
 				complete();

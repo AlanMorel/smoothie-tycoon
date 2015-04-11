@@ -2,6 +2,7 @@ package com.luminositygames.smoothietycoon;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.luminositygames.smoothietycoon.entities.Advertisements;
 import com.luminositygames.smoothietycoon.entities.Container;
 import com.luminositygames.smoothietycoon.entities.Customer;
@@ -9,12 +10,12 @@ import com.luminositygames.smoothietycoon.entities.Player;
 import com.luminositygames.smoothietycoon.entities.Recipe;
 import com.luminositygames.smoothietycoon.entities.Statistics;
 import com.luminositygames.smoothietycoon.ui.Achievements;
-import com.luminositygames.smoothietycoon.ui.Effect;
-import com.luminositygames.smoothietycoon.ui.Event;
+import com.luminositygames.smoothietycoon.ui.Effects;
+import com.luminositygames.smoothietycoon.ui.Events;
 import com.luminositygames.smoothietycoon.ui.Notifications;
-import com.luminositygames.smoothietycoon.ui.Section;
 import com.luminositygames.smoothietycoon.ui.Tips;
-import com.luminositygames.smoothietycoon.ui.Windows;
+import com.luminositygames.smoothietycoon.ui.sections.Section;
+import com.luminositygames.smoothietycoon.ui.windows.Window;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Sounds;
@@ -22,7 +23,7 @@ import com.luminositygames.smoothietycoon.util.Sounds;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -46,29 +47,29 @@ public class Game {
 	private boolean gameOverWindowOpened;
 
 	public Game() {
-		this.player = new Player();
-		this.recipe = new Recipe();
-		this.container = new Container();
-		this.stats = new Statistics();
-		this.day = 0;
-		this.paused = false;
-		this.gameOverWindowOpened = false;
+		player = new Player();
+		recipe = new Recipe();
+		container = new Container();
+		stats = new Statistics();
+		day = 0;
+		paused = false;
+		gameOverWindowOpened = false;
 		Notifications.load();
 		Achievements.load();
-		Event.load();
+		Events.load();
 		startNewDay();
 	}
 
 	private void startNewDay() {
-		this.stats.addEntry(day, player.getMoney());
-		this.day ++;
-		this.player.addMoney(1); //Thanks, Mom!
-		this.night = new Countdown(10 * 1000, false);
-		this.temperature = SmoothieTycoon.random.nextInt(100);
-		this.customers = new ArrayList<Customer>();
-		this.maxCustomers = getMaxCustomers();
-		this.lastSpawn = new Countdown(getSpawnDelay(), true);
-		this.totalCustomers = 0;
+		stats.addEntry(day, player.getMoney());
+		day += 1;
+		player.addMoney(1); //Thanks, Mom!
+		night = new Countdown(10 * 1000, false);
+		temperature = Main.random.nextInt(100);
+		customers = new ArrayList<Customer>();
+		lastSpawn = new Countdown(getSpawnDelay(), true);
+		totalCustomers = 0;
+		setMaxCustomers();
 		Advertisements.useAds();
 		Achievements.progress(Achievements.DAY, 1);
 		Sounds.play("morning", 0.10f);
@@ -102,41 +103,23 @@ public class Game {
 		return temperature;
 	}
 
-	public void render(Section section, float delta) {
-		renderEffects();
-		if (section.isStand()){
-			renderStand();
-		}
+	public void render(float delta) {
+		Effects.render(this);
 		Notifications.render();
+		if (Section.getSection().equals(Section.STAND)){
+			renderCustomers();
+			renderPercentage();
+		}
 	}
 
-	private void renderStand() {
+	private void renderCustomers() {
 		for (Customer customer : customers){
 			customer.render();
 		}
-		if (!night.hasStarted()){
-			Fonts.center(getBuyPercentage() + "% will purchase", 660, Fonts.BLACK_36);
-		}
 	}
-
-	private void renderEffects() {
-		if (container.getServings() <= 1){
-			Effect.render(Effect.SMOOTHIE);
-		}
-		if (player.getFruits() <= 9){
-			Effect.render(Effect.FRUIT);
-		}
-		if (player.getIce() <= 9){
-			Effect.render(Effect.ICE);
-		}
-		if (player.getYogurt() <= 9){
-			Effect.render(Effect.YOGURT);
-		}
-		if (player.getJuice() <= 9){
-			Effect.render(Effect.JUICE);
-		}
-		if (player.getCups() <= 3){
-			Effect.render(Effect.CUPS);
+	private void renderPercentage(){
+		if (!night.hasStarted()){
+			Fonts.center(getBuyPercentage() + "% will purchase", 660, Color.BLACK, 36);
 		}
 	}
 
@@ -144,9 +127,9 @@ public class Game {
 		if (paused){
 			return;
 		}
-		Effect.update(delta);
+		Effects.update(delta);
 		Notifications.update();
-		Event.handle(player);
+		Events.handle(player);
 		updateCustomers(delta);
 		processPurchases();
 		updateGame();
@@ -156,21 +139,20 @@ public class Game {
 		if (totalCustomers < maxCustomers) {
 			addNewCustomer();
 		} else if (!dayStillRunning()) {
-			if (day == Constants.COMPLETION_DAY && (Windows.isOpen() || !gameOverWindowOpened)){ //this is hacky
+			if (day == Constants.COMPLETION_DAY && (Window.isOpen() || !gameOverWindowOpened)){
 				gameOver();
 			} else if (!getNight().hasStarted()) {
-				getNight().start();
+				night.start();
 				Tips.displayTip();
 			} else if(getNight().isCompleted()) {
-				Event.nextEvent();
+				Events.nextEvent();
 				startNewDay();
 			}
 		}
 	}
 
 	private void gameOver() {
-		Windows.close();
-		Windows.open(Windows.GAME_OVER);
+		Window.open(Window.GAME_OVER);
 		gameOverWindowOpened = true;
 		Achievements.check(Achievements.COMPLETED, day);
 	}
@@ -198,16 +180,12 @@ public class Game {
 		}
 	}
 
-	private int getMaxCustomers(){
+	public void setMaxCustomers(){
 		int base = 20;
 		int dayBonus = day * 2;
 		int adBonus = Advertisements.getTotalCustomers();
 		int max = base + dayBonus + adBonus;
-		return max;
-	}
-
-	public void setNewMaxCustomers() {
-		maxCustomers = getMaxCustomers();
+		maxCustomers = max;
 	}
 
 	private void addNewCustomer() {
@@ -221,13 +199,13 @@ public class Game {
 	private int getSpawnDelay() {
 		int base = 1250 - Advertisements.getTotalCustomers() * 5;
 		int variable = 500;
-		int spawnDelay = SmoothieTycoon.random.nextInt(variable) + base;
+		int spawnDelay = Main.random.nextInt(variable) + base;
 		return spawnDelay;
 	}
 
 	private boolean dayStillRunning() {
 		for (Customer customer : customers){
-			if (!customer.hasLeftScreen()){
+			if (!customer.hasExited()){
 				return true;
 			}
 		}
@@ -237,7 +215,7 @@ public class Game {
 	private int getPurchases() {
 		int purchases = 0;
 		for (Customer customer : customers){
-			if (customer.isBuying()){
+			if (customer.hasPurchased()){
 				purchases++;
 			}
 		}
@@ -255,7 +233,7 @@ public class Game {
 	}
 
 	private boolean getWillBuy(){
-		return SmoothieTycoon.random.nextInt(100) < getBuyPercentage();
+		return Main.random.nextInt(100) < getBuyPercentage();
 	}
 
 	//No Max
@@ -266,7 +244,7 @@ public class Game {
 		return percentage;
 	}
 
-	//Max 10%
+	//Max +10%
 	private int getTemperatureIceChange(){
 		int optimalIce = temperature / 5;
 		int delta = Math.abs(optimalIce - container.getIce());
@@ -274,16 +252,15 @@ public class Game {
 		return percentage;
 	}
 
-	//Max 10%
+	//Max +10%
 	private int getQualityChange(){
 		int standardQuality = 30;
 		int currentQuality = container.getFruit() + container.getJuice() + container.getYogurt();
-		int delta = (currentQuality - standardQuality) / 3;
-		int percentage = delta;
+		int percentage = (currentQuality - standardQuality) / 3;
 		return percentage;
 	}
 
-	//Max 100%
+	//0% - 100%
 	private int getBuyPercentage(){
 		int percentage = 0;
 		int pricePerc = getPricePercentageChange();
@@ -292,7 +269,7 @@ public class Game {
 		percentage += pricePerc;
 		percentage += tempPerc;
 		percentage += qualityPerc;
-		return SmoothieTycoon.fixPercentage(percentage);
+		return Main.fixPercentage(percentage);
 	}
 
 	public void togglePause() {

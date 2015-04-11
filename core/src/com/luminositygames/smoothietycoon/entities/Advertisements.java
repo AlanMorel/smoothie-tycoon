@@ -1,13 +1,13 @@
 package com.luminositygames.smoothietycoon.entities;
 
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 import com.luminositygames.smoothietycoon.ui.Achievements;
 import com.luminositygames.smoothietycoon.util.Sounds;
 
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -27,11 +27,11 @@ public enum Advertisements {
 	private int days;
 	private String prefix;
 
-	private Advertisements(int customers, double price, String prefix) {
-		this.customers = customers;
-		this.price = price;
-		this.prefix = prefix;
-		this.days = 0;
+	private Advertisements(int c, double p, String pre) {
+		customers = c;
+		price = p;
+		prefix = pre;
+		days = 0;
 	}
 
 	public int getCustomers(){
@@ -61,7 +61,7 @@ public enum Advertisements {
 	}
 
 	public String getString() {
-		String string = prefix + SmoothieTycoon.format(price);
+		String string = prefix + Main.format(price);
 		if (days > 0){
 			string += " (" + days + "d)";
 		}
@@ -94,8 +94,7 @@ public enum Advertisements {
 	}
 
 	public static String getString(int option){
-		Advertisements ad = Advertisements.getById(option);
-		return ad.getString();
+		return Advertisements.getById(option).getString();
 	}
 }
 

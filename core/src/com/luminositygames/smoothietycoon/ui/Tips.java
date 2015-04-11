@@ -1,11 +1,11 @@
 package com.luminositygames.smoothietycoon.ui;
 
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -14,7 +14,7 @@ import com.luminositygames.smoothietycoon.SmoothieTycoon;
 
 public class Tips {
 
-	private static String [] tip = {
+	private static final String [] TIP = {
 		"People like more ice on hotter days",
 		"Lower the price for more customers",
 		"Buy in bulk to save money",
@@ -38,7 +38,7 @@ public class Tips {
 	};
 
 	public static void displayTip(){
-		int random = SmoothieTycoon.random.nextInt(tip.length);
-		Notifications.show(tip[random], Notifications.TIP);
+		int random = Main.random.nextInt(TIP.length);
+		Notifications.show(TIP[random], Notifications.TIP);
 	}
 }

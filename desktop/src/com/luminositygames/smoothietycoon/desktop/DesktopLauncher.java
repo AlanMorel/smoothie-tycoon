@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.luminositygames.smoothietycoon.Constants;
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 
 public class DesktopLauncher {
 
@@ -22,6 +22,6 @@ public class DesktopLauncher {
 		config.addIcon("icon_16.png", FileType.Internal);
 		config.addIcon("icon_32.png", FileType.Internal);
 		config.addIcon("icon_128.png", FileType.Internal);
-		new LwjglApplication(new SmoothieTycoon(), config);
+		new LwjglApplication(new Main(), config);
 	}
 }

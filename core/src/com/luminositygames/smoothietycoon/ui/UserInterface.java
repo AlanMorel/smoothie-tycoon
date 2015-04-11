@@ -3,9 +3,10 @@ package com.luminositygames.smoothietycoon.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.luminositygames.smoothietycoon.Constants;
 import com.luminositygames.smoothietycoon.Game;
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 import com.luminositygames.smoothietycoon.entities.Player;
-import com.luminositygames.smoothietycoon.entities.Upgrades;
+import com.luminositygames.smoothietycoon.entities.Upgrade;
+import com.luminositygames.smoothietycoon.ui.windows.Window;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.Fonts;
 import com.luminositygames.smoothietycoon.util.Image;
@@ -13,7 +14,7 @@ import com.luminositygames.smoothietycoon.util.Image;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -30,11 +31,17 @@ public class UserInterface {
 		renderThermometer(game.getTemperature());
 		renderArrows();
 		renderContainer(game.getContainer().getServings());
-		Windows.render(game);
+		renderWindow(game);
+	}
+
+	private void renderWindow(Game game) {
+		if (Window.getWindow() != null){
+			Window.getWindow().render(game);
+		}
 	}
 
 	public void renderMoney(double amount){
-		Fonts.left(SmoothieTycoon.format(amount), 25, 20, Fonts.BLACK_48);
+		Fonts.left(Main.format(amount), 25, 20, Color.BLACK,48);
 	}
 
 	private void renderDay(Game game){
@@ -42,12 +49,12 @@ public class UserInterface {
 		if (!nightTime.hasStarted()){
 			renderDay(game.getDay());
 		} else {
-			Fonts.left("Night " + nightTime.getPercentage() + "%", 275, 25, Fonts.BLACK_36);
+			Fonts.left("Night " + nightTime.getPercentage() + "%", 275, 25, Color.BLACK, 36);
 		}
 	}
 
 	public void renderDay(int day) {
-		Fonts.left("Day " + day, 300, 25, Fonts.BLACK_36);
+		Fonts.left("Day " + day, 300, 25, Color.BLACK, 36);
 	}
 
 	private void renderIngredients(Player player){
@@ -61,11 +68,11 @@ public class UserInterface {
 		Image.draw("juice", 1000, 20);
 		Image.draw("cup", 1150, 20);
 
-		Fonts.left(fruits + "", 600, 25, Fonts.BLACK_36);
-		Fonts.left(ice + "", 750, 25, Fonts.BLACK_36);
-		Fonts.left(yogurt + "", 900, 25, Fonts.BLACK_36);
-		Fonts.left(juice + "", 1050, 25, Fonts.BLACK_36);
-		Fonts.left(cups + "", 1200, 25, Fonts.BLACK_36);
+		Fonts.left(fruits + "", 600, 25, Color.BLACK, 36);
+		Fonts.left(ice + "", 750, 25, Color.BLACK, 36);
+		Fonts.left(yogurt + "", 900, 25, Color.BLACK, 36);
+		Fonts.left(juice + "", 1050, 25, Color.BLACK, 36);
+		Fonts.left(cups + "", 1200, 25, Color.BLACK, 36);
 	}
 
 	public void renderThermometer(int temperature){
@@ -73,7 +80,7 @@ public class UserInterface {
 		int height = 15 + temperature;
 		Image.rectangle(1230, y, 15, height, 1.0f, Color.RED);
 		Image.draw("thermometer", Constants.WIDTH - 60, 200);
-		Fonts.center(temperature + "°", 1240, 370, Fonts.BLACK_36);
+		Fonts.center(temperature + "°", 1240, 370, Color.BLACK, 36);
 	}
 
 	private void renderArrows() {
@@ -82,13 +89,13 @@ public class UserInterface {
 	}
 
 	public void renderContainer(int servings){
-		int percentage = Upgrades.HAS_DOUBLE_CONTAINER ? servings * 5 : servings * 10;
+		int percentage = Upgrade.DOUBLE_CONTAINER.hasPurchased() ? servings * 5 : servings * 10;
 		int realPercent = 100 - percentage;
 		int height = realPercent * 2 + 200;
 		int length = percentage * 2;
 
 		Image.rectangle(28, 150, 24, 200, 0.7f, Color.BLACK);
 		Image.rectangle(28, height - 50, 24, length, 1.0f, Color.PINK);
-		Fonts.center(servings + "", 40, 370, Fonts.BLACK_36);
+		Fonts.center(servings + "", 40, 370, Color.BLACK, 36);
 	}
 }

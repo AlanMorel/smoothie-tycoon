@@ -2,7 +2,7 @@ package com.luminositygames.smoothietycoon.entities;
 
 import com.badlogic.gdx.graphics.Color;
 import com.luminositygames.smoothietycoon.Constants;
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 import com.luminositygames.smoothietycoon.util.Countdown;
 import com.luminositygames.smoothietycoon.util.GameTween;
 import com.luminositygames.smoothietycoon.util.Image;
@@ -10,7 +10,7 @@ import com.luminositygames.smoothietycoon.util.Image;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -27,41 +27,44 @@ public class Customer {
 	private int facing;
 	private boolean buying;
 	private Color color;
+	private Color indicator;
 	private Hat hat;
 	private Countdown purchase;
 
-	public Customer(boolean buying) {
-		this.buying = buying;
-		this.facing = SmoothieTycoon.random.nextInt(2);
-		this.hat = new Hat(facing);
-		this.purchase = new Countdown(getPurchaseDelay(), false);
-		this.color = Image.getRandomColor();
+	public Customer(boolean b) {
+		buying = b;
+		indicator = buying ? Color.YELLOW : Color.RED;
+		facing = Main.random.nextInt(2);
+		hat = new Hat(facing);
+		purchase = new Countdown(getPurchaseDelay(), false);
+		color = Image.getRandomColor();
 		if (facing == LEFT){
-			this.x = -102;
-			this.speed = 4;
+			x = -102;
+			speed = 4;
 		} else if (facing == RIGHT){
-			this.x = Constants.WIDTH + 2;
-			this.speed = -4;
+			x = Constants.WIDTH + 2;
+			speed = -4;
 		}
 	}
 
 	private int getPurchaseDelay(){
-		return SmoothieTycoon.random.nextInt(1500) + 1000;
+		return Main.random.nextInt(1500) + 1000;
 	}
 
 	public boolean isWaiting(){
 		return purchase.hasStarted() && !purchase.isCompleted();
 	}
 
-	public boolean isBuying(){
+	public boolean hasPurchased(){
 		if (atStand() && purchase.isCompleted()){
-			speed = facing == LEFT ? 4 : -4;
+			speed = 4 * (facing == LEFT ? 1 : -1);
+			indicator = Color.GREEN;
 			return true;
 		}
 		return false;
 	}
 
-	public boolean hasLeftScreen(){
+	public boolean hasExited(){
 		return x > Constants.WIDTH + 50 || x < -150;
 	}
 
@@ -71,19 +74,21 @@ public class Customer {
 	}
 
 	public void render() {
-		if (!hasLeftScreen()){
-			renderCustomer();
-			hat.render(x);
+		if (hasExited()){
+			return;
 		}
+		renderCustomer();
+		hat.render(x);
+
 	}
 
 	private void renderCustomer(){
-		int tweenValue = (int) hat.getHatTween().getValue();
+		int tweenValue = (int) hat.getTween().getValue();
 		int length = 240 - tweenValue;
 		int height = 300 + tweenValue;
 
 		Image.rectangle(x, height, 100, length, 1.0f, color);
-		Image.rectangle(x, 540, 100, 10, 1.0f, buying ? Color.GREEN : Color.RED);
+		Image.rectangle(x, 540, 100, 10, 1.0f, indicator);
 		Image.draw("customerOverlay", x, 300);
 	}
 
@@ -96,7 +101,6 @@ public class Customer {
 		}
 	}
 
-
 	private class Hat {
 
 		private static final byte SWAG = 0;
@@ -106,14 +110,14 @@ public class Customer {
 		private static final byte PIRATE = 4;
 		private static final byte BROWN = 5;
 
-		private GameTween hatTween;
+		private GameTween tween;
 		private String hat;
 		private int x;
 		private int y;
 
 		private Hat(int side){
-			this.hatTween = new GameTween(-10, GameTween.HAT);
-			int random = SmoothieTycoon.random.nextInt(6);
+			this.tween = new GameTween(-10, GameTween.HAT);
+			int random = Main.random.nextInt(6);
 			if (random == SWAG){
 				this.hat = "swag";
 				this.x = -22;
@@ -142,16 +146,16 @@ public class Customer {
 			this.hat += side == 0 ? "L" : "R";
 		}
 
-		public GameTween getHatTween(){
-			return hatTween;
+		public GameTween getTween(){
+			return tween;
 		}
 
 		private void render(int customerX){
-			Image.draw(hat, customerX + x, y + hatTween.getValue());
+			Image.draw(hat, customerX + x, y + tween.getValue());
 		}
 
 		private void update(float delta){
-			hatTween.update(delta);
+			tween.update(delta);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -49,9 +49,9 @@ public class Animation {
 		private String image;
 		private Countdown delay;
 
-		public Frame(String image, long delay){
-			this.image = image;
-			this.delay = new Countdown(delay, false);
+		public Frame(String img, long d){
+			image = img;
+			delay = new Countdown(d, false);
 		}
 
 		public String getImage(){

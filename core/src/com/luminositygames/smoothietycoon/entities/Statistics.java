@@ -2,12 +2,12 @@ package com.luminositygames.smoothietycoon.entities;
 
 import java.util.ArrayList;
 
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -55,7 +55,7 @@ public class Statistics {
 
 		@Override
 		public String toString(){
-			return "Day " + getDay() + " | Profit: " + SmoothieTycoon.format(profit);
+			return "Day " + getDay() + " | Profit: " + Main.format(profit);
 		}
 	}
 }

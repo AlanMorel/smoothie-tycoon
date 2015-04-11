@@ -34,10 +34,10 @@ public class Splash implements Screen2 {
 	@Override
 	public void update(float delta) {
 		splashAlpha.update(delta);
-		handleTouch();
 	}
 
-	private void handleTouch() {
+	@Override
+	public void handleTouch() {
 		if (Gdx.input.justTouched()){
 			Gdx.net.openURI("http://luminositygames.com/");
 		}

@@ -3,7 +3,7 @@ package com.luminositygames.smoothietycoon.screens;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -20,4 +20,5 @@ public interface Screen2 {
 
 	public void keyPress(int keycode);
 
+	public void handleTouch();
 }

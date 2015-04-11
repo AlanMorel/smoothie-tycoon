@@ -2,7 +2,7 @@ package com.luminositygames.smoothietycoon.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.luminositygames.smoothietycoon.Constants;
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
+import com.luminositygames.smoothietycoon.Main;
 import com.luminositygames.smoothietycoon.util.GameTween;
 import com.luminositygames.smoothietycoon.util.Image;
 import com.luminositygames.smoothietycoon.util.Songs;
@@ -10,7 +10,7 @@ import com.luminositygames.smoothietycoon.util.Songs;
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -41,12 +41,12 @@ public class MainMenu implements Screen2 {
 	@Override
 	public void update(float delta) {
 		logoTween.update(delta);
-		handleTouch();
 	}
 
-	private void handleTouch() {
+	@Override
+	public void handleTouch() {
 		if (Image.get("playbutton").isTouched()){
-			SmoothieTycoon.setScreen(SmoothieTycoon.tutorial);
+			Main.setScreen(Main.tutorial);
 		} else if (Image.get("credits").isTouched()){
 			Gdx.net.openURI("http://luminositygames.com/");
 		}
@@ -54,6 +54,5 @@ public class MainMenu implements Screen2 {
 
 	@Override
 	public void keyPress(int keycode) {
-
 	}
 }

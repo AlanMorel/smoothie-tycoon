@@ -3,11 +3,10 @@ package com.luminositygames.smoothietycoon.entities;
 import com.luminositygames.smoothietycoon.ui.Achievements;
 import com.luminositygames.smoothietycoon.util.Sounds;
 
-
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -24,12 +23,12 @@ public class Player {
 	private int cups;
 
 	public Player(){
-		this.money = 19.00; //Mom makes it $20 to start off with!
-		this.fruits = 0;
-		this.ice = 0;
-		this.yogurt = 0;
-		this.juice = 0;
-		this.cups = 5;
+		money = 19.00; //Mom makes it $20 to start off with!
+		fruits = 0;
+		ice = 0;
+		yogurt = 0;
+		juice = 0;
+		cups = 5;
 	}
 
 	public int getFruits() {

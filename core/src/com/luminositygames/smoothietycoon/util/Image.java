@@ -12,14 +12,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
-import com.luminositygames.smoothietycoon.SmoothieTycoon;
-import com.luminositygames.smoothietycoon.ui.Windows;
-import com.luminositygames.smoothietycoon.ui.Windows.Window;
+import com.luminositygames.smoothietycoon.Main;
+import com.luminositygames.smoothietycoon.ui.windows.Window;
 
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -58,15 +57,15 @@ public class Image {
 
 	public boolean isHoveredOver(){
 		Rectangle spriteRect = sprite.getBoundingRectangle();
-		float x = SmoothieTycoon.getX();
-		float y = SmoothieTycoon.getY();
+		float x = Main.getX();
+		float y = Main.getY();
 		return spriteRect.contains(x, y);
 	}
 
 	public boolean isTouched(){
 		Rectangle spriteRect = sprite.getBoundingRectangle();
-		float x = SmoothieTycoon.getX();
-		float y = SmoothieTycoon.getY();
+		float x = Main.getX();
+		float y = Main.getY();
 		return spriteRect.contains(x, y) && Gdx.input.justTouched();
 	}
 
@@ -101,9 +100,9 @@ public class Image {
 	}
 
 	public static Color getRandomColor(){
-		float red = SmoothieTycoon.random.nextFloat();
-		float green = SmoothieTycoon.random.nextFloat();
-		float blue = SmoothieTycoon.random.nextFloat();
+		float red = Main.random.nextFloat();
+		float green = Main.random.nextFloat();
+		float blue = Main.random.nextFloat();
 
 		return new Color(red, green, blue, 1f);
 	}
@@ -111,7 +110,7 @@ public class Image {
 	public static void window(Window window){
 		float alpha = 0.85f;
 		Color color = Color.WHITE;
-		if (window.equals(Windows.GAME_OVER)){
+		if (window.equals(Window.GAME_OVER)){
 			color = Color.BLACK;
 		}
 		rectangle(window.getRectangle(), alpha, color);
@@ -140,7 +139,7 @@ public class Image {
 		Image.batch.begin();
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		Image.renderer.setProjectionMatrix(SmoothieTycoon.camera.combined);
+		Image.renderer.setProjectionMatrix(Main.camera.combined);
 		Image.renderer.begin(ShapeType.Filled);
 		Image.renderer.identity();
 		color.a = alpha;

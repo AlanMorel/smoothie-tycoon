@@ -2,11 +2,12 @@ package com.luminositygames.smoothietycoon.entities;
 
 import com.luminositygames.smoothietycoon.Game;
 import com.luminositygames.smoothietycoon.ui.Achievements;
+import com.luminositygames.smoothietycoon.ui.Notifications;
 
 /**
  * This file is part of Smoothie Tycoon
  * 
- * Copyright (c) 2013 - 2014 Luminosity Games
+ * Copyright (c) 2013 - 2015 Luminosity Games
  * 
  * @author Alan Morel
  * @since July 1, 2014
@@ -22,11 +23,11 @@ public class Container {
 	private int juice;
 
 	public Container() {
-		this.servings = 10;
-		this.fruit = 10;
-		this.ice = 10;
-		this.yogurt = 10;
-		this.juice = 10;
+		servings = 10;
+		fruit = 10;
+		ice = 10;
+		yogurt = 10;
+		juice = 10;
 	}
 
 	public int getFruit() {
@@ -55,13 +56,15 @@ public class Container {
 
 	public void refill(Game game) {
 		if(canRefill(game)){
-			this.servings = Upgrades.HAS_DOUBLE_CONTAINER ? 20 : 10;
-			this.fruit = game.getRecipe().getFruit();
-			this.ice = game.getRecipe().getIce();
-			this.yogurt = game.getRecipe().getYogurt();
-			this.juice = game.getRecipe().getJuice();
+			servings = Upgrade.DOUBLE_CONTAINER.hasPurchased() ? 20 : 10;
+			fruit = game.getRecipe().getFruit();
+			ice = game.getRecipe().getIce();
+			yogurt = game.getRecipe().getYogurt();
+			juice = game.getRecipe().getJuice();
 			game.getPlayer().refillContainer(game.getRecipe());
 			Achievements.progress(Achievements.REFILLS, 1);
+		} else {
+			Notifications.show("You are missing some ingredients!", Notifications.TIP);
 		}
 	}
 
