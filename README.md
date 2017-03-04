@@ -1,5 +1,6 @@
 # Smoothie Tycoon
 ![alt tag](http://i.imgur.com/ypbFwxD.png)
+
 **Smoothie Tycoon** is a tycoon game written using Java for Windows and Mac. In this game, you start off small as you sell smoothies on the streets of New York to build your smoothie stand. Buy supplies, set your own price and recipe, and determine your own destiny!
 
 ## Technologies
